@@ -3,7 +3,7 @@ title: "TODO - Your title"
 abbrev: "TODO - Abbreviation"
 category: info
 
-docname: draft-todo-yourname-protocol-latest
+docname: draft-gray-plants-mtc-deploy-use-cases-latest
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:
@@ -25,9 +25,9 @@ venue:
 
 author:
  -
-    fullname: Your Name Here
+    fullname: "jogray"
     organization: Your Organization Here
-    email: your.email@example.com
+    email: "John.Gray@entrust.com"
 
 normative:
 

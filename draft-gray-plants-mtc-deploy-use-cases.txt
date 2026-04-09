@@ -2,8 +2,8 @@
 
 
 
-PKI, Logs, And Tree Signatures                                    jogray
-Internet-Draft                                    Your Organization Here
+PKI, Logs, And Tree Signatures                                   J. Gray
+Internet-Draft                                                   Entrust
 Intended status: Informational                              9 April 2026
 Expires: 11 October 2026
 
@@ -112,6 +112,9 @@ Acknowledgments
 
 Author's Address
 
-   jogray
-   Your Organization Here
-   Email: John.Gray@entrust.com
+   John Gray
+   Entrust Limited
+   2500 Solandt Road – Suite 100
+   Ottawa, Ontario  K2K 3G5
+   Canada
+   Email: john.gray@entrust.com

@@ -1,6 +1,6 @@
 ---
-title: "TODO - Your title"
-abbrev: "TODO - Abbreviation"
+title: "Merkle Tree Certificates Deployment Use Cases"
+abbrev: "MTC Use Cases"
 category: info
 
 docname: draft-todo-yourname-protocol-latest

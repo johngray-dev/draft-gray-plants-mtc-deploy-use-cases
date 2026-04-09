@@ -25,9 +25,16 @@ venue:
 
 author:
  -
-    fullname: "jogray"
-    organization: Your Organization Here
-    email: "John.Gray@entrust.com"
+    ins: J. Gray
+    name: John Gray
+    org: Entrust Limited
+    abbrev: Entrust
+    street: 2500 Solandt Road – Suite 100
+    city: Ottawa, Ontario
+    country: Canada
+    code: K2K 3G5
+    email: john.gray@entrust.com
+
 
 normative:
 

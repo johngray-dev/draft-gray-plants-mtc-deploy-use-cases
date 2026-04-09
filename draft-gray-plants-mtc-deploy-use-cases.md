@@ -23,56 +23,11 @@ venue:
   github: USER/REPO
   latest: https://example.com/LATEST
 
-keyword:
- - MTC
- - PLANTS
- - use-cases
- - deployment
-
 author:
  -
-    ins: J. Gray
-    name: John Gray
-    org: Entrust Limited
-    abbrev: Entrust
-    street: 2500 Solandt Road – Suite 100
-    city: Ottawa, Ontario
-    country: Canada
-    code: K2K 3G5
-    email: john.gray@entrust.com
-
-  -
-    ins: B.E. Westerbaan
-    name: Bas Westerbaan
-    organization: Cloudflare
-    email: bas@cloudflare.com
-
-  -
-    ins: "D. Benjamin"
-    name: "David Benjamin"
-    organization: "Google LLC"
-    email: davidben@google.com
-
-  -
-    ins: M. Ounsworth
-    name: Mike Ounsworth
-    org: Cryptic Forest Software
-    abbrev: Cryptic Forest
-    city: Sioux Lookout, Ontario
-    country: Canada
-    email: mike@ounsworth.ca
-
-  -
-    ins: J. Klaussner
-    name: Jan Klaussner
-    org: Bundesdruckerei GmbH
-    email: jan.klaussner@bdr.de
-    street: Kommandantenstr. 18
-    code: 10969
-    city: Berlin
-    country: Germany
-
-
+    fullname: Your Name Here
+    organization: Your Organization Here
+    email: your.email@example.com
 
 normative:
 

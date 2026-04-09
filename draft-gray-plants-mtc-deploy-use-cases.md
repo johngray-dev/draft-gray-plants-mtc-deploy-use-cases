@@ -1,23 +1,27 @@
 ---
-title: "Merkle Tree Certificates Deployment Use Cases"
-abbrev: "MTC Use Cases"
+title: "TODO - Your title"
+abbrev: "TODO - Abbreviation"
 category: info
 
-docname: draft-gray-plants-mtc-deploy-use-cases-latest
+docname: draft-todo-yourname-protocol-latest
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
 number:
 date:
 consensus: true
 v: 3
-area: "Security"
-workgroup: "PKI, Logs, And Tree Signatures"
+area: AREA
+workgroup: WG Working Group
+keyword:
+ - next generation
+ - unicorn
+ - sparkling distributed ledger
 venue:
-  group: "PKI, Logs, And Tree Signatures"
-  type: "Working Group"
-  mail: "plants@ietf.org"
-  arch: "https://mailarchive.ietf.org/arch/browse/plants"
-##  github: "ietf-plants-wg/merkle-tree-certs"
-##  latest: "https://ietf-plants-wg.github.io/merkle-tree-certs/draft-ietf-plants-merkle-tree-certs.html"
+  group: WG
+  type: Working Group
+  mail: WG@example.com
+  arch: https://example.com/WG
+  github: USER/REPO
+  latest: https://example.com/LATEST
 
 keyword:
  - MTC

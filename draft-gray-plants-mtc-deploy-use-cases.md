@@ -34,6 +34,33 @@ author:
     country: Canada
     code: K2K 3G5
     email: john.gray@entrust.com
+ -
+    ins: B.E. Westerbaan
+    name: Bas Westerbaan
+    organization: Cloudflare
+    email: bas@cloudflare.com
+ -
+    ins: "D. Benjamin"
+    name: "David Benjamin"
+    organization: "Google LLC"
+    email: davidben@google.com
+ -
+    ins: M. Ounsworth
+    name: Mike Ounsworth
+    org: Cryptic Forest Software
+    abbrev: Cryptic Forest
+    city: Sioux Lookout, Ontario
+    country: Canada
+    email: mike@ounsworth.ca
+ -
+    ins: J. Klaussner
+    name: Jan Klaussner
+    org: Bundesdruckerei GmbH
+    email: jan.klaussner@bdr.de
+    street: Kommandantenstr. 18
+    code: 10969
+    city: Berlin
+    country: Germany
 
 
 normative:

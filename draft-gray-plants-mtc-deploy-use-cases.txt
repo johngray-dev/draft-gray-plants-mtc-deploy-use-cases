@@ -2,14 +2,14 @@
 
 
 
-WG Working Group                                              Y. N. Here
+PKI, Logs, And Tree Signatures                                    jogray
 Internet-Draft                                    Your Organization Here
 Intended status: Informational                              9 April 2026
 Expires: 11 October 2026
 
 
-                           TODO - Your title
-                  draft-todo-yourname-protocol-latest
+             Merkle Tree Certificates Deployment Use Cases
+             draft-gray-plants-mtc-deploy-use-cases-latest
 
 Abstract
 
@@ -19,17 +19,20 @@ About This Document
 
    This note is to be removed before publishing as an RFC.
 
-   The latest revision of this draft can be found at
-   https://example.com/LATEST.  Status information for this document may
-   be found at https://datatracker.ietf.org/doc/draft-todo-yourname-
-   protocol/.
+   The latest revision of this draft can be found at https://johngray-
+   dev.github.io/draft-gray-plants-mtc-deploy-use-cases/draft-gray-
+   plants-mtc-deploy-use-cases.html.  Status information for this
+   document may be found at https://datatracker.ietf.org/doc/draft-gray-
+   plants-mtc-deploy-use-cases/.
 
-   Discussion of this document takes place on the WG Working Group
-   mailing list (mailto:WG@example.com), which is archived at
-   https://example.com/WG.
+   Discussion of this document takes place on the PKI, Logs, And Tree
+   Signatures Working Group mailing list (mailto:plants@ietf.org), which
+   is archived at https://mailarchive.ietf.org/arch/browse/plants.
+   Subscribe at https://www.ietf.org/mailman/listinfo/plants/.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/USER/REPO.
+   https://github.com/johngray-dev/draft-gray-plants-mtc-deploy-use-
+   cases.
 
 Status of This Memo
 
@@ -109,6 +112,6 @@ Acknowledgments
 
 Author's Address
 
-   Your Name Here
+   jogray
    Your Organization Here
-   Email: your.email@example.com
+   Email: John.Gray@entrust.com

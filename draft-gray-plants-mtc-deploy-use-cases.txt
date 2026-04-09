@@ -4,8 +4,15 @@
 
 PKI, Logs, And Tree Signatures                                   J. Gray
 Internet-Draft                                                   Entrust
-Intended status: Informational                              9 April 2026
-Expires: 11 October 2026
+Intended status: Informational                          B. E. Westerbaan
+Expires: 11 October 2026                                      Cloudflare
+                                                             D. Benjamin
+                                                              Google LLC
+                                                            M. Ounsworth
+                                                          Cryptic Forest
+                                                            J. Klaussner
+                                                    Bundesdruckerei GmbH
+                                                            9 April 2026
 
 
              Merkle Tree Certificates Deployment Use Cases
@@ -73,7 +80,7 @@ Table of Contents
    4.  IANA Considerations
    5.  Normative References
    Acknowledgments
-   Author's Address
+   Authors' Addresses
 
 1.  Introduction
 
@@ -110,7 +117,7 @@ Acknowledgments
 
    TODO acknowledge.
 
-Author's Address
+Authors' Addresses
 
    John Gray
    Entrust Limited
@@ -118,3 +125,28 @@ Author's Address
    Ottawa, Ontario  K2K 3G5
    Canada
    Email: john.gray@entrust.com
+
+
+   Bas Westerbaan
+   Cloudflare
+   Email: bas@cloudflare.com
+
+
+   David Benjamin
+   Google LLC
+   Email: davidben@google.com
+
+
+   Mike Ounsworth
+   Cryptic Forest Software
+   Sioux Lookout, Ontario
+   Canada
+   Email: mike@ounsworth.ca
+
+
+   Jan Klaussner
+   Bundesdruckerei GmbH
+   Kommandantenstr. 18
+   10969 Berlin
+   Germany
+   Email: jan.klaussner@bdr.de

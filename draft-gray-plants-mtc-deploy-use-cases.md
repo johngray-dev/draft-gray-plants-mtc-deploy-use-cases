@@ -66,7 +66,7 @@ informative:
 
 --- abstract
 
-The Merkle Tree Certificate (MTC) structure as defined in 
+The Merkle Tree Certificate (MTC) structure as defined in
 draft-ietf-plants-merkle-tree-certs defines a new form of X.509 certificate
 that integrates logging with certificate issues.  It was mainly designed to
 help mitigate the cost of signatures sizes in the Post Quantum context. This

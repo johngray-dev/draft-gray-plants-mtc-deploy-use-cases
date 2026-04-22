@@ -35,11 +35,6 @@ author:
     code: K2K 3G5
     email: john.gray@entrust.com
  -
-    ins: B.E. Westerbaan
-    name: Bas Westerbaan
-    organization: Cloudflare
-    email: bas@cloudflare.com
- -
     ins: "D. Benjamin"
     name: "David Benjamin"
     organization: "Google LLC"
@@ -71,7 +66,19 @@ informative:
 
 --- abstract
 
-TODO Abstract
+The Merkle Tree Certificate (MTC) structure as defined in 
+draft-ietf-plants-merkle-tree-certs defines a new form of X.509 certificate
+that integrates logging with certificate issues.  It was mainly designed to
+help mitigate the cost of signatures sizes in the Post Quantum context. This
+is achieved by replacing the traditional signature with a Merkle Tree
+Signature containing the authentication path to a set of landmarks in
+the Merkle Tree structure which are available to the signature verifier. Cost
+savings are magnified in cases like the Web PKI where there may be multiple
+Signer Certifcate Timestamps (SCT).  For environments where SCTs might not be
+used, the cost benefit may be less pronounced. The purpose of the
+specification is to explore these types of use-cases which may help optimizate
+general purpose PKI usages, particularily in the Post Quantum context where
+signatures sizes and performances characteristics may hinder operations.
 
 
 --- middle

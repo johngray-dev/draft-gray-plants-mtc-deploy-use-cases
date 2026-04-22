@@ -66,31 +66,80 @@ informative:
 
 --- abstract
 
-The Merkle Tree Certificate (MTC) structure as defined in
-draft-ietf-plants-merkle-tree-certs defines a new form of X.509 certificate
-that integrates logging with certificate issues.  It was mainly designed to
-help mitigate the cost of signatures sizes in the Post Quantum context. This
-is achieved by replacing the traditional signature with a Merkle Tree
-Signature containing the authentication path to a set of landmarks in
-the Merkle Tree structure which are available to the signature verifier. Cost
-savings are magnified in cases like the Web PKI where there may be multiple
-Signer Certifcate Timestamps (SCT).  For environments where SCTs might not be
-used, the cost benefit may be less pronounced. The purpose of the
-specification is to explore these types of use-cases which may help optimizate
-general purpose PKI usages, particularily in the Post Quantum context where
-signatures sizes and performances characteristics may hinder operations.
+Merkle Tree Certificates (MTC)
+{{I-D.draft-ietf-plants-merkle-tree-certs}} has been defined for the
+use case of the WebPKI.
+In this document we explore when and how MTC in parts or full can be used in different
+use cases.
 
 
 --- middle
 
 # Introduction
 
-TODO Introduction
+[[ EdNote: Before getting into the nitty gritty, let's start with the potential
+   benefit. ]]
+
+MTC has been designed to solve two problems for the WebPKI:
+
+1. **Size.** A *landmark-relative Merkle Tree Certificate* is small as it
+  only contains a public key and a small Merkle Tree authenticaiton path.
+2. **DD.** MTC ensures Certificate Transparency is post-quantum secure, and with that
+   allows detection of post-quantum downgrade attacks after the fact.
+
+Besides solving these two problems, MTC has additional benefits.
+
+3. **Batch.** MTC reduces the load on the CA HSM by signing batches.
+
+A PKI that faces either of these three challenges could benefit from MTC.
+These advantages come with trade-offs:
+
+1. The small *landmark-relative* MTCs can only be used if the verified
+   has been updated with recent *landmarks*. If the verifier is stale, it
+   has to fall back to a larger *standalone* MTC. The prover and verifier
+   need a mechanism to negotiate whether to use the landmark-relative or
+   standalone certificate.
+2. For downgrade detection, the issuer needs to publish a log of issued
+   certificates.
+
+## Brief overview of MTC
+
+A Merkle Tree Certificate is like a regular X509 certificate with two
+differences:
+
+1. Instead of a single signatures, an MTC can contain zero or more signatures:
+   zero in the case of landmark-relative and one-or-more in case of standalone.
+   One is by the issuer, and others are added when certificate transparency is required.
+2. The contents of the certificate is not signed directly, but instead
+   a Merkle tree head is signed, together with providing a proof-of-inclusion
+   of the certificate contents in that Merkle tree.
+ 
+The use of a Merkle tree allows for the batch signing.
+
+If a verifier has out-of-band knowledge of the treehead used (which in
+that case is called a *landmark*), then it can be satisfied with
+the landmark-relative certificate that leaves out the signatures.
 
 
 # Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
+
+# Use cases
+
+## Just using batching
+
+**When** TODO
+**Requirements** Changing verification code; only one signature.
+
+## Just using landmarks
+
+**When** ...
+**Requirements** ...
+
+## Just using transparency
+
+# Different ways of acquiring landmarks
 
 
 # Security Considerations

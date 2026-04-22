@@ -4,15 +4,13 @@
 
 PKI, Logs, And Tree Signatures                                   J. Gray
 Internet-Draft                                                   Entrust
-Intended status: Informational                          B. E. Westerbaan
-Expires: 11 October 2026                                      Cloudflare
-                                                             D. Benjamin
-                                                              Google LLC
+Intended status: Informational                               D. Benjamin
+Expires: 24 October 2026                                      Google LLC
                                                             M. Ounsworth
                                                           Cryptic Forest
                                                             J. Klaussner
                                                     Bundesdruckerei GmbH
-                                                            9 April 2026
+                                                           22 April 2026
 
 
              Merkle Tree Certificates Deployment Use Cases
@@ -20,7 +18,21 @@ Expires: 11 October 2026                                      Cloudflare
 
 Abstract
 
-   TODO Abstract
+   The Merkle Tree Certificate (MTC) structure as defined in draft-ietf-
+   plants-merkle-tree-certs defines a new form of X.509 certificate that
+   integrates logging with certificate issues.  It was mainly designed
+   to help mitigate the cost of signatures sizes in the Post Quantum
+   context.  This is achieved by replacing the traditional signature
+   with a Merkle Tree Signature containing the authentication path to a
+   set of landmarks in the Merkle Tree structure which are available to
+   the signature verifier.  Cost savings are magnified in cases like the
+   Web PKI where there may be multiple Signer Certifcate Timestamps
+   (SCT).  For environments where SCTs might not be used, the cost
+   benefit may be less pronounced.  The purpose of the specification is
+   to explore these types of use-cases which may help optimizate general
+   purpose PKI usages, particularily in the Post Quantum context where
+   signatures sizes and performances characteristics may hinder
+   operations.
 
 About This Document
 
@@ -56,7 +68,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 October 2026.
+   This Internet-Draft will expire on 24 October 2026.
 
 Copyright Notice
 
@@ -125,11 +137,6 @@ Authors' Addresses
    Ottawa, Ontario  K2K 3G5
    Canada
    Email: john.gray@entrust.com
-
-
-   Bas Westerbaan
-   Cloudflare
-   Email: bas@cloudflare.com
 
 
    David Benjamin

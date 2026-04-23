@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-21T01:20:29.605059+00:00",
+  "timestamp": "2026-04-23T01:24:13.602447+00:00",
   "repo": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
   "labels": [
     {
@@ -49,6 +49,124 @@
       "color": "ffffff"
     }
   ],
-  "issues": [],
-  "pulls": []
+  "issues": [
+    {
+      "number": 1,
+      "id": "I_kwDOR-NuIc8AAAABALIc-Q",
+      "title": "Initial Discussion Notes",
+      "url": "https://github.com/johngray-dev/draft-gray-plants-mtc-deploy-use-cases/issues/1",
+      "state": "OPEN",
+      "author": "johngray-dev",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Here is combined notes from Mike Ounsworths and myself:\n\n\nAttendees: John Gray, Luke (NCSC), DavidBen, Bas, Jan Klau\u00dfner\n\n\nDavid:  https://www.chromium.org/Home/chromium-security/post-quantum-auth-roadmap/\n\nDiscussion on Use Cases:\n\nHigh volume (batching)\n- Batch signing, if you're concerned about HSM capacity\n\nHigh auditability\n- PKIs that issue admin credentials?\n- A more efficient and flexible transparency/auditing scheme, if you either already use CT or would have found auditing schemes compelling if CT worked differently\u00a0\n- Auditing case, private PKI's audited to the hilt.   Work by dumping something out of a database.  Extra machinery is worth it if you don't trust the operator of the PKI. \n- System of building trusting... Can trust be reduced to automation.\n\nAllowing things to stay on RSA / ECC\n- Imagine an industrial IoT setting where things want to continue using ECDSA certs for size reasons. Imagine putting those into an MTC and having a witness that monitors for suspicious activity adjacent to the closed IoT network continuing to use the legacy certs.\n\nUse Case for Transport / Admin PKI\n- Admin plane won't be high volume, but it needs to be high assurance.  Secret admin credential\n\nDowngrade protection (using transparency logs)\n- Have to turn off quantum vulnerable algorithms but still service quantum vulnerable certs.   Leads to a downgrade...\n- Quantum capable client, server has both quantum and non-quantum...  Way to solve this in 2 ways.  HSTS is one way to fix.\n- Second way is to use transparency auditing - then you can check by using the log\nhttps://westerbaan.name/~bas/rwpqc2026/bas.pdf\n\nMultiple co-signers\n- Basically anything that uses Timestamp Authorities (RFC3161) today could map to this.\n- eIDAS and ICAO ePassport\n\nPQC Migration:\n- Possible use of migration?   Downgrade attacks?   CA service provider.  \n- Way to get web PKI off classic roots\n\neIDAS - ICAO (passports)\n- Jan mentioned this as a use-case\n\nLandmark build-up:\n- Imagine a smartcard building access door reader. It needs to be able to accept any employee ID badge issued in the past 10 years. This device will have limited on-board memory. Today, it has the root cert, and just needs to fetch today\u2019s CRL (then throw out yesterday\u2019s CRL). This use case wants MTC to have a landmark scheme where the new landmark replaces the previous landmark.\n- We should provide guidance for how to calculate the bound (ceiling) on how much disk space is required for a Verifier to successfully be able to validate all certificates issued in a X day window.\n\nLandmark build-up:\n- Imagine a smartcard building access door reader. It needs to be able to accept any employee ID badge issued in the past 10 years. This device will have limited on-board memory. Today, it has the root cert, and just needs to fetch today\u2019s CRL (then throw out yesterday\u2019s CRL). This use case wants MTC to have a landmark scheme where the new landmark replaces the previous landmark.\n- We should provide guidance for how to calculate the bound (ceiling) on how much disk space is required for a Verifier to successfully be able to validate all certificates issued in a X day window.\n\n\nGeneral\n- Timestamp authority, counter-signer - anything that uses TSA's could be a target for multi-signed MTC\n- The landmark certificates optimization, if (a subset of) your RPs are able to manage it\n- Might be use-cases without connection to update service..  Has access to a mechanism to fetch landmarks.\n- Server could send landmarks to client if they don't have them.\n- Longer cert lifetimes - client will have to store more landmarks.   \n- Create a scheme for rebasing the landmarks?  \n- How to re-anchor the card once it is out.\n- Can we make a MT of the landmarks?\n- Need a fetching mechanism - like CRL's\n- There is a fall back mode...  \n- What are the options for making use of this new tool, and what is the advantages\n- Zero trust work-from-home, continuous authentication - new VPN connection every so often.\n\n- Rebase only if you are not happy with the rebase - maybe tuning parameters\n- You need to allocate this much disk space -  10 years * 365 landmarks * 32\n\n\nJohn / Bas Conversations (April 22nd, 2026)\n- Maybe we start simple - a Certificate Verifier for clients which use the MTC landmarks.   Non web PKI's will likely come across MTC and need to know how to verify.\n- A mechanism to fetch landmarks (could be like a CRL mechanism).   Maybe an LDP (Landmark Distribution point)? \n- a new purpose intent for draft-lamps-certificate-discovery?  Or just define separately\n\n",
+      "createdAt": "2026-04-22T04:08:17Z",
+      "updatedAt": "2026-04-22T04:08:17Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
+  "pulls": [
+    {
+      "number": 2,
+      "id": "PR_kwDOR-NuIc7UviHP",
+      "title": "Stub",
+      "url": "https://github.com/johngray-dev/draft-gray-plants-mtc-deploy-use-cases/pull/2",
+      "state": "OPEN",
+      "author": "bwesterb",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "What do you think of structuring it something like this?",
+      "createdAt": "2026-04-22T19:27:58Z",
+      "updatedAt": "2026-04-22T19:28:21Z",
+      "baseRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
+      "baseRefName": "main",
+      "baseRefOid": "d87b73fd2627c734a44f578b58b093181d44bbfc",
+      "headRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
+      "headRefName": "bas",
+      "headRefOid": "b5ecd4001789d68b7327e17e05fbb12c9fd2ca43",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOR-NuIc73zO05",
+          "commit": {
+            "abbreviatedOid": "b5ecd40"
+          },
+          "author": "github-actions",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-22T19:28:21Z",
+          "updatedAt": "2026-04-22T19:28:21Z",
+          "comments": [
+            {
+              "originalPosition": 65,
+              "body": "````suggestion\n\n````",
+              "createdAt": "2026-04-22T19:28:21Z",
+              "updatedAt": "2026-04-22T19:28:21Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "id": "PR_kwDOR-NuIc7UyEJ0",
+      "title": "John Gray's updates to Bas's initial update",
+      "url": "https://github.com/johngray-dev/draft-gray-plants-mtc-deploy-use-cases/pull/3",
+      "state": "OPEN",
+      "author": "johngray-dev",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Correct typos and add some additional content.",
+      "createdAt": "2026-04-22T22:24:52Z",
+      "updatedAt": "2026-04-22T22:25:16Z",
+      "baseRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
+      "baseRefName": "bas",
+      "baseRefOid": "b5ecd4001789d68b7327e17e05fbb12c9fd2ca43",
+      "headRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
+      "headRefName": "johngray-dev-patch-1",
+      "headRefOid": "39c92c550069e137766b2fec5b9ca04c2ebd3e79",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOR-NuIc732fjM",
+          "commit": {
+            "abbreviatedOid": "39c92c5"
+          },
+          "author": "github-actions",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-22T22:25:15Z",
+          "updatedAt": "2026-04-22T22:25:16Z",
+          "comments": [
+            {
+              "originalPosition": 30,
+              "body": "````suggestion\n   system efficiency based on the particular use-case.\n````",
+              "createdAt": "2026-04-22T22:25:15Z",
+              "updatedAt": "2026-04-22T22:25:16Z"
+            },
+            {
+              "originalPosition": 69,
+              "body": "````suggestion\n\n````",
+              "createdAt": "2026-04-22T22:25:16Z",
+              "updatedAt": "2026-04-22T22:25:16Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

@@ -83,7 +83,7 @@ use cases.
 MTC has been designed to solve two problems for the WebPKI:
 
 1. **Size.** A *landmark-relative Merkle Tree Certificate* is small as it
-  only contains a public key and a small Merkle Tree authenticaiton path.
+  only contains a public key and a small Merkle Tree authentication path.
 2. **DD.** MTC ensures Certificate Transparency is post-quantum secure, and with that
    allows detection of post-quantum downgrade attacks after the fact.
 
@@ -91,23 +91,26 @@ Besides solving these two problems, MTC has additional benefits.
 
 3. **Batch.** MTC reduces the load on the CA HSM by signing batches.
 
-A PKI that faces either of these three challenges could benefit from MTC.
+A PKI that faces any of these three challenges could benefit from MTC.
 These advantages come with trade-offs:
 
-1. The small *landmark-relative* MTCs can only be used if the verified
+1. The small *landmark-relative* MTCs can only be used if the verifier
    has been updated with recent *landmarks*. If the verifier is stale, it
-   has to fall back to a larger *standalone* MTC. The prover and verifier
-   need a mechanism to negotiate whether to use the landmark-relative or
-   standalone certificate.
+   has to fall back to a larger *standalone* MTC or it will need a
+   mechanism to be able to fetch the latest landmarks (refresh its
+   state). The prover and verifier need a mechanism to negotiate whether
+   to use the landmark-relative or standalone certificate.
 2. For downgrade detection, the issuer needs to publish a log of issued
    certificates.
+3. Batch sizing parameters will need to be carefully chosen to optimize
+   system efficiency based on the particular use-case.  
 
 ## Brief overview of MTC
 
-A Merkle Tree Certificate is like a regular X509 certificate with two
+A Merkle Tree Certificate is a regular X509 certificate with two
 differences:
 
-1. Instead of a single signatures, an MTC can contain zero or more signatures:
+1. Instead of a single signature, an MTC can contain zero or more signatures:
    zero in the case of landmark-relative and one-or-more in case of standalone.
    One is by the issuer, and others are added when certificate transparency is required.
 2. The contents of the certificate is not signed directly, but instead
@@ -126,6 +129,30 @@ the landmark-relative certificate that leaves out the signatures.
 {::boilerplate bcp14-tagged}
 
 # Use cases
+
+## Verification of signatureless Merkle Tree Certificates
+Merkle Tree Certificates which only contain the inclusion proof
+to a signed tree head can only be verified when it contains the landmark
+that completes the include proof contained in the Certificate.  If
+the certificate is in an environment where it has an online connection
+it should be possible for the verifier to request a refresh of its
+landmarks.   There are different ways this could be accomplished:
+
+1. It could be done dynamically, on demand by the verifier.  A mechanism
+   that fetches landmarks from a distribution location could be added to
+   the certificate which could be used to complete this looked.  Such a
+   mechanism could be similar to an X.509 CRLDP, except in this case it
+   could be a "Landmark Distribution Point".
+
+    TODO:   Define the mechanism
+
+2. The landmarks could be fetched periodically by the verifier (or a
+   verification system)
+
+3. They could be fetched by a locally defined policy.  For example they
+   could be pre-shared at a location governed by a local policy.
+
+   
 
 ## Just using batching
 
@@ -155,6 +182,7 @@ This document has no IANA actions.
 --- back
 
 # Acknowledgments
+Thanks for Bas Westerban
 {:numbered="false"}
 
 TODO acknowledge.

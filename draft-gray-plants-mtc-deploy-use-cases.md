@@ -103,7 +103,7 @@ These advantages come with trade-offs:
 2. For downgrade detection, the issuer needs to publish a log of issued
    certificates.
 3. Batch sizing parameters will need to be carefully chosen to optimize
-   system efficiency based on the particular use-case.  
+   system efficiency based on the particular use-case.
 
 ## Brief overview of MTC
 
@@ -140,24 +140,42 @@ landmarks.   There are different ways this could be accomplished:
 
 1. It could be done dynamically, on demand by the verifier.  A mechanism
    that fetches landmarks from a distribution location could be added to
-   the certificate which could be used to complete this looked.  Such a
+   the certificate which could be used to complete this lookup.  Such a
    mechanism could be similar to an X.509 CRLDP, except in this case it
    could be a "Landmark Distribution Point".
 
     TODO:   Define the mechanism
 
 2. The landmarks could be fetched periodically by the verifier (or a
-   verification system)
+   verification system could push them down to the verifiers).
 
 3. They could be fetched by a locally defined policy.  For example they
    could be pre-shared at a location governed by a local policy.
 
-   
-
 ## Just using batching
 
-**When** TODO
-**Requirements** Changing verification code; only one signature.
+**When**
+Signatures are expensive computational operations.  Systems where
+high signature throughput is important (for example, device certificates)
+are good candidates for the use of batch signing, as it can provide a
+sizeable performance optimization.  Merkle Trees with leaves of size N
+can be computed as hashes of the toBeSigned data, with a single signature
+over the root of that Merke Tree.  For example, a Merkle tree of size
+2^12 would have 2^11 leaves and could represent 2048 signatures.  The
+verifier would only need to create a single signature for each batch
+of 2048 toBeSigned data values.  Larger sizes could be used to meet the
+operational requirements of the system.
+
+**Requirements**
+The verifier could use the mechanism defined in "Verification of
+signatureless Merkle Tree Certificates" above to verifiy the signature
+when certificates are used.
+
+TODO:  If a certificate is not used, the same kind of fetching mechanism
+would be needed for the verifier but that would need to be provided by
+some out-of-band mechanism.
+
+Changing verification code; only one signature.
 
 ## Just using landmarks
 
@@ -182,7 +200,7 @@ This document has no IANA actions.
 --- back
 
 # Acknowledgments
-Thanks for Bas Westerban
+Thanks to Bas Westerban for his help and review of this specification.
 {:numbered="false"}
 
 TODO acknowledge.

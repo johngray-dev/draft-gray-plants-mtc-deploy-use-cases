@@ -77,8 +77,7 @@ use cases.
 
 # Introduction
 
-[[ EdNote: Before getting into the nitty gritty, let's start with the potential
-   benefit. ]]
+EdNote: Before getting into the nitty gritty, let's start with the potential benefit
 
 MTC has been designed to solve two problems for the WebPKI:
 

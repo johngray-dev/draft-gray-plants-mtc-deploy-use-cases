@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-26T01:26:04.126026+00:00",
+  "timestamp": "2026-04-30T01:48:01.467519+00:00",
   "repo": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
   "labels": [
     {
@@ -73,24 +73,26 @@
       "id": "PR_kwDOR-NuIc7UviHP",
       "title": "Stub",
       "url": "https://github.com/johngray-dev/draft-gray-plants-mtc-deploy-use-cases/pull/2",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "bwesterb",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "What do you think of structuring it something like this?",
       "createdAt": "2026-04-22T19:27:58Z",
-      "updatedAt": "2026-04-22T19:28:21Z",
+      "updatedAt": "2026-04-28T20:39:19Z",
       "baseRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
       "baseRefName": "main",
       "baseRefOid": "d87b73fd2627c734a44f578b58b093181d44bbfc",
       "headRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
       "headRefName": "bas",
-      "headRefOid": "b5ecd4001789d68b7327e17e05fbb12c9fd2ca43",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "b6cd974c6ec4955a6ab71809b10e671aeb2cc675",
+      "closedAt": "2026-04-28T20:39:19Z",
+      "mergedAt": "2026-04-28T20:39:19Z",
+      "mergedBy": "johngray-dev",
+      "mergeCommit": {
+        "oid": "84fc832ddef3d817ce387c96a3a7e3e0dab98693"
+      },
       "comments": [],
       "reviews": [
         {
@@ -112,6 +114,32 @@
               "updatedAt": "2026-04-22T19:28:21Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOR-NuIc754D4w",
+          "commit": {
+            "abbreviatedOid": "b6cd974"
+          },
+          "author": "github-actions",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-28T20:38:23Z",
+          "updatedAt": "2026-04-28T20:38:23Z",
+          "comments": [
+            {
+              "originalPosition": 55,
+              "body": "````suggestion\n   system efficiency based on the particular use-case.\n````",
+              "createdAt": "2026-04-28T20:38:23Z",
+              "updatedAt": "2026-04-28T20:38:23Z"
+            },
+            {
+              "originalPosition": 104,
+              "body": "````suggestion\n\n````",
+              "createdAt": "2026-04-28T20:38:23Z",
+              "updatedAt": "2026-04-28T20:38:23Z"
+            }
+          ]
         }
       ]
     },
@@ -120,24 +148,26 @@
       "id": "PR_kwDOR-NuIc7UyEJ0",
       "title": "John Gray's updates to Bas's initial update",
       "url": "https://github.com/johngray-dev/draft-gray-plants-mtc-deploy-use-cases/pull/3",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "johngray-dev",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Correct typos and add some additional content.",
       "createdAt": "2026-04-22T22:24:52Z",
-      "updatedAt": "2026-04-23T15:13:32Z",
+      "updatedAt": "2026-04-28T20:37:53Z",
       "baseRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
       "baseRefName": "bas",
       "baseRefOid": "b5ecd4001789d68b7327e17e05fbb12c9fd2ca43",
       "headRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
       "headRefName": "johngray-dev-patch-1",
       "headRefOid": "39c92c550069e137766b2fec5b9ca04c2ebd3e79",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-04-28T20:37:53Z",
+      "mergedAt": "2026-04-28T20:37:53Z",
+      "mergedBy": "johngray-dev",
+      "mergeCommit": {
+        "oid": "b6cd974c6ec4955a6ab71809b10e671aeb2cc675"
+      },
       "comments": [],
       "reviews": [
         {

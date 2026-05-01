@@ -143,12 +143,35 @@ landmarks.   There are different ways this could be accomplished:
    mechanism could be similar to an X.509 CRLDP, except in this case it
    could be a "Landmark Distribution Point".
 
-    TODO:   Define the mechanism
+   TODO:   Define the mechanism
 
-2. The landmarks could be fetched periodically by the verifier (or a
+   Potential Mechanism at Issuer:
+   LandmarkDistributionPoints ::= SEQUENCE OF IA5String
+
+   Current Signature proof field uses this:
+   What is in signature field today:
+
+struct {
+    uint64 start;
+    uint64 end;
+    HashValue inclusion_proof<0..2^16-1>;
+    MTCSignature signatures<0..2^16-1>;
+} MTCProof;
+
+   The client simply combined the URL as follows:
+   
+   LandmarkDistributionPoint?st=start?ed=end
+
+   
+   Verifier needs to trust the issuer.  Mechanism for landmark location
+   should be in the issuer certificate.  For its subjects, they only need
+   the start and end landmark location.
+   
+
+3. The landmarks could be fetched periodically by the verifier (or a
    verification system could push them down to the verifiers).
 
-3. They could be fetched by a locally defined policy.  For example they
+4. They could be fetched by a locally defined policy.  For example they
    could be pre-shared at a location governed by a local policy.
 
 ## Just using batching
@@ -182,6 +205,9 @@ Changing verification code; only one signature.
 **Requirements** ...
 
 ## Just using transparency
+- Track mis-issued certificates in your private key
+- CA's already have an audit trail - is there an advantage to using transparency logs
+- Need a source of truth for cross checking
 
 # Different ways of acquiring landmarks
 

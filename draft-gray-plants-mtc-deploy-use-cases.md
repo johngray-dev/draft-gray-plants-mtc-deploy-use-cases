@@ -12,9 +12,9 @@ v: 3
 area: "Security"
 workgroup: "PKI, Logs, And Tree Signatures"
 keyword:
- - next generation
- - unicorn
- - sparkling distributed ledger
+ - Merke Tree Certificate
+ - Post Quantum
+ - PKI
 venue:
   group: "PKI, Logs, And Tree Signatures"
   type: "Working Group"
@@ -59,7 +59,7 @@ author:
 
 
 normative:
-I-D.draft-plants-merkle-tree-certs-03:
+I-D.draft-ietf-plants-merkle-tree-certs-03:
 
 informative:
 
@@ -89,7 +89,7 @@ MTC has been designed to solve two problems for the WebPKI:
 
 Besides solving these two problems, MTC has additional benefits.
 
-3. **Batch.** MTC reduces the load on the CA HSM by signing batches.
+**Batch.** MTC reduces the load on the CA HSM by signing batches.
 
 A PKI that faces any of these three challenges could benefit from MTC.
 These advantages come with trade-offs:
@@ -116,7 +116,7 @@ differences:
 2. The contents of the certificate is not signed directly, but instead
    a Merkle tree head is signed, together with providing a proof-of-inclusion
    of the certificate contents in that Merkle tree.
- 
+
 The use of a Merkle tree allows for the batch signing.
 
 If a verifier has out-of-band knowledge of the treehead used (which in
@@ -130,7 +130,9 @@ the landmark-relative certificate that leaves out the signatures.
 
 # Use cases
 
+
 ## Verification of signatureless Merkle Tree Certificates
+
 Merkle Tree Certificates which only contain the inclusion proof
 to a signed tree head can only be verified when it contains the landmark
 that completes the include proof contained in the Certificate.  If
@@ -152,27 +154,27 @@ landmarks.   There are different ways this could be accomplished:
    Current Signature proof field uses this:
    What is in signature field today:
 
+```c
 struct {
     uint64 start;
     uint64 end;
     HashValue inclusion_proof<0..2^16-1>;
     MTCSignature signatures<0..2^16-1>;
 } MTCProof;
+```
 
-   The client simply combined the URL as follows:
-   
+   The client simply combines the URL as follows:
+
    LandmarkDistributionPoint?st=start?ed=end
 
-   
-   Verifier needs to trust the issuer.  Mechanism for landmark location
+   The verifier needs to trust the issuer. Mechanism for landmark location
    should be in the issuer certificate.  For its subjects, they only need
    the start and end landmark location.
-   
 
-3. The landmarks could be fetched periodically by the verifier (or a
+2. The landmarks could be fetched periodically by the verifier (or a
    verification system could push them down to the verifiers).
 
-4. They could be fetched by a locally defined policy.  For example they
+3. They could be fetched by a locally defined policy.  For example they
    could be pre-shared at a location governed by a local policy.
 
 ## Just using batching
@@ -211,7 +213,7 @@ Changing verification code; only one signature.
 - Need a source of truth for cross checking
 
 # Different ways of acquiring landmarks
-
+This section will describe the different ways landmarks can be obtained.
 
 # Security Considerations
 
@@ -227,6 +229,3 @@ This document has no IANA actions.
 
 # Acknowledgments
 Thanks to Bas Westerban for his help and review of this specification.
-{:numbered="false"}
-
-TODO acknowledge.

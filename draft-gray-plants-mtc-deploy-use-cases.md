@@ -152,12 +152,14 @@ landmarks.   There are different ways this could be accomplished:
    Current Signature proof field uses this:
    What is in signature field today:
 
+```c
 struct {
     uint64 start;
     uint64 end;
     HashValue inclusion_proof<0..2^16-1>;
     MTCSignature signatures<0..2^16-1>;
 } MTCProof;
+```
 
    The client simply combined the URL as follows:
    
@@ -168,11 +170,10 @@ struct {
    should be in the issuer certificate.  For its subjects, they only need
    the start and end landmark location.
    
-
-3. The landmarks could be fetched periodically by the verifier (or a
+2. The landmarks could be fetched periodically by the verifier (or a
    verification system could push them down to the verifiers).
 
-4. They could be fetched by a locally defined policy.  For example they
+3. They could be fetched by a locally defined policy.  For example they
    could be pre-shared at a location governed by a local policy.
 
 ## Just using batching

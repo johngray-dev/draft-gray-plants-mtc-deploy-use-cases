@@ -5,12 +5,12 @@
 PKI, Logs, And Tree Signatures                                   J. Gray
 Internet-Draft                                                   Entrust
 Intended status: Informational                               D. Benjamin
-Expires: 24 October 2026                                      Google LLC
+Expires: 6 November 2026                                      Google LLC
                                                             M. Ounsworth
                                                           Cryptic Forest
                                                             J. Klaussner
                                                     Bundesdruckerei GmbH
-                                                           22 April 2026
+                                                              5 May 2026
 
 
              Merkle Tree Certificates Deployment Use Cases
@@ -18,21 +18,11 @@ Expires: 24 October 2026                                      Google LLC
 
 Abstract
 
-   The Merkle Tree Certificate (MTC) structure as defined in draft-ietf-
-   plants-merkle-tree-certs defines a new form of X.509 certificate that
-   integrates logging with certificate issues.  It was mainly designed
-   to help mitigate the cost of signatures sizes in the Post Quantum
-   context.  This is achieved by replacing the traditional signature
-   with a Merkle Tree Signature containing the authentication path to a
-   set of landmarks in the Merkle Tree structure which are available to
-   the signature verifier.  Cost savings are magnified in cases like the
-   Web PKI where there may be multiple Signer Certifcate Timestamps
-   (SCT).  For environments where SCTs might not be used, the cost
-   benefit may be less pronounced.  The purpose of the specification is
-   to explore these types of use-cases which may help optimizate general
-   purpose PKI usages, particularily in the Post Quantum context where
-   signatures sizes and performances characteristics may hinder
-   operations.
+   Merkle Tree Certificates (MTC) I-D.ietf-plants-merkle-tree-certs has
+   been defined for the use case of the WebPKI.  In this document we
+   explore when and how MTC in parts or full can be used in different
+   use cases.  Some of this use-cases may provide benefit for private
+   PKI usage.
 
 About This Document
 
@@ -68,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 October 2026.
+   This Internet-Draft will expire on 6 November 2026.
 
 Copyright Notice
 
@@ -87,16 +77,76 @@ Copyright Notice
 Table of Contents
 
    1.  Introduction
+     1.1.  Brief overview of MTC
    2.  Conventions and Definitions
-   3.  Security Considerations
-   4.  IANA Considerations
-   5.  Normative References
-   Acknowledgments
+   3.  Use cases
+     3.1.  Verification of signatureless Merkle Tree Certificates
+     3.2.  Just using batching
+     3.3.  Just using landmarks
+     3.4.  Just using transparency
+   4.  Different ways of acquiring landmarks
+   5.  Security Considerations
+   6.  IANA Considerations
+   7.  Normative References
+   Appendix A.  Acknowledgments
    Authors' Addresses
 
 1.  Introduction
 
-   TODO Introduction
+   EdNote: Before getting into the nitty gritty, let's start with the
+   potential benefit
+
+   MTC has been designed to solve two problems for the WebPKI:
+
+   1.  *Size.* A _landmark-relative Merkle Tree Certificate_ is small as
+       it only contains a public key and a small Merkle Tree
+       authentication path.
+
+   2.  *DD.* MTC ensures Certificate Transparency is post-quantum
+       secure, and with that allows detection of post-quantum downgrade
+       attacks after the fact.
+
+   Besides solving these two problems, MTC has additional benefits.
+
+   *Batch.* MTC reduces the load on the CA HSM by signing batches.
+
+   A PKI that faces any of these three challenges could benefit from
+   MTC.  These advantages come with trade-offs:
+
+   1.  The small _landmark-relative_ MTCs can only be used if the
+       verifier has been updated with recent _landmarks_. If the
+       verifier is stale, it has to fall back to a larger _standalone_
+       MTC or it will need a mechanism to be able to fetch the latest
+       landmarks (refresh its state).  The prover and verifier need a
+       mechanism to negotiate whether to use the landmark-relative or
+       standalone certificate.
+
+   2.  For downgrade detection, the issuer needs to publish a log of
+       issued certificates.
+
+   3.  Batch sizing parameters will need to be carefully chosen to
+       optimize system efficiency based on the particular use-case.
+
+1.1.  Brief overview of MTC
+
+   A Merkle Tree Certificate is a regular X509 certificate with two
+   differences:
+
+   1.  Instead of a single signature, an MTC can contain zero or more
+       signatures: zero in the case of landmark-relative and one-or-more
+       in case of standalone.  One is by the issuer, and others are
+       added when certificate transparency is required.
+
+   2.  The contents of the certificate is not signed directly, but
+       instead a Merkle tree head is signed, together with providing a
+       proof-of-inclusion of the certificate contents in that Merkle
+       tree.
+
+   The use of a Merkle tree allows for the batch signing.
+
+   If a verifier has out-of-band knowledge of the treehead used (which
+   in that case is called a _landmark_), then it can be satisfied with
+   the landmark-relative certificate that leaves out the signatures.
 
 2.  Conventions and Definitions
 
@@ -106,15 +156,103 @@ Table of Contents
    BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
-3.  Security Considerations
+3.  Use cases
+
+3.1.  Verification of signatureless Merkle Tree Certificates
+
+   Merkle Tree Certificates which only contain the inclusion proof to a
+   signed tree head can only be verified when it contains the landmark
+   that completes the include proof contained in the Certificate.  If
+   the certificate is in an environment where it has an online
+   connection it should be possible for the verifier to request a
+   refresh of its landmarks.  There are different ways this could be
+   accomplished:
+
+   1.  It could be done dynamically, on demand by the verifier.  A
+       mechanism that fetches landmarks from a distribution location
+       could be added to the certificate which could be used to complete
+       this lookup.  Such a mechanism could be similar to an X.509
+       CRLDP, except in this case it could be a "Landmark Distribution
+       Point".
+
+       TODO: Define the mechanism
+
+       Potential Mechanism at Issuer: LandmarkDistributionPoints ::=
+       SEQUENCE OF IA5String
+
+       Current Signature proof field uses this: What is in signature
+       field today:
+
+   c struct { uint64 start; uint64 end; HashValue
+   inclusion_proof<0..2^16-1>; MTCSignature signatures<0..2^16-1>; }
+   MTCProof;
+
+   The client simply combines the URL as follows:
+
+   LandmarkDistributionPoint?st=start?ed=end
+
+   The verifier needs to trust the issuer.  Mechanism for landmark
+   location should be in the issuer certificate.  For its subjects, they
+   only need the start and end landmark location.
+
+   1.  The landmarks could be fetched periodically by the verifier (or a
+       verification system could push them down to the verifiers).
+
+   2.  They could be fetched by a locally defined policy.  For example
+       they could be pre-shared at a location governed by a local
+       policy.
+
+3.2.  Just using batching
+
+   *When* Signatures are expensive computational operations.  Systems
+   where high signature throughput is important (for example, device
+   certificates) are good candidates for the use of batch signing, as it
+   can provide a sizeable performance optimization.  Merkle Trees with
+   leaves of size N can be computed as hashes of the toBeSigned data,
+   with a single signature over the root of that Merke Tree.  For
+   example, a Merkle tree of size 2^12 would have 2^11 leaves and could
+   represent 2048 signatures.  The verifier would only need to create a
+   single signature for each batch of 2048 toBeSigned data values.
+   Larger sizes could be used to meet the operational requirements of
+   the system.
+
+   *Requirements* The verifier could use the mechanism defined in
+   "Verification of signatureless Merkle Tree Certificates" above to
+   verifiy the signature when certificates are used.
+
+   TODO: If a certificate is not used, the same kind of fetching
+   mechanism would be needed for the verifier but that would need to be
+   provided by some out-of-band mechanism.
+
+   Changing verification code; only one signature.
+
+3.3.  Just using landmarks
+
+   *When* ... *Requirements* ...
+
+3.4.  Just using transparency
+
+   *  Track mis-issued certificates in your private key
+
+   *  CA's already have an audit trail - is there an advantage to using
+      transparency logs
+
+   *  Need a source of truth for cross checking
+
+4.  Different ways of acquiring landmarks
+
+   This section will describe the different ways landmarks can be
+   obtained.
+
+5.  Security Considerations
 
    TODO Security
 
-4.  IANA Considerations
+6.  IANA Considerations
 
    This document has no IANA actions.
 
-5.  Normative References
+7.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -125,9 +263,10 @@ Table of Contents
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
-Acknowledgments
+Appendix A.  Acknowledgments
 
-   TODO acknowledge.
+   Thanks to Bas Westerban for his help and review of this
+   specification.
 
 Authors' Addresses
 

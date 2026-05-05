@@ -1,0 +1,303 @@
+
+
+
+
+PKI, Logs, And Tree Signatures                                   J. Gray
+Internet-Draft                                                   Entrust
+Intended status: Informational                               D. Benjamin
+Expires: 6 November 2026                                      Google LLC
+                                                            M. Ounsworth
+                                                          Cryptic Forest
+                                                            J. Klaussner
+                                                    Bundesdruckerei GmbH
+                                                              5 May 2026
+
+
+             Merkle Tree Certificates Deployment Use Cases
+             draft-gray-plants-mtc-deploy-use-cases-latest
+
+Abstract
+
+   Merkle Tree Certificates (MTC) I-D.ietf-plants-merkle-tree-certs has
+   been defined for the use case of the WebPKI.  In this document we
+   explore when and how MTC in parts or full can be used in different
+   use cases.  Some of this use-cases may provide benefit for private
+   PKI usage.
+
+About This Document
+
+   This note is to be removed before publishing as an RFC.
+
+   The latest revision of this draft can be found at https://johngray-
+   dev.github.io/draft-gray-plants-mtc-deploy-use-cases/draft-gray-
+   plants-mtc-deploy-use-cases.html.  Status information for this
+   document may be found at https://datatracker.ietf.org/doc/draft-gray-
+   plants-mtc-deploy-use-cases/.
+
+   Discussion of this document takes place on the PKI, Logs, And Tree
+   Signatures Working Group mailing list (mailto:plants@ietf.org), which
+   is archived at https://mailarchive.ietf.org/arch/browse/plants.
+   Subscribe at https://www.ietf.org/mailman/listinfo/plants/.
+
+   Source for this draft and an issue tracker can be found at
+   https://github.com/johngray-dev/draft-gray-plants-mtc-deploy-use-
+   cases.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 6 November 2026.
+
+Copyright Notice
+
+   Copyright (c) 2026 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+Table of Contents
+
+   1.  Introduction
+     1.1.  Brief overview of MTC
+   2.  Conventions and Definitions
+   3.  Use cases
+     3.1.  Verification of Signatureless Merkle Tree Certificates
+       3.1.1.  Landmark Distribution Point Mechanism
+     3.2.  Batching for performance optimization
+     3.3.  Just using transparency
+   4.  Different ways of acquiring landmarks
+   5.  Security Considerations
+   6.  IANA Considerations
+   7.  Normative References
+   Appendix A.  Acknowledgments
+   Authors' Addresses
+
+1.  Introduction
+
+   EdNote: Before getting into the nitty gritty, let's start with the
+   potential benefit
+
+   MTC has been designed to solve two problems for the WebPKI:
+
+   1.  *Size.* A _landmark-relative Merkle Tree Certificate_ is small as
+       it only contains a public key and a small Merkle Tree
+       authentication path.
+
+   2.  *DD.* MTC ensures Certificate Transparency is post-quantum
+       secure, and with that allows detection of post-quantum downgrade
+       attacks after the fact.
+
+   Besides solving these two problems, MTC has additional benefits.
+
+   *Batch.* MTC reduces the load on the CA HSM by signing batches.
+
+   A PKI that faces any of these three challenges could benefit from
+   MTC.  These advantages come with trade-offs:
+
+   1.  The small _landmark-relative_ MTCs can only be used if the
+       verifier has been updated with recent _landmarks_. If the
+       verifier is stale, it has to fall back to a larger _standalone_
+       MTC or it will need a mechanism to be able to fetch the latest
+       landmarks (refresh its state).  The prover and verifier need a
+       mechanism to negotiate whether to use the landmark-relative or
+       standalone certificate.
+
+   2.  For downgrade detection, the issuer needs to publish a log of
+       issued certificates.
+
+   3.  Batch sizing parameters will need to be carefully chosen to
+       optimize system efficiency based on the particular use-case.
+
+1.1.  Brief overview of MTC
+
+   A Merkle Tree Certificate is a regular X509 certificate with two
+   differences:
+
+   1.  Instead of a single signature, an MTC can contain zero or more
+       signatures: zero in the case of landmark-relative and one-or-more
+       in case of standalone.  One is by the issuer, and others are
+       added when certificate transparency is required.
+
+   2.  The contents of the certificate is not signed directly, but
+       instead a Merkle tree head is signed, together with providing a
+       proof-of-inclusion of the certificate contents in that Merkle
+       tree.
+
+   The use of a Merkle tree allows for the batch signing.
+
+   If a verifier has out-of-band knowledge of the treehead used (which
+   in that case is called a _landmark_), then it can be satisfied with
+   the landmark-relative certificate that leaves out the signatures.
+
+2.  Conventions and Definitions
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+3.  Use cases
+
+3.1.  Verification of Signatureless Merkle Tree Certificates
+
+   Merkle Tree Certificates which only contain the inclusion proof to a
+   signed tree head can only be verified when it contains the landmark
+   that completes the include proof contained in the Certificate.  If
+   the certificate is in an environment where it has an online
+   connection it should be possible for the verifier to request a
+   refresh of its landmarks.  There are different ways this could be
+   accomplished:
+
+   1.  It could be done dynamically, on demand by the verifier.  A
+       mechanism that fetches landmarks from a distribution location
+       could be added to the certificate which could be used to complete
+       this lookup.  Such a mechanism could be similar to an X.509
+       CRLDP, except in this case it could be a "Landmark Distribution
+       Point".
+
+   2.  The landmarks could be fetched periodically by the verifier (or a
+       verification system could push them down to the verifiers).
+
+   3.  They could be fetched by a locally defined policy.  For example
+       they could be pre-shared at a location governed by a local
+       policy.
+
+3.1.1.  Landmark Distribution Point Mechanism
+
+   The Issuer of the Signatureless Merkle Tree Certificate contains the
+   SEQUENCE of LandmarkDistributionPoints which refer to the base URI as
+   an IA5String:
+
+   LandmarkDistributionPoints ::= SEQUENCE OF IA5String
+
+   The Inclusion Proof structure defined in I-D.ietf-plants-merkle-tree-
+   certs uses the following structure:
+
+   struct {
+       uint64 start;
+       uint64 end;
+       HashValue inclusion_proof<0..2^16-1>;
+       MTCSignature signatures<0..2^16-1>;
+   } MTCProof;
+
+   Note that it contains a start and end values which indicate the
+   corresponding parameters of the chosen subtree.  The client simply
+   combines the URL as follows:
+
+   LandmarkDistributionPoint?st=start?ed=end
+
+   This allows the verifier to request the required landmark so the
+   include proof can be verified.
+
+   The verifier needs to trust the issuer as per RFC 5280.
+
+3.2.  Batching for performance optimization
+
+   *When* Signatures are expensive computational operations.  Systems
+   where high signature throughput is important are good candidates for
+   the use of batch signing, as it can provide a sizeable performance
+   optimization (for example, device certificates).  Merkle Trees with
+   leaves of size N can be computed as hashes of the toBeSigned data,
+   with a single signature over the root of that Merke Tree.  For
+   example, a Merkle tree of size 2^12 would have 2^11 leaves and could
+   represent 2048 signatures.  The verifier would only need to create a
+   single signature for each batch of 2048 toBeSigned data values.
+   Larger sizes could be used to meet the operational requirements of
+   the system.
+
+   *Requirements* The verifier could use the mechanism defined in
+   "Verification of signatureless Merkle Tree Certificates" above to
+   verifiy the signature when certificates are used.
+
+   TODO: If a certificate is not used, the same kind of fetching
+   mechanism would be needed for the verifier but that would need to be
+   provided by some out-of-band mechanism.
+
+   Changing verification code; only one signature.
+
+3.3.  Just using transparency
+
+   *  Track mis-issued certificates in your private key
+
+   *  CA's already have an audit trail - is there an advantage to using
+      transparency logs
+
+   *  Need a source of truth for cross checking
+
+4.  Different ways of acquiring landmarks
+
+   This section will describe the different ways landmarks can be
+   obtained.
+
+5.  Security Considerations
+
+   TODO Security
+
+6.  IANA Considerations
+
+   This document has no IANA actions.
+
+7.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+Appendix A.  Acknowledgments
+
+   Thanks to Bas Westerban for his help and review of this
+   specification.
+
+Authors' Addresses
+
+   John Gray
+   Entrust Limited
+   2500 Solandt Road – Suite 100
+   Ottawa, Ontario  K2K 3G5
+   Canada
+   Email: john.gray@entrust.com
+
+
+   David Benjamin
+   Google LLC
+   Email: davidben@google.com
+
+
+   Mike Ounsworth
+   Cryptic Forest Software
+   Sioux Lookout, Ontario
+   Canada
+   Email: mike@ounsworth.ca
+
+
+   Jan Klaussner
+   Bundesdruckerei GmbH
+   Kommandantenstr. 18
+   10969 Berlin
+   Germany
+   Email: jan.klaussner@bdr.de

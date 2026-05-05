@@ -89,7 +89,7 @@ MTC has been designed to solve two problems for the WebPKI:
 
 Besides solving these two problems, MTC has additional benefits.
 
-3. **Batch.** MTC reduces the load on the CA HSM by signing batches.
+**Batch.** MTC reduces the load on the CA HSM by signing batches.
 
 A PKI that faces any of these three challenges could benefit from MTC.
 These advantages come with trade-offs:
@@ -130,7 +130,9 @@ the landmark-relative certificate that leaves out the signatures.
 
 # Use cases
 
+
 ## Verification of signatureless Merkle Tree Certificates
+
 Merkle Tree Certificates which only contain the inclusion proof
 to a signed tree head can only be verified when it contains the landmark
 that completes the include proof contained in the Certificate.  If
@@ -227,6 +229,3 @@ This document has no IANA actions.
 
 # Acknowledgments
 Thanks to Bas Westerban for his help and review of this specification.
-{:numbered="false"}
-
-TODO acknowledge.

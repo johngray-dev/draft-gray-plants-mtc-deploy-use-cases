@@ -164,9 +164,9 @@ struct {
 ```
 
    The client simply combines the URL as follows:
-   
+
    LandmarkDistributionPoint?st=start?ed=end
-   
+
    The verifier needs to trust the issuer. Mechanism for landmark location
    should be in the issuer certificate.  For its subjects, they only need
    the start and end landmark location.

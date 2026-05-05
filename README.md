@@ -2,8 +2,6 @@
 
 # MTC Deployment Use Cases
 
-This is the working area for the individual Internet-Draft, "TODO - Your title".
-
 * [Editor's Copy](https://johngray-dev.github.io/draft-gray-plants-mtc-deploy-use-cases/#go.draft-gray-plants-mtc-deploy-use-cases.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-gray-plants-mtc-deploy-use-cases)
 * [Individual Draft](https://datatracker.ietf.org/doc/html/draft-gray-plants-mtc-deploy-use-cases)

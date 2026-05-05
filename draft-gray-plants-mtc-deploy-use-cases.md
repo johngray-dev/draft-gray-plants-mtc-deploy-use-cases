@@ -130,8 +130,7 @@ the landmark-relative certificate that leaves out the signatures.
 
 # Use cases
 
-
-## Verification of signatureless Merkle Tree Certificates
+## Verification of Signatureless Merkle Tree Certificates
 
 Merkle Tree Certificates which only contain the inclusion proof
 to a signed tree head can only be verified when it contains the landmark
@@ -146,44 +145,53 @@ landmarks.   There are different ways this could be accomplished:
    mechanism could be similar to an X.509 CRLDP, except in this case it
    could be a "Landmark Distribution Point".
 
-   TODO:   Define the mechanism
-
-   Potential Mechanism at Issuer:
-   LandmarkDistributionPoints ::= SEQUENCE OF IA5String
-
-   Current Signature proof field uses this:
-   What is in signature field today:
-
-```c
-struct {
-    uint64 start;
-    uint64 end;
-    HashValue inclusion_proof<0..2^16-1>;
-    MTCSignature signatures<0..2^16-1>;
-} MTCProof;
-```
-
-   The client simply combines the URL as follows:
-
-   LandmarkDistributionPoint?st=start?ed=end
-
-   The verifier needs to trust the issuer. Mechanism for landmark location
-   should be in the issuer certificate.  For its subjects, they only need
-   the start and end landmark location.
-
 2. The landmarks could be fetched periodically by the verifier (or a
    verification system could push them down to the verifiers).
 
 3. They could be fetched by a locally defined policy.  For example they
    could be pre-shared at a location governed by a local policy.
 
-## Just using batching
+
+### Landmark Distribution Point Mechanism
+
+The Issuer of the Signatureless Merkle Tree Certificate contains the
+   SEQUENCE of LandmarkDistributionPoints which refer to the base URI
+   as an IA5String:
+
+~~~   
+LandmarkDistributionPoints ::= SEQUENCE OF IA5String
+~~~
+    
+   The Inclusion Proof structure defined in I-D.ietf-plants-merkle-tree-certs
+   uses the following structure:
+
+~~~
+struct {
+    uint64 start;
+    uint64 end;
+    HashValue inclusion_proof<0..2^16-1>;
+    MTCSignature signatures<0..2^16-1>;
+} MTCProof;
+~~~
+
+   Note that it contains a start and end values which indicate 
+   the corresponding parameters of the chosen subtree.  The client simply
+   combines the URL as follows:
+
+   LandmarkDistributionPoint?st=start?ed=end
+
+   This allows the verifier to request the required landmark so the
+   include proof can be verified.  
+   
+   The verifier needs to trust the issuer as per RFC 5280.
+
+## Batching for performance optimization
 
 **When**
 Signatures are expensive computational operations.  Systems where
-high signature throughput is important (for example, device certificates)
-are good candidates for the use of batch signing, as it can provide a
-sizeable performance optimization.  Merkle Trees with leaves of size N
+high signature throughput is important are good candidates for the use
+of batch signing, as it can provide a sizeable performance optimization
+(for example, device certificates).  Merkle Trees with leaves of size N
 can be computed as hashes of the toBeSigned data, with a single signature
 over the root of that Merke Tree.  For example, a Merkle tree of size
 2^12 would have 2^11 leaves and could represent 2048 signatures.  The
@@ -201,11 +209,6 @@ would be needed for the verifier but that would need to be provided by
 some out-of-band mechanism.
 
 Changing verification code; only one signature.
-
-## Just using landmarks
-
-**When** ...
-**Requirements** ...
 
 ## Just using transparency
 - Track mis-issued certificates in your private key

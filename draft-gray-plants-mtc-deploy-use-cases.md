@@ -68,7 +68,7 @@ informative:
 --- abstract
 
 Merkle Tree Certificates (MTC)
-{{I-D.ietf-plants-merkle-tree-certs}} has been defined for the
+I-D.ietf-plants-merkle-tree-certs has been defined for the
 use case of the WebPKI.
 In this document we explore when and how MTC in parts or full can be used in different
 use cases. Some of this use-cases may provide benefit for private PKI usage.

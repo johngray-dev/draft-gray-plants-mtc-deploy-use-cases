@@ -12,9 +12,9 @@ v: 3
 area: "Security"
 workgroup: "PKI, Logs, And Tree Signatures"
 keyword:
- - next generation
- - unicorn
- - sparkling distributed ledger
+ - Merke Tree Certificate
+ - Post Quantum
+ - PKI
 venue:
   group: "PKI, Logs, And Tree Signatures"
   type: "Working Group"
@@ -116,7 +116,7 @@ differences:
 2. The contents of the certificate is not signed directly, but instead
    a Merkle tree head is signed, together with providing a proof-of-inclusion
    of the certificate contents in that Merkle tree.
- 
+
 The use of a Merkle tree allows for the batch signing.
 
 If a verifier has out-of-band knowledge of the treehead used (which in
@@ -163,14 +163,14 @@ struct {
 } MTCProof;
 ```
 
-   The client simply combined the URL as follows:
+   The client simply combines the URL as follows:
    
    LandmarkDistributionPoint?st=start?ed=end
    
-   Verifier needs to trust the issuer.  Mechanism for landmark location
+   The verifier needs to trust the issuer. Mechanism for landmark location
    should be in the issuer certificate.  For its subjects, they only need
    the start and end landmark location.
-   
+
 2. The landmarks could be fetched periodically by the verifier (or a
    verification system could push them down to the verifiers).
 

@@ -158,7 +158,7 @@ The Issuer of the Signatureless Merkle Tree Certificate contains the
    SEQUENCE of LandmarkDistributionPoints which refer to the base URI
    as an IA5String:
 
-~~~   
+~~~
 LandmarkDistributionPoints ::= SEQUENCE OF IA5String
 ~~~
     

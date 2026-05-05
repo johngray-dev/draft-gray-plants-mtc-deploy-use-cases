@@ -164,7 +164,6 @@ struct {
    The client simply combined the URL as follows:
    
    LandmarkDistributionPoint?st=start?ed=end
-
    
    Verifier needs to trust the issuer.  Mechanism for landmark location
    should be in the issuer certificate.  For its subjects, they only need
@@ -212,7 +211,7 @@ Changing verification code; only one signature.
 - Need a source of truth for cross checking
 
 # Different ways of acquiring landmarks
-
+This section will describe the different ways landmarks can be obtained.
 
 # Security Considerations
 

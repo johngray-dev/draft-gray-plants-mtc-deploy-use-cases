@@ -161,7 +161,7 @@ The Issuer of the Signatureless Merkle Tree Certificate contains the
 ~~~
 LandmarkDistributionPoints ::= SEQUENCE OF IA5String
 ~~~
-    
+
    The Inclusion Proof structure defined in I-D.ietf-plants-merkle-tree-certs
    uses the following structure:
 
@@ -174,15 +174,15 @@ struct {
 } MTCProof;
 ~~~
 
-   Note that it contains a start and end values which indicate 
+   Note that it contains a start and end values which indicate
    the corresponding parameters of the chosen subtree.  The client simply
    combines the URL as follows:
 
    LandmarkDistributionPoint?st=start?ed=end
 
    This allows the verifier to request the required landmark so the
-   include proof can be verified.  
-   
+   include proof can be verified.
+
    The verifier needs to trust the issuer as per RFC 5280.
 
 ## Batching for performance optimization

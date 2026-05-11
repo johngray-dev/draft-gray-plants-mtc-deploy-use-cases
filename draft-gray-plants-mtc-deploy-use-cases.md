@@ -123,6 +123,26 @@ If a verifier has out-of-band knowledge of the treehead used (which in
 that case is called a *landmark*), then it can be satisfied with
 the landmark-relative certificate that leaves out the signatures.
 
+## Batch size trade-offs 
+
+A private PKI can make trade-offs when selecting MTC batch sizes for both 
+checkpoints and landmarks. 
+
+For checkpoints the trade-off is between computational cost of signatures and 
+the size of standalone certificates. Smaller checkpoint batches require more
+frequent signatures, but reduce the size of the inclusion proofs for standalone
+certificates. Conversely, larger batches reduce the signature frequency but
+increase the size of inclusion proofs for standalone certificates.
+
+For landmarks the trade-offs are between relying party storage costs and the
+size of signatureless certificates. Fewer landmarks require less storage on the
+relying party, but result in each landmark representing a larger Merkle tree,
+which increases the size of the inclusion proof for the signatureless
+certificate. Conversely, more frequent landmarks would give smaller proofs for
+the signatureless certificate but require more storage on the relying party.
+
+Both batch sizes will be influenced by the specifics of the PKI, including the
+frequency of certificate signing requests and acceptable issuance latency. 
 
 # Conventions and Definitions
 

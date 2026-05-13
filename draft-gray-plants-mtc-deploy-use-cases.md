@@ -135,9 +135,9 @@ certificates. Conversely, larger batches reduce the signature frequency but
 increase the size of inclusion proofs for standalone certificates.
 
 For landmarks the trade-offs are between relying party storage costs and the
-size of signatureless certificates. Fewer landmarks require less storage on the
-relying party, but result in each landmark representing a larger Merkle tree,
-which increases the size of the inclusion proof for the signatureless
+size of landmark-relative certificates. Fewer landmarks require less storage on
+the relying party, but result in each landmark representing a larger Merkle 
+tree, which increases the size of the inclusion proof for the landmark-relative
 certificate. Conversely, more frequent landmarks would give smaller proofs for
 the signatureless certificate but require more storage on the relying party.
 

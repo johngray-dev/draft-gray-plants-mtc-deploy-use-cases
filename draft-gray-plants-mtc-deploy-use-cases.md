@@ -207,7 +207,7 @@ high signature throughput is important are good candidates for the use
 of batch signing, as it can provide a sizeable performance optimization
 (for example, device certificates).  Merkle Trees with leaves of size N
 can be computed as hashes of the toBeSigned data, with a single signature
-over the root of that Merke Tree.  For example, a Merkle tree of size
+over the root of that Merkle Tree.  For example, a Merkle tree of size
 2^12 would have 2^11 leaves and could represent 2048 signatures.  The
 verifier would only need to create a single signature for each batch
 of 2048 toBeSigned data values.  Larger sizes could be used to meet the

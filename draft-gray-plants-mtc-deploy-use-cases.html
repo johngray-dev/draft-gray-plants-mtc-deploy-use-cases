@@ -1058,7 +1058,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Gray, et al.</td>
-<td class="center">Expires 6 November 2026</td>
+<td class="center">Expires 14 November 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1071,12 +1071,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-gray-plants-mtc-deploy-use-cases-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-05-05" class="published">5 May 2026</time>
+<time datetime="2026-05-13" class="published">13 May 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-11-06">6 November 2026</time></dd>
+<dd class="expires"><time datetime="2026-11-14">14 November 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1142,7 +1142,7 @@ use cases. Some of this use-cases may provide benefit for private PKI usage.<a h
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 6 November 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 14 November 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1186,16 +1186,21 @@ use cases. Some of this use-cases may provide benefit for private PKI usage.<a h
             <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-use-cases" class="internal xref">Use cases</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
-                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-verification-of-signaturele" class="internal xref">Verification of signatureless Merkle Tree Certificates</a></p>
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-verification-of-signaturele" class="internal xref">Verification of Signatureless Merkle Tree Certificates</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.1">
+                    <p id="section-toc.1-1.3.2.1.2.1.1"><a href="#section-3.1.1" class="auto internal xref">3.1.1</a>.  <a href="#name-landmark-distribution-point" class="internal xref">Landmark Distribution Point Mechanism</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.2">
+                    <p id="section-toc.1-1.3.2.1.2.2.1"><a href="#section-3.1.2" class="auto internal xref">3.1.2</a>.  <a href="#name-format-of-landmark" class="internal xref">Format of Landmark</a></p>
+</li>
+                </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
-                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-just-using-batching" class="internal xref">Just using batching</a></p>
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-batching-for-performance-op" class="internal xref">Batching for performance optimization</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
-                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-just-using-landmarks" class="internal xref">Just using landmarks</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4">
-                <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="auto internal xref">3.4</a>.  <a href="#name-just-using-transparency" class="internal xref">Just using transparency</a></p>
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-just-using-transparency" class="internal xref">Just using transparency</a></p>
 </li>
             </ul>
 </li>
@@ -1306,14 +1311,14 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <div id="verification-of-signatureless-merkle-tree-certificates">
 <section id="section-3.1">
         <h3 id="name-verification-of-signaturele">
-<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-verification-of-signaturele" class="section-name selfRef">Verification of signatureless Merkle Tree Certificates</a>
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-verification-of-signaturele" class="section-name selfRef">Verification of Signatureless Merkle Tree Certificates</a>
         </h3>
 <p id="section-3.1-1">Merkle Tree Certificates which only contain the inclusion proof
 to a signed tree head can only be verified when it contains the landmark
-that completes the include proof contained in the Certificate.  If
-the certificate is in an environment where it has an online connection
-it should be possible for the verifier to request a refresh of its
-landmarks.   There are different ways this could be accomplished:<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+that completes the inclusion proof contained in the Certificate signature
+field.  If the certificate is in an environment where it has an online
+connection it should be possible for the verifier to request a refresh of its
+landmarks.  There are different ways this could be accomplished:<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-3.1-2">
 <li id="section-3.1-2.1">
             <p id="section-3.1-2.1.1">It could be done dynamically, on demand by the verifier.  A mechanism
@@ -1321,53 +1326,78 @@ that fetches landmarks from a distribution location could be added to
 the certificate which could be used to complete this lookup.  Such a
 mechanism could be similar to an X.509 CRLDP, except in this case it
 could be a "Landmark Distribution Point".<a href="#section-3.1-2.1.1" class="pilcrow">¶</a></p>
-<p id="section-3.1-2.1.2">
-TODO:   Define the mechanism<a href="#section-3.1-2.1.2" class="pilcrow">¶</a></p>
-<p id="section-3.1-2.1.3">
-Potential Mechanism at Issuer:
-LandmarkDistributionPoints ::= SEQUENCE OF IA5String<a href="#section-3.1-2.1.3" class="pilcrow">¶</a></p>
-<p id="section-3.1-2.1.4">
-Current Signature proof field uses this:
-What is in signature field today:<a href="#section-3.1-2.1.4" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-3.1-2.2">
+            <p id="section-3.1-2.2.1">The landmarks could be fetched periodically by the verifier (or a
+distribution system could push them down to the verifiers).<a href="#section-3.1-2.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-3.1-2.3">
+            <p id="section-3.1-2.3.1">They could be fetched by a locally defined policy.  For example they
+could be pre-shared at a location governed by a local policy.<a href="#section-3.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
-<p id="section-3.1-3"><code>c
+<div id="landmark-distribution-point-mechanism">
+<section id="section-3.1.1">
+          <h4 id="name-landmark-distribution-point">
+<a href="#section-3.1.1" class="section-number selfRef">3.1.1. </a><a href="#name-landmark-distribution-point" class="section-name selfRef">Landmark Distribution Point Mechanism</a>
+          </h4>
+<p id="section-3.1.1-1">The ldpBaseURIs X509 V3 extension is held by the Issuer of the Signatureless
+   Merkle Tree Certificate and contains the SEQUENCE of LandmarkDistributionPoints, each
+   which is a LandmarkDistributionPoint of IA5String.  Each refers to a BaseURI location
+   indicating where the landmarks are published.<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-3.1.1-2">
+<pre>
+id-pe-ldpBaseURIs OBJECT IDENTIFIER ::=  { id-pe TBD }
+
+LandmarkDistributionPoints ::= SEQUENCE (1..MAX) OF LandmarkDistributionPoint
+
+LandmarkDistributionPoint ::= IA5String
+</pre><a href="#section-3.1.1-2" class="pilcrow">¶</a>
+</div>
+<p id="section-3.1.1-3">The Inclusion Proof structure defined in I-D.ietf-plants-merkle-tree-certs
+   uses the following structure:<a href="#section-3.1.1-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-3.1.1-4">
+<pre>
 struct {
     uint64 start;
     uint64 end;
     HashValue inclusion_proof&lt;0..2^16-1&gt;;
     MTCSignature signatures&lt;0..2^16-1&gt;;
 } MTCProof;
-</code><a href="#section-3.1-3" class="pilcrow">¶</a></p>
-<p id="section-3.1-4">The client simply combines the URL as follows:<a href="#section-3.1-4" class="pilcrow">¶</a></p>
-<p id="section-3.1-5">LandmarkDistributionPoint?st=start?ed=end<a href="#section-3.1-5" class="pilcrow">¶</a></p>
-<p id="section-3.1-6">The verifier needs to trust the issuer. Mechanism for landmark location
-   should be in the issuer certificate.  For its subjects, they only need
-   the start and end landmark location.<a href="#section-3.1-6" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-3.1-7">
-<li id="section-3.1-7.1">
-            <p id="section-3.1-7.1.1">The landmarks could be fetched periodically by the verifier (or a
-verification system could push them down to the verifiers).<a href="#section-3.1-7.1.1" class="pilcrow">¶</a></p>
-</li>
-          <li id="section-3.1-7.2">
-            <p id="section-3.1-7.2.1">They could be fetched by a locally defined policy.  For example they
-could be pre-shared at a location governed by a local policy.<a href="#section-3.1-7.2.1" class="pilcrow">¶</a></p>
-</li>
-        </ol>
+</pre><a href="#section-3.1.1-4" class="pilcrow">¶</a>
+</div>
+<p id="section-3.1.1-5">Note that it contains start and end values which indicate
+   the corresponding parameters of the chosen subtree.  To request the
+   required landmark, the client simply combines the URL as follows:<a href="#section-3.1.1-5" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-6">LandmarkDistributionPoint?st=start?ed=end<a href="#section-3.1.1-6" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-7">This allows the verifier to request the required landmark so the
+   inclusion proof can be verified.<a href="#section-3.1.1-7" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-8">The verifier needs to trust the issuer as per RFC 5280.<a href="#section-3.1.1-8" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="just-using-batching">
+<div id="format-of-landmark">
+<section id="section-3.1.2">
+          <h4 id="name-format-of-landmark">
+<a href="#section-3.1.2" class="section-number selfRef">3.1.2. </a><a href="#name-format-of-landmark" class="section-name selfRef">Format of Landmark</a>
+          </h4>
+<p id="section-3.1.2-1">The format of the landmark distribution point is as follows:<a href="#section-3.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-2">TODO<a href="#section-3.1.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="batching-for-performance-optimization">
 <section id="section-3.2">
-        <h3 id="name-just-using-batching">
-<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-just-using-batching" class="section-name selfRef">Just using batching</a>
+        <h3 id="name-batching-for-performance-op">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-batching-for-performance-op" class="section-name selfRef">Batching for performance optimization</a>
         </h3>
 <p id="section-3.2-1"><strong>When</strong>
 Signatures are expensive computational operations.  Systems where
-high signature throughput is important (for example, device certificates)
-are good candidates for the use of batch signing, as it can provide a
-sizeable performance optimization.  Merkle Trees with leaves of size N
+high signature throughput is important are good candidates for the use
+of batch signing, as it can provide a sizeable performance optimization
+(for example, device certificates).  Merkle Trees with leaves of size N
 can be computed as hashes of the toBeSigned data, with a single signature
-over the root of that Merke Tree.  For example, a Merkle tree of size
+over the root of that Merkle Tree.  For example, a Merkle tree of size
 2^12 would have 2^11 leaves and could represent 2048 signatures.  The
 verifier would only need to create a single signature for each batch
 of 2048 toBeSigned data values.  Larger sizes could be used to meet the
@@ -1382,29 +1412,20 @@ some out-of-band mechanism.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 <p id="section-3.2-4">Changing verification code; only one signature.<a href="#section-3.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="just-using-landmarks">
-<section id="section-3.3">
-        <h3 id="name-just-using-landmarks">
-<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-just-using-landmarks" class="section-name selfRef">Just using landmarks</a>
-        </h3>
-<p id="section-3.3-1"><strong>When</strong> ...
-<strong>Requirements</strong> ...<a href="#section-3.3-1" class="pilcrow">¶</a></p>
-</section>
-</div>
 <div id="just-using-transparency">
-<section id="section-3.4">
+<section id="section-3.3">
         <h3 id="name-just-using-transparency">
-<a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-just-using-transparency" class="section-name selfRef">Just using transparency</a>
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-just-using-transparency" class="section-name selfRef">Just using transparency</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="section-3.4-1.1">
-            <p id="section-3.4-1.1.1">Track mis-issued certificates in your private key<a href="#section-3.4-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-3.3-1.1">
+            <p id="section-3.3-1.1.1">Track mis-issued certificates in your private key<a href="#section-3.3-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.4-1.2">
-            <p id="section-3.4-1.2.1">CA's already have an audit trail - is there an advantage to using transparency logs<a href="#section-3.4-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.3-1.2">
+            <p id="section-3.3-1.2.1">CA's already have an audit trail - is there an advantage to using transparency logs<a href="#section-3.3-1.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.4-1.3">
-            <p id="section-3.4-1.3.1">Need a source of truth for cross checking<a href="#section-3.4-1.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-3.3-1.3">
+            <p id="section-3.3-1.3.1">Need a source of truth for cross checking<a href="#section-3.3-1.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1432,7 +1453,8 @@ some out-of-band mechanism.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
       <h2 id="name-iana-considerations">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-6-1">This document has no IANA actions.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-1">This document requests a new id-pe-ldpBaseURIs extension for use with X.509 certificates
+in the "SMI Security for PKIX Certificate Extension" registry (1.3.6.1.5.5.7.1).<a href="#section-6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-normative-references">

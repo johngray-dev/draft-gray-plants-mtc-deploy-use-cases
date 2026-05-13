@@ -125,7 +125,7 @@ the landmark-relative certificate that leaves out the signatures.
 
 ## Batch size trade-offs 
 
-A private PKI can make trade-offs when selecting MTC batch sizes for both 
+A PKI can make trade-offs when selecting MTC batch sizes for both 
 checkpoints and landmarks. 
 
 For checkpoints the trade-off is between computational cost of signatures and 

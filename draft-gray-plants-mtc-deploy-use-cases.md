@@ -130,15 +130,14 @@ the landmark-relative certificate that leaves out the signatures.
 
 # Use cases
 
-
-## Verification of signatureless Merkle Tree Certificates
+## Verification of Signatureless Merkle Tree Certificates
 
 Merkle Tree Certificates which only contain the inclusion proof
 to a signed tree head can only be verified when it contains the landmark
-that completes the include proof contained in the Certificate.  If
-the certificate is in an environment where it has an online connection
-it should be possible for the verifier to request a refresh of its
-landmarks.   There are different ways this could be accomplished:
+that completes the inclusion proof contained in the Certificate signature
+field.  If the certificate is in an environment where it has an online
+connection it should be possible for the verifier to request a refresh of its
+landmarks.  There are different ways this could be accomplished:
 
 1. It could be done dynamically, on demand by the verifier.  A mechanism
    that fetches landmarks from a distribution location could be added to
@@ -146,46 +145,69 @@ landmarks.   There are different ways this could be accomplished:
    mechanism could be similar to an X.509 CRLDP, except in this case it
    could be a "Landmark Distribution Point".
 
-   TODO:   Define the mechanism
+2. The landmarks could be fetched periodically by the verifier (or a
+   distribution system could push them down to the verifiers).
 
-   Potential Mechanism at Issuer:
-   LandmarkDistributionPoints ::= SEQUENCE OF IA5String
+3. They could be fetched by a locally defined policy.  For example they
+   could be pre-shared at a location governed by a local policy.
 
-   Current Signature proof field uses this:
-   What is in signature field today:
 
-```c
+### Landmark Distribution Point Mechanism
+
+   The ldpBaseURIs X509 V3 extension is held by the Issuer of the Signatureless
+   Merkle Tree Certificate and contains the SEQUENCE of LandmarkDistributionPoints, each
+   which is a LandmarkDistributionPoint of IA5String.  Each refers to a BaseURI location
+   indicating where the landmarks are published.
+
+~~~
+id-pe-ldpBaseURIs OBJECT IDENTIFIER ::=  { id-pe TBD }
+
+LandmarkDistributionPoints ::= SEQUENCE (1..MAX) OF LandmarkDistributionPoint
+
+LandmarkDistributionPoint ::= IA5String
+~~~
+
+
+   The Inclusion Proof structure defined in I-D.ietf-plants-merkle-tree-certs
+   uses the following structure:
+
+~~~
 struct {
     uint64 start;
     uint64 end;
     HashValue inclusion_proof<0..2^16-1>;
     MTCSignature signatures<0..2^16-1>;
 } MTCProof;
-```
+~~~
 
-   The client simply combines the URL as follows:
+   Note that it contains start and end values which indicate
+   the corresponding parameters of the chosen subtree.  To request the
+   required landmark, the client simply combines the URL as follows:
 
    LandmarkDistributionPoint?st=start?ed=end
 
-   The verifier needs to trust the issuer. Mechanism for landmark location
-   should be in the issuer certificate.  For its subjects, they only need
-   the start and end landmark location.
+   This allows the verifier to request the required landmark so the
+   inclusion proof can be verified.
 
-2. The landmarks could be fetched periodically by the verifier (or a
-   verification system could push them down to the verifiers).
+   The verifier needs to trust the issuer as per RFC 5280.
 
-3. They could be fetched by a locally defined policy.  For example they
-   could be pre-shared at a location governed by a local policy.
 
-## Just using batching
+### Format of Landmark
+
+The format of the landmark distribution point is as follows:
+
+TODO
+
+
+## Batching for performance optimization
 
 **When**
 Signatures are expensive computational operations.  Systems where
-high signature throughput is important (for example, device certificates)
-are good candidates for the use of batch signing, as it can provide a
-sizeable performance optimization.  Merkle Trees with leaves of size N
+high signature throughput is important are good candidates for the use
+of batch signing, as it can provide a sizeable performance optimization
+(for example, device certificates).  Merkle Trees with leaves of size N
 can be computed as hashes of the toBeSigned data, with a single signature
-over the root of that Merke Tree.  For example, a Merkle tree of size
+over the root of that Merkle Tree.  For example, a Merkle tree of size
 2^12 would have 2^11 leaves and could represent 2048 signatures.  The
 verifier would only need to create a single signature for each batch
 of 2048 toBeSigned data values.  Larger sizes could be used to meet the
@@ -202,11 +224,6 @@ some out-of-band mechanism.
 
 Changing verification code; only one signature.
 
-## Just using landmarks
-
-**When** ...
-**Requirements** ...
-
 ## Just using transparency
 - Track mis-issued certificates in your private key
 - CA's already have an audit trail - is there an advantage to using transparency logs
@@ -222,8 +239,8 @@ TODO Security
 
 # IANA Considerations
 
-This document has no IANA actions.
-
+This document requests a new id-pe-ldpBaseURIs extension for use with X.509 certificates
+in the "SMI Security for PKIX Certificate Extension" registry (1.3.6.1.5.5.7.1).
 
 --- back
 

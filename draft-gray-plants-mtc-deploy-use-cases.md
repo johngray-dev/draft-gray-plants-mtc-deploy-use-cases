@@ -139,7 +139,7 @@ size of landmark-relative certificates. Fewer landmarks require less storage on
 the relying party, but result in each landmark representing a larger Merkle 
 tree, which increases the size of the inclusion proof for the landmark-relative
 certificate. Conversely, more frequent landmarks would give smaller proofs for
-the signatureless certificate but require more storage on the relying party.
+the landmark-relative certificate but require more storage on the relying party.
 
 Both batch sizes will be influenced by the specifics of the PKI, including the
 frequency of certificate signing requests and acceptable issuance latency. 

@@ -157,7 +157,7 @@ landmarks.  There are different ways this could be accomplished:
    The ldpBaseURIs X509 V3 extension is held by the Issuer of the Signatureless
    Merkle Tree Certificate and contains the SEQUENCE of LandmarkDistributionPoints, each
    which is a LandmarkDistributionPoint of IA5String.  Each refers to a BaseURI location
-   indicating where the landmarks are published.  
+   indicating where the landmarks are published.
 
 ~~~
 id-pe-ldpBaseURIs OBJECT IDENTIFIER ::=  { id-pe TBD }
@@ -192,7 +192,7 @@ struct {
    The verifier needs to trust the issuer as per RFC 5280.
 
 
-### Format of Landmark 
+### Format of Landmark
 
 The format of the landmark distribution point is as follows:
 

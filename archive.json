@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-07T01:47:50.532465+00:00",
+  "timestamp": "2026-05-14T01:58:02.144083+00:00",
   "repo": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
   "labels": [
     {
@@ -244,25 +244,280 @@
       "id": "PR_kwDOR-NuIc7Yi-lV",
       "title": "John define ldp mechanism",
       "url": "https://github.com/johngray-dev/draft-gray-plants-mtc-deploy-use-cases/pull/5",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "johngray-dev",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Defined Landmark Distribution Point mechanism based on author discussion.   Moved it into its own sub section (I think it is important enough), it also allows the previous text to flow better.",
       "createdAt": "2026-05-05T21:01:53Z",
-      "updatedAt": "2026-05-05T21:01:53Z",
+      "updatedAt": "2026-05-13T15:10:50Z",
       "baseRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
       "baseRefName": "main",
       "baseRefOid": "1faa0a86fa33ff1a463569440dbc59a1cf6dae45",
       "headRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
       "headRefName": "john_defineLDPMechanism",
-      "headRefOid": "fdf0850361686961a463c27ab3e6427909e9cb02",
+      "headRefOid": "e0bbe023c9ca9133115467a00cfc30abd7a4949e",
+      "closedAt": "2026-05-13T15:10:40Z",
+      "mergedAt": "2026-05-13T15:10:40Z",
+      "mergedBy": "johngray-dev",
+      "mergeCommit": {
+        "oid": "9278b1bc47f7fc1793031b040604a18dd6d44a07"
+      },
+      "comments": [
+        {
+          "author": "johngray-dev",
+          "authorAssociation": "OWNER",
+          "body": "Merging based on group discussion.  We will modify the fetching mechanism as needed.  There were 3 main things we need a design decision towards:\r\n\r\n1. Fetch signature over 1 subsubtree  (large landmarks).  \r\n- Cacheabilty - define a predictable format of the landmarks - one static file, use a merkle tree, how it is sized\r\n- Problem of how subsequent fetching is needed.   Don't want to have to download huge file every time.   I guess CRL's have this same issue.\r\n2. Pick a tree position from largest subtree, send signature of treehead, send consistency proofs.  Medium Large  (10s of kilobits).   \r\n3. Fetch a bunch of hashes together (very small and compact), but fetching would probably be needed per certificate.   The cache could effectively represent a partial copy of the Merkle Tree.   Interaction between the cache and what is requested would optimize the fetch retreval.\r\n",
+          "createdAt": "2026-05-13T15:10:26Z",
+          "updatedAt": "2026-05-13T15:10:26Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOR-NuIc7-nKkk",
+          "commit": {
+            "abbreviatedOid": "87245c1"
+          },
+          "author": "Luke-T-2",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-12T11:11:31Z",
+          "updatedAt": "2026-05-12T11:11:31Z",
+          "comments": [
+            {
+              "originalPosition": 61,
+              "body": "I think this should be inclusion proof \n```suggestion\n   inclusion proof can be verified.",
+              "createdAt": "2026-05-12T11:11:31Z",
+              "updatedAt": "2026-05-12T11:11:31Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOR-NuIc7-5Fri",
+          "commit": {
+            "abbreviatedOid": "c470a1a"
+          },
+          "author": "github-actions",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-12T21:26:47Z",
+          "updatedAt": "2026-05-12T21:26:48Z",
+          "comments": [
+            {
+              "originalPosition": 38,
+              "body": "````suggestion\n   indicating where the landmarks are published.\n````",
+              "createdAt": "2026-05-12T21:26:47Z",
+              "updatedAt": "2026-05-12T21:26:48Z"
+            },
+            {
+              "originalPosition": 88,
+              "body": "````suggestion\n### Format of Landmark\n````",
+              "createdAt": "2026-05-12T21:26:47Z",
+              "updatedAt": "2026-05-12T21:26:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOR-NuIc7_PQOu",
+          "commit": {
+            "abbreviatedOid": "119a338"
+          },
+          "author": "janklaussner",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-13T13:41:39Z",
+          "updatedAt": "2026-05-13T13:47:09Z",
+          "comments": [
+            {
+              "originalPosition": 26,
+              "body": "What is the difference for fetching to 1., except that its not on demand? Does it also need the ldp in the certificate?",
+              "createdAt": "2026-05-13T13:41:39Z",
+              "updatedAt": "2026-05-13T13:47:10Z"
+            },
+            {
+              "originalPosition": 106,
+              "body": "```suggestion\nover the root of that Merkle Tree.  For example, a Merkle tree of size\n```",
+              "createdAt": "2026-05-13T13:46:20Z",
+              "updatedAt": "2026-05-13T13:47:10Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOR-NuIc7_PkMN",
+          "commit": {
+            "abbreviatedOid": "c470a1a"
+          },
+          "author": "johngray-dev",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-13T13:51:17Z",
+          "updatedAt": "2026-05-13T13:51:17Z",
+          "comments": [
+            {
+              "originalPosition": 38,
+              "body": "Already fixed this typo",
+              "createdAt": "2026-05-13T13:51:17Z",
+              "updatedAt": "2026-05-13T13:51:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOR-NuIc7_PoqZ",
+          "commit": {
+            "abbreviatedOid": "119a338"
+          },
+          "author": "johngray-dev",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-13T13:53:21Z",
+          "updatedAt": "2026-05-13T13:53:21Z",
+          "comments": [
+            {
+              "originalPosition": 26,
+              "body": "I was thinking it is possible some system could populate the locate landmark cache out-of-band...  I think that is basically how the browsers work today.   Maybe that isn't realistic and can be removed.  ",
+              "createdAt": "2026-05-13T13:53:21Z",
+              "updatedAt": "2026-05-13T13:53:22Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOR-NuIc7_P36o",
+          "commit": {
+            "abbreviatedOid": "e0bbe02"
+          },
+          "author": "janklaussner",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-13T14:00:19Z",
+          "updatedAt": "2026-05-13T14:00:19Z",
+          "comments": [
+            {
+              "originalPosition": 26,
+              "body": "I think thats fine, just needs to be mentioned. I feel there are 3 dimensions to this:\n1. how to get the ldp: by cert, by Software (fixed?), by Policy\n2. how to get the landmarks: push vs pull\n3. when to get: on demand vs periodically\n?",
+              "createdAt": "2026-05-13T14:00:19Z",
+              "updatedAt": "2026-05-13T14:00:19Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "id": "PR_kwDOR-NuIc7bL356",
+      "title": "Batch size trade off text",
+      "url": "https://github.com/johngray-dev/draft-gray-plants-mtc-deploy-use-cases/pull/6",
+      "state": "OPEN",
+      "author": "Luke-T-2",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "As mentioned in the meeting today, here is some text on the trade-offs that a PKI can make when deciding how to batch their certificates for checkpoints and landmarks. \r\n\r\nWe may want to put example numbers in the future, but for now its a high level guidance on the trade-offs \r\n ",
+      "createdAt": "2026-05-13T15:44:43Z",
+      "updatedAt": "2026-05-13T15:49:38Z",
+      "baseRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
+      "baseRefName": "main",
+      "baseRefOid": "9278b1bc47f7fc1793031b040604a18dd6d44a07",
+      "headRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
+      "headRefName": "luke_batchSizeTradeOff",
+      "headRefOid": "801d9a6bf3d703f0c9b3b5ec5321e84b1cece139",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOR-NuIc7_THxJ",
+          "commit": {
+            "abbreviatedOid": "df2fd0e"
+          },
+          "author": "github-actions",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-13T15:45:12Z",
+          "updatedAt": "2026-05-13T15:45:12Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "````suggestion\nfrequency of certificate signing requests and acceptable issuance latency.\n````",
+              "createdAt": "2026-05-13T15:45:12Z",
+              "updatedAt": "2026-05-13T15:45:12Z"
+            },
+            {
+              "originalPosition": 17,
+              "body": "````suggestion\nthe relying party, but result in each landmark representing a larger Merkle\n````",
+              "createdAt": "2026-05-13T15:45:12Z",
+              "updatedAt": "2026-05-13T15:45:12Z"
+            },
+            {
+              "originalPosition": 9,
+              "body": "````suggestion\nFor checkpoints the trade-off is between computational cost of signatures and\n````",
+              "createdAt": "2026-05-13T15:45:12Z",
+              "updatedAt": "2026-05-13T15:45:12Z"
+            },
+            {
+              "originalPosition": 7,
+              "body": "````suggestion\nA PKI can make trade-offs when selecting MTC batch sizes for both\ncheckpoints and landmarks.\n````",
+              "createdAt": "2026-05-13T15:45:12Z",
+              "updatedAt": "2026-05-13T15:45:12Z"
+            },
+            {
+              "originalPosition": 4,
+              "body": "````suggestion\n## Batch size trade-offs\n````",
+              "createdAt": "2026-05-13T15:45:12Z",
+              "updatedAt": "2026-05-13T15:45:12Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "id": "PR_kwDOR-NuIc7bNTQP",
+      "title": "Move myself from authors to acknowledgments",
+      "url": "https://github.com/johngray-dev/draft-gray-plants-mtc-deploy-use-cases/pull/7",
+      "state": "OPEN",
+      "author": "davidben",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "This seems more appropriate given everyone else is doing the lion's share of work on this document, and I'd prefer to not steal your thunder. :-)\r\n\r\n(Not a comment on the contents at all, just trying to more accurately credit the rest of you all, since I probably will continue to not have much time for this beyond our syncs.)\r\n\r\nAlso fix the spelling of Bas's last name.",
+      "createdAt": "2026-05-13T16:49:27Z",
+      "updatedAt": "2026-05-13T19:40:03Z",
+      "baseRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
+      "baseRefName": "main",
+      "baseRefOid": "9278b1bc47f7fc1793031b040604a18dd6d44a07",
+      "headRepository": "davidben/draft-gray-plants-mtc-deploy-use-cases",
+      "headRefName": "move-self",
+      "headRefOid": "b9520e1be856d3e1d09c011edff370552bf51213",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "johngray-dev",
+          "authorAssociation": "OWNER",
+          "body": "Are you sure David?  You and Bas are providing a lot of valuable information and suggestions on solutions we can explore... Then the rest of us take a couple weeks to digest it all and come up with some text that seems to make sense.",
+          "createdAt": "2026-05-13T19:25:04Z",
+          "updatedAt": "2026-05-13T19:25:04Z"
+        },
+        {
+          "author": "davidben",
+          "authorAssociation": "NONE",
+          "body": "Oh, I don't mean to stop providing feedback or change anything there! It just seemed more appropriate to credit and cite you all as authors. You're doing the actual work. :-)",
+          "createdAt": "2026-05-13T19:40:03Z",
+          "updatedAt": "2026-05-13T19:40:03Z"
+        }
+      ],
       "reviews": []
     }
   ]

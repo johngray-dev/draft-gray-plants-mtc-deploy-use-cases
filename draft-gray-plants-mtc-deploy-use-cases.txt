@@ -5,12 +5,14 @@
 PKI, Logs, And Tree Signatures                                   J. Gray
 Internet-Draft                                                   Entrust
 Intended status: Informational                               D. Benjamin
-Expires: 14 November 2026                                     Google LLC
+Expires: 15 November 2026                                     Google LLC
                                                             M. Ounsworth
                                                           Cryptic Forest
                                                             J. Klaussner
                                                     Bundesdruckerei GmbH
-                                                             13 May 2026
+                                                              L. Tindell
+                                       UK National Cyber Security Centre
+                                                             14 May 2026
 
 
              Merkle Tree Certificates Deployment Use Cases
@@ -58,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 14 November 2026.
+   This Internet-Draft will expire on 15 November 2026.
 
 Copyright Notice
 
@@ -78,6 +80,7 @@ Table of Contents
 
    1.  Introduction
      1.1.  Brief overview of MTC
+     1.2.  Batch size trade-offs
    2.  Conventions and Definitions
    3.  Use cases
      3.1.  Verification of Signatureless Merkle Tree Certificates
@@ -148,6 +151,31 @@ Table of Contents
    If a verifier has out-of-band knowledge of the treehead used (which
    in that case is called a _landmark_), then it can be satisfied with
    the landmark-relative certificate that leaves out the signatures.
+
+1.2.  Batch size trade-offs
+
+   A PKI can make trade-offs when selecting MTC batch sizes for both
+   checkpoints and landmarks.
+
+   For checkpoints the trade-off is between computational cost of
+   signatures and the size of standalone certificates.  Smaller
+   checkpoint batches require more frequent signatures, but reduce the
+   size of the inclusion proofs for standalone certificates.
+   Conversely, larger batches reduce the signature frequency but
+   increase the size of inclusion proofs for standalone certificates.
+
+   For landmarks the trade-offs are between relying party storage costs
+   and the size of landmark-relative certificates.  Fewer landmarks
+   require less storage on the relying party, but result in each
+   landmark representing a larger Merkle tree, which increases the size
+   of the inclusion proof for the landmark-relative certificate.
+   Conversely, more frequent landmarks would give smaller proofs for the
+   landmark-relative certificate but require more storage on the relying
+   party.
+
+   Both batch sizes will be influenced by the specifics of the PKI,
+   including the frequency of certificate signing requests and
+   acceptable issuance latency.
 
 2.  Conventions and Definitions
 
@@ -316,3 +344,9 @@ Authors' Addresses
    10969 Berlin
    Germany
    Email: jan.klaussner@bdr.de
+
+
+   Luke Tindell
+   UK National Cyber Security Centre
+   United Kingdom
+   Email: luke.t2@ncsc.gov.uk

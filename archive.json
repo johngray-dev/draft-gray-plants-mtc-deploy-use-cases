@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-14T01:58:02.144083+00:00",
+  "timestamp": "2026-05-17T01:52:41.123978+00:00",
   "repo": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
   "labels": [
     {
@@ -413,25 +413,35 @@
       "id": "PR_kwDOR-NuIc7bL356",
       "title": "Batch size trade off text",
       "url": "https://github.com/johngray-dev/draft-gray-plants-mtc-deploy-use-cases/pull/6",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "Luke-T-2",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "As mentioned in the meeting today, here is some text on the trade-offs that a PKI can make when deciding how to batch their certificates for checkpoints and landmarks. \r\n\r\nWe may want to put example numbers in the future, but for now its a high level guidance on the trade-offs \r\n ",
       "createdAt": "2026-05-13T15:44:43Z",
-      "updatedAt": "2026-05-13T15:49:38Z",
+      "updatedAt": "2026-05-14T15:09:43Z",
       "baseRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
       "baseRefName": "main",
       "baseRefOid": "9278b1bc47f7fc1793031b040604a18dd6d44a07",
       "headRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
       "headRefName": "luke_batchSizeTradeOff",
-      "headRefOid": "801d9a6bf3d703f0c9b3b5ec5321e84b1cece139",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "headRefOid": "401d7c431f2c74d65d7476865f140c9225fac985",
+      "closedAt": "2026-05-14T15:09:43Z",
+      "mergedAt": "2026-05-14T15:09:43Z",
+      "mergedBy": "johngray-dev",
+      "mergeCommit": {
+        "oid": "bb7c04dd9fe642130ed134e09e9515e0721f5f85"
+      },
+      "comments": [
+        {
+          "author": "johngray-dev",
+          "authorAssociation": "OWNER",
+          "body": "Thanks Luke...  Yes, I think some numbers and guidance will be needed, but this is a good start!    I'll go ahead and Merge this (but I'll add you as an author first).   :)",
+          "createdAt": "2026-05-14T14:56:30Z",
+          "updatedAt": "2026-05-14T14:56:30Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOR-NuIc7_THxJ",
@@ -439,7 +449,7 @@
             "abbreviatedOid": "df2fd0e"
           },
           "author": "github-actions",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2026-05-13T15:45:12Z",
@@ -474,6 +484,26 @@
               "body": "````suggestion\n## Batch size trade-offs\n````",
               "createdAt": "2026-05-13T15:45:12Z",
               "updatedAt": "2026-05-13T15:45:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOR-NuIc7_w5O_",
+          "commit": {
+            "abbreviatedOid": "9338f63"
+          },
+          "author": "github-actions",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-14T15:03:52Z",
+          "updatedAt": "2026-05-14T15:03:53Z",
+          "comments": [
+            {
+              "originalPosition": 11,
+              "body": "````suggestion\n\n````",
+              "createdAt": "2026-05-14T15:03:52Z",
+              "updatedAt": "2026-05-14T15:03:53Z"
             }
           ]
         }

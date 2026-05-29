@@ -35,11 +35,6 @@ author:
     code: K2K 3G5
     email: john.gray@entrust.com
  -
-    ins: "D. Benjamin"
-    name: "David Benjamin"
-    organization: "Google LLC"
-    email: davidben@google.com
- -
     ins: M. Ounsworth
     name: Mike Ounsworth
     org: Cryptic Forest Software
@@ -271,4 +266,4 @@ in the "SMI Security for PKIX Certificate Extension" registry (1.3.6.1.5.5.7.1).
 --- back
 
 # Acknowledgments
-Thanks to Bas Westerban for his help and review of this specification.
+Thanks to David Benjamin and Bas Westerbaan for his help and review of this specification.

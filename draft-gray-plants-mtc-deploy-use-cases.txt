@@ -4,15 +4,13 @@
 
 PKI, Logs, And Tree Signatures                                   J. Gray
 Internet-Draft                                                   Entrust
-Intended status: Informational                               D. Benjamin
-Expires: 15 November 2026                                     Google LLC
-                                                            M. Ounsworth
-                                                          Cryptic Forest
+Intended status: Informational                              M. Ounsworth
+Expires: 30 November 2026                                 Cryptic Forest
                                                             J. Klaussner
                                                     Bundesdruckerei GmbH
                                                               L. Tindell
                                        UK National Cyber Security Centre
-                                                             14 May 2026
+                                                             29 May 2026
 
 
              Merkle Tree Certificates Deployment Use Cases
@@ -60,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 15 November 2026.
+   This Internet-Draft will expire on 30 November 2026.
 
 Copyright Notice
 
@@ -313,8 +311,8 @@ LandmarkDistributionPoint ::= IA5String
 
 Appendix A.  Acknowledgments
 
-   Thanks to Bas Westerban for his help and review of this
-   specification.
+   Thanks to David Benjamin and Bas Westerbaan for his help and review
+   of this specification.
 
 Authors' Addresses
 
@@ -324,11 +322,6 @@ Authors' Addresses
    Ottawa, Ontario  K2K 3G5
    Canada
    Email: john.gray@entrust.com
-
-
-   David Benjamin
-   Google LLC
-   Email: davidben@google.com
 
 
    Mike Ounsworth

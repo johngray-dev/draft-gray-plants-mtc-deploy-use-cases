@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-17T01:52:41.123978+00:00",
+  "timestamp": "2026-05-31T02:08:02.307169+00:00",
   "repo": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
   "labels": [
     {
@@ -514,24 +514,26 @@
       "id": "PR_kwDOR-NuIc7bNTQP",
       "title": "Move myself from authors to acknowledgments",
       "url": "https://github.com/johngray-dev/draft-gray-plants-mtc-deploy-use-cases/pull/7",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "davidben",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "This seems more appropriate given everyone else is doing the lion's share of work on this document, and I'd prefer to not steal your thunder. :-)\r\n\r\n(Not a comment on the contents at all, just trying to more accurately credit the rest of you all, since I probably will continue to not have much time for this beyond our syncs.)\r\n\r\nAlso fix the spelling of Bas's last name.",
       "createdAt": "2026-05-13T16:49:27Z",
-      "updatedAt": "2026-05-13T19:40:03Z",
+      "updatedAt": "2026-05-29T20:38:16Z",
       "baseRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
       "baseRefName": "main",
       "baseRefOid": "9278b1bc47f7fc1793031b040604a18dd6d44a07",
       "headRepository": "davidben/draft-gray-plants-mtc-deploy-use-cases",
       "headRefName": "move-self",
       "headRefOid": "b9520e1be856d3e1d09c011edff370552bf51213",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-05-29T20:38:16Z",
+      "mergedAt": "2026-05-29T20:38:16Z",
+      "mergedBy": "johngray-dev",
+      "mergeCommit": {
+        "oid": "e684d2b23f4d294e8398e0615ba4e3d1036bd101"
+      },
       "comments": [
         {
           "author": "johngray-dev",
@@ -542,10 +544,17 @@
         },
         {
           "author": "davidben",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Oh, I don't mean to stop providing feedback or change anything there! It just seemed more appropriate to credit and cite you all as authors. You're doing the actual work. :-)",
           "createdAt": "2026-05-13T19:40:03Z",
           "updatedAt": "2026-05-13T19:40:03Z"
+        },
+        {
+          "author": "johngray-dev",
+          "authorAssociation": "OWNER",
+          "body": "Okay, I'll approve it... You are always welcome to come back as an author David....   ",
+          "createdAt": "2026-05-29T20:38:06Z",
+          "updatedAt": "2026-05-29T20:38:06Z"
         }
       ],
       "reviews": []

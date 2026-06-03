@@ -93,7 +93,7 @@ Besides solving these two problems, MTC has additional benefits.
 **Batch Signing.** MTC reduces the load on the CA because a single signature is used for a batch of certificates.
 
 A PKI that operates with any of these three challenges could benefit from MTC.
-These advantages come with trade-offs:t
+These advantages come with trade-offs:
 
 1. The small *landmark-relative* MTCs can only be used if the verifier
    has been updated with recent *landmarks*. If the verifier is stale, it
@@ -224,13 +224,24 @@ is not readily available.
 
 TODO, define format of the landmark (or point to section in MTC Draft):
 
-Questions:
+Questions To be answered:
 - When a CA issues an MTC certificate, it will know where the landmark will be published.
    - Current format uses start and end values from the inclusion proof.  This is nice because no other extension is needed in the EE certs
 - Landmarks should be available in a predictable way
 - Section 6.3.3 of Merkle Tree Certificates describes publishing landmarks, but it just seems to be a text file that contains the list of
 tree sizes for each landmark?  It doesn't seem to mention the actual format of the subtree?
-- Do Landmark's contain a signature, or is it just the MTH and we use the cumulative landmarks along with the inclusion proof?
+- Do Landmark's contain a signature, or is it just the MTH and we use the cumulative landmarks along with the inclusion proof?  Where is the verifiable signature? I thought landmarks were signed
+- Is there a repository of test landmarks we can use to test this mechanism?
+
+### Landmark Distribution server
+As mentioned above, the landmarks can be fetched dynamically as needed by
+combining the start and end values from the MTCProof.  The server fulfilling
+these requests will need to parse the start and end values, aggregate the
+require landmark subtrees together, and send the responce back to the client.
+The responce format will be:
+
+TODO:  DEFINE responce format
+
 
 ## Batching for performance optimization
 

@@ -85,6 +85,7 @@ Table of Contents
            outside the WebPKI
        3.1.1.  Landmark Distribution Point Fetching Mechanism
        3.1.2.  Format of Landmark
+       3.1.3.  Landmark Distribution server
      3.2.  Batching for performance optimization
      3.3.  Just using transparency
    4.  Different ways of acquiring landmarks
@@ -116,7 +117,7 @@ Table of Contents
    signature is used for a batch of certificates.
 
    A PKI that operates with any of these three challenges could benefit
-   from MTC.  These advantages come with trade-offs:t
+   from MTC.  These advantages come with trade-offs:
 
    1.  The small _landmark-relative_ MTCs can only be used if the
        verifier has been updated with recent _landmarks_. If the
@@ -261,16 +262,29 @@ LandmarkDistributionPoint ::= IA5String
    TODO, define format of the landmark (or point to section in MTC
    Draft):
 
-   Questions: - When a CA issues an MTC certificate, it will know where
-   the landmark will be published.  - Current format uses start and end
-   values from the inclusion proof.  This is nice because no other
-   extension is needed in the EE certs - Landmarks should be available
-   in a predictable way - Section 6.3.3 of Merkle Tree Certificates
-   describes publishing landmarks, but it just seems to be a text file
-   that contains the list of tree sizes for each landmark?  It doesn't
-   seem to mention the actual format of the subtree? - Do Landmark's
-   contain a signature, or is it just the MTH and we use the cumulative
-   landmarks along with the inclusion proof?
+   Questions To be answered: - When a CA issues an MTC certificate, it
+   will know where the landmark will be published.  - Current format
+   uses start and end values from the inclusion proof.  This is nice
+   because no other extension is needed in the EE certs - Landmarks
+   should be available in a predictable way - Section 6.3.3 of Merkle
+   Tree Certificates describes publishing landmarks, but it just seems
+   to be a text file that contains the list of tree sizes for each
+   landmark?  It doesn't seem to mention the actual format of the
+   subtree? - Do Landmark's contain a signature, or is it just the MTH
+   and we use the cumulative landmarks along with the inclusion proof?
+   Where is the verifiable signature?  I thought landmarks were signed -
+   Is there a repository of test landmarks we can use to test this
+   mechanism?
+
+3.1.3.  Landmark Distribution server
+
+   As mentioned above, the landmarks can be fetched dynamically as
+   needed by combining the start and end values from the MTCProof.  The
+   server fulfilling these requests will need to parse the start and end
+   values, aggregate the require landmark subtrees together, and send
+   the responce back to the client.  The responce format will be:
+
+   TODO: DEFINE responce format
 
 3.2.  Batching for performance optimization
 

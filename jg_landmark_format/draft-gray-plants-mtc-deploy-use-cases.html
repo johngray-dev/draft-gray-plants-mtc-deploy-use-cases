@@ -1195,6 +1195,9 @@ use cases. Some of this use-cases may provide benefit for private PKI usage.<a h
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.2">
                     <p id="section-toc.1-1.3.2.1.2.2.1"><a href="#section-3.1.2" class="auto internal xref">3.1.2</a>.  <a href="#name-format-of-landmark" class="internal xref">Format of Landmark</a></p>
 </li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.3">
+                    <p id="section-toc.1-1.3.2.1.2.3.1"><a href="#section-3.1.3" class="auto internal xref">3.1.3</a>.  <a href="#name-landmark-distribution-serve" class="internal xref">Landmark Distribution server</a></p>
+</li>
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
@@ -1247,7 +1250,7 @@ allows detection of post-quantum downgrade attacks.<a href="#section-1-3.2.1" cl
 <p id="section-1-4">Besides solving these two problems, MTC has additional benefits.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5"><strong>Batch Signing.</strong> MTC reduces the load on the CA because a single signature is used for a batch of certificates.<a href="#section-1-5" class="pilcrow">¶</a></p>
 <p id="section-1-6">A PKI that operates with any of these three challenges could benefit from MTC.
-These advantages come with trade-offs:t<a href="#section-1-6" class="pilcrow">¶</a></p>
+These advantages come with trade-offs:<a href="#section-1-6" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-1-7">
 <li id="section-1-7.1">
           <p id="section-1-7.1.1">The small <em>landmark-relative</em> MTCs can only be used if the verifier
@@ -1409,13 +1412,27 @@ of I-D.ietf-plants-merkle-tree-certs<a href="#section-3.1.2-1" class="pilcrow">�
 <p id="section-3.1.2-2">As mentioned above, the verifier may need to request the landmark if it
 is not readily available.<a href="#section-3.1.2-2" class="pilcrow">¶</a></p>
 <p id="section-3.1.2-3">TODO, define format of the landmark (or point to section in MTC Draft):<a href="#section-3.1.2-3" class="pilcrow">¶</a></p>
-<p id="section-3.1.2-4">Questions:
+<p id="section-3.1.2-4">Questions To be answered:
 - When a CA issues an MTC certificate, it will know where the landmark will be published.
    - Current format uses start and end values from the inclusion proof.  This is nice because no other extension is needed in the EE certs
 - Landmarks should be available in a predictable way
 - Section 6.3.3 of Merkle Tree Certificates describes publishing landmarks, but it just seems to be a text file that contains the list of
 tree sizes for each landmark?  It doesn't seem to mention the actual format of the subtree?
-- Do Landmark's contain a signature, or is it just the MTH and we use the cumulative landmarks along with the inclusion proof?<a href="#section-3.1.2-4" class="pilcrow">¶</a></p>
+- Do Landmark's contain a signature, or is it just the MTH and we use the cumulative landmarks along with the inclusion proof?  Where is the verifiable signature? I thought landmarks were signed
+- Is there a repository of test landmarks we can use to test this mechanism?<a href="#section-3.1.2-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="landmark-distribution-server">
+<section id="section-3.1.3">
+          <h4 id="name-landmark-distribution-serve">
+<a href="#section-3.1.3" class="section-number selfRef">3.1.3. </a><a href="#name-landmark-distribution-serve" class="section-name selfRef">Landmark Distribution server</a>
+          </h4>
+<p id="section-3.1.3-1">As mentioned above, the landmarks can be fetched dynamically as needed by
+combining the start and end values from the MTCProof.  The server fulfilling
+these requests will need to parse the start and end values, aggregate the
+require landmark subtrees together, and send the responce back to the client.
+The responce format will be:<a href="#section-3.1.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.3-2">TODO:  DEFINE responce format<a href="#section-3.1.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>

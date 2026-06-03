@@ -220,18 +220,17 @@ The format of the landmark distribution point is defined in section 6.3.3
 of I-D.ietf-plants-merkle-tree-certs
 
 As mentioned above, the verifier may need to request the landmark if it
-is not readily available.  
+is not readily available.
 
 TODO, define format of the landmark (or point to section in MTC Draft):
 
-Questions:  
+Questions:
 - When a CA issues an MTC certificate, it will know where the landmark will be published.
-   - Current format uses start and end values from the inclusion proof.  This is nice because no other extension is needed in the EE certs  
+   - Current format uses start and end values from the inclusion proof.  This is nice because no other extension is needed in the EE certs
 - Landmarks should be available in a predictable way
 - Section 6.3.3 of Merkle Tree Certificates describes publishing landmarks, but it just seems to be a text file that contains the list of
 tree sizes for each landmark?  It doesn't seem to mention the actual format of the subtree?
 - Do Landmark's contain a signature, or is it just the MTH and we use the cumulative landmarks along with the inclusion proof?
-  
 
 ## Batching for performance optimization
 

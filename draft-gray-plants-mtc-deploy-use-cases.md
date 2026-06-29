@@ -81,18 +81,18 @@ use cases. Some of this use-cases may provide benefit for private PKI usage.
 
 EdNote: Before getting into the nitty gritty, let's start with the potential benefit
 
-MTC has been designed to solve two problems for the WebPKI:
+Merkle Tree Certificates (MTC) have been designed to solve two problems for the WebPKI:
 
 1. **Size.** A *landmark-relative Merkle Tree Certificate* is small as it
-  only contains a public key and a small Merkle Tree authentication path.
-2. **DD.** MTC ensures Certificate Transparency is post-quantum secure, and with that
-   allows detection of post-quantum downgrade attacks after the fact.
+  only contains a public key and a small Merkle Tree inclusion proof.
+2. **Downgrade Detection.** MTC ensures Certificate Transparency is post-quantum secure, and with that
+   allows detection of post-quantum downgrade attacks.
 
 Besides solving these two problems, MTC has additional benefits.
 
-**Batch.** MTC reduces the load on the CA HSM by signing batches.
+**Batch Signing.** MTC reduces the load on the CA because a single signature is used for a batch of certificates.
 
-A PKI that faces any of these three challenges could benefit from MTC.
+A PKI that operates with any of these three challenges could benefit from MTC.
 These advantages come with trade-offs:
 
 1. The small *landmark-relative* MTCs can only be used if the verifier
@@ -118,7 +118,8 @@ differences:
    a Merkle tree head is signed, together with providing a proof-of-inclusion
    of the certificate contents in that Merkle tree.
 
-The use of a Merkle tree allows for the batch signing.
+The use of a Merkle tree allows for batch signing, and the cost of a signature is
+amortized over the number of certificates at the leaf notes.
 
 If a verifier has out-of-band knowledge of the treehead used (which in
 that case is called a *landmark*), then it can be satisfied with
@@ -151,16 +152,16 @@ frequency of certificate signing requests and acceptable issuance latency.
 
 # Use cases
 
-## Verification of Signatureless Merkle Tree Certificates
+## Verification of LandMark-Relative Merkle Tree Certificates outside the WebPKI
 
 Merkle Tree Certificates which only contain the inclusion proof
-to a signed tree head can only be verified when it contains the landmark
-that completes the inclusion proof contained in the Certificate signature
-field.  If the certificate is in an environment where it has an online
-connection it should be possible for the verifier to request a refresh of its
-landmarks.  There are different ways this could be accomplished:
+to a signed tree head can only be verified when the verifier contains the
+landmark that completes the inclusion proof contained in the Certificate
+signature field.  If the certificate is in a non webPKI environment where it has an
+online connection it should be possible for the verifier to request a refresh
+of its landmarks.  There are different ways this can be accomplished:
 
-1. It could be done dynamically, on demand by the verifier.  A mechanism
+1. It can be done dynamically, on demand by the verifier.  A mechanism
    that fetches landmarks from a distribution location could be added to
    the certificate which could be used to complete this lookup.  Such a
    mechanism could be similar to an X.509 CRLDP, except in this case it
@@ -173,7 +174,7 @@ landmarks.  There are different ways this could be accomplished:
    could be pre-shared at a location governed by a local policy.
 
 
-### Landmark Distribution Point Mechanism
+### Landmark Distribution Point Fetching Mechanism
 
    The ldpBaseURIs X509 V3 extension is held by the Issuer of the Signatureless
    Merkle Tree Certificate and contains the SEQUENCE of LandmarkDistributionPoints, each
@@ -215,9 +216,31 @@ struct {
 
 ### Format of Landmark
 
-The format of the landmark distribution point is as follows:
+The format of the landmark distribution point is defined in section 6.3.3
+of I-D.ietf-plants-merkle-tree-certs
 
-TODO
+As mentioned above, the verifier may need to request the landmark if it
+is not readily available.
+
+TODO, define format of the landmark (or point to section in MTC Draft):
+
+Questions To be answered:
+- When a CA issues an MTC certificate, it will know where the landmark will be published.
+   - Current format uses start and end values from the inclusion proof.  This is nice because no other extension is needed in the EE certs
+- Landmarks should be available in a predictable way
+- Section 6.3.3 of Merkle Tree Certificates describes publishing landmarks, but it just seems to be a text file that contains the list of
+tree sizes for each landmark?  It doesn't seem to mention the actual format of the subtree?
+- Do Landmark's contain a signature, or is it just the MTH and we use the cumulative landmarks along with the inclusion proof?  Where is the verifiable signature? I thought landmarks were signed
+- Is there a repository of test landmarks we can use to test this mechanism?
+
+### Landmark Distribution server
+As mentioned above, the landmarks can be fetched dynamically as needed by
+combining the start and end values from the MTCProof.  The server fulfilling
+these requests will need to parse the start and end values, aggregate the
+require landmark subtrees together, and send the responce back to the client.
+The responce format will be:
+
+TODO:  DEFINE responce format
 
 
 ## Batching for performance optimization

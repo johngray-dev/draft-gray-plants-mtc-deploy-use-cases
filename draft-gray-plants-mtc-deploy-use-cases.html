@@ -16,24 +16,25 @@ use case of the WebPKI.
 In this document we explore when and how MTC in parts or full can be used in different
 use cases. Some of this use-cases may provide benefit for private PKI usage. 
     " name="description">
-<meta content="xml2rfc 3.33.0" name="generator">
+<meta content="xml2rfc 3.34.0" name="generator">
 <meta content="Merke Tree Certificate" name="keyword">
 <meta content="Post Quantum" name="keyword">
 <meta content="PKI" name="keyword">
 <meta content="draft-gray-plants-mtc-deploy-use-cases-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.33.0
-    Python 3.12.13
-    ConfigArgParse 1.7
+  xml2rfc 3.34.0
+    Python 3.14.5
+    ConfigArgParse 1.7.5
     google-i18n-address 3.1.1
     intervaltree 3.2.1
     Jinja2 3.1.6
-    lxml 6.0.2
-    platformdirs 4.9.6
+    lxml 6.1.1
+    natsort 8.4.0
+    platformdirs 4.10.0
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.33.1
-    wcwidth 0.7.0
+    wcwidth 0.8.1
 -->
 <link href="draft-gray-plants-mtc-deploy-use-cases.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1052,11 +1053,11 @@ svg {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">MTC Use Cases</td>
-<td class="right">May 2026</td>
+<td class="right">June 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Gray, et al.</td>
-<td class="center">Expires 30 November 2026</td>
+<td class="center">Expires 31 December 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1069,12 +1070,12 @@ svg {
 <dd class="internet-draft">draft-gray-plants-mtc-deploy-use-cases-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-05-29" class="published">29 May 2026</time>
+<time datetime="2026-06-29" class="published">29 June 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-11-30">30 November 2026</time></dd>
+<dd class="expires"><time datetime="2026-12-31">31 December 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1140,7 +1141,7 @@ use cases. Some of this use-cases may provide benefit for private PKI usage.<a h
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 30 November 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 31 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1187,13 +1188,16 @@ use cases. Some of this use-cases may provide benefit for private PKI usage.<a h
             <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-use-cases" class="internal xref">Use cases</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
-                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-verification-of-signaturele" class="internal xref">Verification of Signatureless Merkle Tree Certificates</a></p>
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-verification-of-landmark-re" class="internal xref">Verification of LandMark-Relative Merkle Tree Certificates outside the WebPKI</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.1">
-                    <p id="section-toc.1-1.3.2.1.2.1.1"><a href="#section-3.1.1" class="auto internal xref">3.1.1</a>.  <a href="#name-landmark-distribution-point" class="internal xref">Landmark Distribution Point Mechanism</a></p>
+                    <p id="section-toc.1-1.3.2.1.2.1.1"><a href="#section-3.1.1" class="auto internal xref">3.1.1</a>.  <a href="#name-landmark-distribution-point" class="internal xref">Landmark Distribution Point Fetching Mechanism</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.2">
                     <p id="section-toc.1-1.3.2.1.2.2.1"><a href="#section-3.1.2" class="auto internal xref">3.1.2</a>.  <a href="#name-format-of-landmark" class="internal xref">Format of Landmark</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.3">
+                    <p id="section-toc.1-1.3.2.1.2.3.1"><a href="#section-3.1.3" class="auto internal xref">3.1.3</a>.  <a href="#name-landmark-distribution-serve" class="internal xref">Landmark Distribution server</a></p>
 </li>
                 </ul>
 </li>
@@ -1233,20 +1237,20 @@ use cases. Some of this use-cases may provide benefit for private PKI usage.<a h
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
 <p id="section-1-1">EdNote: Before getting into the nitty gritty, let's start with the potential benefit<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">MTC has been designed to solve two problems for the WebPKI:<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-2">Merkle Tree Certificates (MTC) have been designed to solve two problems for the WebPKI:<a href="#section-1-2" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-1-3">
 <li id="section-1-3.1">
           <p id="section-1-3.1.1"><strong>Size.</strong> A <em>landmark-relative Merkle Tree Certificate</em> is small as it
-  only contains a public key and a small Merkle Tree authentication path.<a href="#section-1-3.1.1" class="pilcrow">¶</a></p>
+  only contains a public key and a small Merkle Tree inclusion proof.<a href="#section-1-3.1.1" class="pilcrow">¶</a></p>
 </li>
         <li id="section-1-3.2">
-          <p id="section-1-3.2.1"><strong>DD.</strong> MTC ensures Certificate Transparency is post-quantum secure, and with that
-allows detection of post-quantum downgrade attacks after the fact.<a href="#section-1-3.2.1" class="pilcrow">¶</a></p>
+          <p id="section-1-3.2.1"><strong>Downgrade Detection.</strong> MTC ensures Certificate Transparency is post-quantum secure, and with that
+allows detection of post-quantum downgrade attacks.<a href="#section-1-3.2.1" class="pilcrow">¶</a></p>
 </li>
       </ol>
 <p id="section-1-4">Besides solving these two problems, MTC has additional benefits.<a href="#section-1-4" class="pilcrow">¶</a></p>
-<p id="section-1-5"><strong>Batch.</strong> MTC reduces the load on the CA HSM by signing batches.<a href="#section-1-5" class="pilcrow">¶</a></p>
-<p id="section-1-6">A PKI that faces any of these three challenges could benefit from MTC.
+<p id="section-1-5"><strong>Batch Signing.</strong> MTC reduces the load on the CA because a single signature is used for a batch of certificates.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-6">A PKI that operates with any of these three challenges could benefit from MTC.
 These advantages come with trade-offs:<a href="#section-1-6" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-1-7">
 <li id="section-1-7.1">
@@ -1285,7 +1289,8 @@ a Merkle tree head is signed, together with providing a proof-of-inclusion
 of the certificate contents in that Merkle tree.<a href="#section-1.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
-<p id="section-1.1-3">The use of a Merkle tree allows for the batch signing.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
+<p id="section-1.1-3">The use of a Merkle tree allows for batch signing, and the cost of a signature is
+amortized over the number of certificates at the leaf notes.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
 <p id="section-1.1-4">If a verifier has out-of-band knowledge of the treehead used (which in
 that case is called a <em>landmark</em>), then it can be satisfied with
 the landmark-relative certificate that leaves out the signatures.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
@@ -1331,20 +1336,20 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       <h2 id="name-use-cases">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-use-cases" class="section-name selfRef">Use cases</a>
       </h2>
-<div id="verification-of-signatureless-merkle-tree-certificates">
+<div id="verification-of-landmark-relative-merkle-tree-certificates-outside-the-webpki">
 <section id="section-3.1">
-        <h3 id="name-verification-of-signaturele">
-<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-verification-of-signaturele" class="section-name selfRef">Verification of Signatureless Merkle Tree Certificates</a>
+        <h3 id="name-verification-of-landmark-re">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-verification-of-landmark-re" class="section-name selfRef">Verification of LandMark-Relative Merkle Tree Certificates outside the WebPKI</a>
         </h3>
 <p id="section-3.1-1">Merkle Tree Certificates which only contain the inclusion proof
-to a signed tree head can only be verified when it contains the landmark
-that completes the inclusion proof contained in the Certificate signature
-field.  If the certificate is in an environment where it has an online
-connection it should be possible for the verifier to request a refresh of its
-landmarks.  There are different ways this could be accomplished:<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+to a signed tree head can only be verified when the verifier contains the
+landmark that completes the inclusion proof contained in the Certificate
+signature field.  If the certificate is in a non webPKI environment where it has an
+online connection it should be possible for the verifier to request a refresh
+of its landmarks.  There are different ways this can be accomplished:<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-3.1-2">
 <li id="section-3.1-2.1">
-            <p id="section-3.1-2.1.1">It could be done dynamically, on demand by the verifier.  A mechanism
+            <p id="section-3.1-2.1.1">It can be done dynamically, on demand by the verifier.  A mechanism
 that fetches landmarks from a distribution location could be added to
 the certificate which could be used to complete this lookup.  Such a
 mechanism could be similar to an X.509 CRLDP, except in this case it
@@ -1359,10 +1364,10 @@ distribution system could push them down to the verifiers).<a href="#section-3.1
 could be pre-shared at a location governed by a local policy.<a href="#section-3.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
-<div id="landmark-distribution-point-mechanism">
+<div id="landmark-distribution-point-fetching-mechanism">
 <section id="section-3.1.1">
           <h4 id="name-landmark-distribution-point">
-<a href="#section-3.1.1" class="section-number selfRef">3.1.1. </a><a href="#name-landmark-distribution-point" class="section-name selfRef">Landmark Distribution Point Mechanism</a>
+<a href="#section-3.1.1" class="section-number selfRef">3.1.1. </a><a href="#name-landmark-distribution-point" class="section-name selfRef">Landmark Distribution Point Fetching Mechanism</a>
           </h4>
 <p id="section-3.1.1-1">The ldpBaseURIs X509 V3 extension is held by the Issuer of the Signatureless
    Merkle Tree Certificate and contains the SEQUENCE of LandmarkDistributionPoints, each
@@ -1403,8 +1408,32 @@ struct {
           <h4 id="name-format-of-landmark">
 <a href="#section-3.1.2" class="section-number selfRef">3.1.2. </a><a href="#name-format-of-landmark" class="section-name selfRef">Format of Landmark</a>
           </h4>
-<p id="section-3.1.2-1">The format of the landmark distribution point is as follows:<a href="#section-3.1.2-1" class="pilcrow">¶</a></p>
-<p id="section-3.1.2-2">TODO<a href="#section-3.1.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-1">The format of the landmark distribution point is defined in section 6.3.3
+of I-D.ietf-plants-merkle-tree-certs<a href="#section-3.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-2">As mentioned above, the verifier may need to request the landmark if it
+is not readily available.<a href="#section-3.1.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-3">TODO, define format of the landmark (or point to section in MTC Draft):<a href="#section-3.1.2-3" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-4">Questions To be answered:
+- When a CA issues an MTC certificate, it will know where the landmark will be published.
+   - Current format uses start and end values from the inclusion proof.  This is nice because no other extension is needed in the EE certs
+- Landmarks should be available in a predictable way
+- Section 6.3.3 of Merkle Tree Certificates describes publishing landmarks, but it just seems to be a text file that contains the list of
+tree sizes for each landmark?  It doesn't seem to mention the actual format of the subtree?
+- Do Landmark's contain a signature, or is it just the MTH and we use the cumulative landmarks along with the inclusion proof?  Where is the verifiable signature? I thought landmarks were signed
+- Is there a repository of test landmarks we can use to test this mechanism?<a href="#section-3.1.2-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="landmark-distribution-server">
+<section id="section-3.1.3">
+          <h4 id="name-landmark-distribution-serve">
+<a href="#section-3.1.3" class="section-number selfRef">3.1.3. </a><a href="#name-landmark-distribution-serve" class="section-name selfRef">Landmark Distribution server</a>
+          </h4>
+<p id="section-3.1.3-1">As mentioned above, the landmarks can be fetched dynamically as needed by
+combining the start and end values from the MTCProof.  The server fulfilling
+these requests will need to parse the start and end values, aggregate the
+require landmark subtrees together, and send the responce back to the client.
+The responce format will be:<a href="#section-3.1.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.3-2">TODO:  DEFINE responce format<a href="#section-3.1.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>

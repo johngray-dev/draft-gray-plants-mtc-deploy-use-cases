@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-04T02:31:34.225122+00:00",
+  "timestamp": "2026-06-30T02:04:17.236584+00:00",
   "repo": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
   "labels": [
     {
@@ -155,7 +155,7 @@
       "labels": [],
       "body": "Correct typos and add some additional content.",
       "createdAt": "2026-04-22T22:24:52Z",
-      "updatedAt": "2026-04-28T20:37:53Z",
+      "updatedAt": "2026-06-29T14:10:59Z",
       "baseRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
       "baseRefName": "bas",
       "baseRefOid": "b5ecd4001789d68b7327e17e05fbb12c9fd2ca43",
@@ -176,7 +176,7 @@
             "abbreviatedOid": "39c92c5"
           },
           "author": "github-actions",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2026-04-22T22:25:15Z",
@@ -420,7 +420,7 @@
       "labels": [],
       "body": "As mentioned in the meeting today, here is some text on the trade-offs that a PKI can make when deciding how to batch their certificates for checkpoints and landmarks. \r\n\r\nWe may want to put example numbers in the future, but for now its a high level guidance on the trade-offs \r\n ",
       "createdAt": "2026-05-13T15:44:43Z",
-      "updatedAt": "2026-05-14T15:09:43Z",
+      "updatedAt": "2026-06-29T14:10:34Z",
       "baseRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
       "baseRefName": "main",
       "baseRefOid": "9278b1bc47f7fc1793031b040604a18dd6d44a07",
@@ -564,24 +564,26 @@
       "id": "PR_kwDOR-NuIc7iPbMV",
       "title": "Jg landmark format",
       "url": "https://github.com/johngray-dev/draft-gray-plants-mtc-deploy-use-cases/pull/8",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "johngray-dev",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-06-03T13:31:27Z",
-      "updatedAt": "2026-06-03T13:48:30Z",
+      "updatedAt": "2026-06-29T14:10:13Z",
       "baseRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
       "baseRefName": "main",
       "baseRefOid": "e684d2b23f4d294e8398e0615ba4e3d1036bd101",
       "headRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
       "headRefName": "jg_landmark_format",
       "headRefOid": "560f2a68f20e2b53c6c55ed1166b58c29e054f07",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-06-29T14:06:18Z",
+      "mergedAt": "2026-06-29T14:06:18Z",
+      "mergedBy": "johngray-dev",
+      "mergeCommit": {
+        "oid": "19dfd52c30ecc593d4e6906079229d4ace57c520"
+      },
       "comments": [],
       "reviews": []
     }

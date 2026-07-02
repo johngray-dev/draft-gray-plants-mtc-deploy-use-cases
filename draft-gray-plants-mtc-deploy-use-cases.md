@@ -222,6 +222,190 @@ of I-D.ietf-plants-merkle-tree-certs
 As mentioned above, the verifier may need to request the landmark if it
 is not readily available.
 
+This draft proposes an extension to the landmark format specified in section
+6.3.3 of I-D.ietf-plants-merkle-tree-certs.  The extension to this format
+will include carrying the necessary hashes so that there is an authentication
+path from one landmark to the next.  The calculation of the path from one
+landmark to the next can occur when a new landmark is published.  
+
+This will allow for period and incremental updates for clients that need to
+request infromation from the LDP server.
+
+The format is defined as follows:
+
+~~~
+<landmark-header>
+<landmark-tree-sizes>
+[landmarkProofs-section]
+~~~~
+
+LandmarkProofs-section
+
+### ABNF Definition of Landmark Format
+{: #abnf-definition}
+
+~~~ abnf
+landmark-file = header newline
+                sizes
+                [multiproof-section]
+
+header = last-landmark SP num-active-landmarks
+
+last-landmark = 1*DIGIT
+num-active-landmarks = 1*DIGIT
+
+sizes = 1*(tree-size newline)
+
+tree-size = 1*DIGIT
+
+multiproof-section = newline
+                     "leaf:" SP hash newline
+                     targets-section
+                     proof-section
+                     layout-section
+
+targets-section = "targets:" newline
+                  1*(target-line)
+
+target-line = landmark-index SP hash newline
+
+landmark-index = 1*DIGIT
+
+proof-section = "proof:" newline
+                1*(hash newline)
+
+layout-section = "layout:" newline
+                 1*(layout-token newline)
+
+layout-token = "left" / "right" / "up"
+
+hash = 1*(HEXDIG)
+newline = %x0A
+SP = %x20
+~~~
+
+### Semantics
+{: #semantics}
+
+#### Landmark Header and Sizes
+{: #semantics-header}
+
+The header and tree size values MUST satisfy all conditions defined in
+Section 6.3.3, including:
+
+* num_active_landmarks &lt;= last_landmark
+* Exactly num_active_landmarks + 1 tree-size entries
+* Tree sizes MUST be strictly monotonically decreasing
+* All tree sizes MUST be less than or equal to the log's latest tree size
+
+#### Leaf
+{: #semantics-leaf}
+
+The value after "leaf:" specifies the starting hash for the proof.
+
+#### Targets
+{: #semantics-targets}
+
+Each entry in the targets section defines a landmark index and its
+expected hash value.
+
+Targets MUST:
+
+* Be in strictly increasing index order
+* Refer only to active landmarks from the header
+* Not contain duplicate indices
+
+#### Proof Nodes
+{: #semantics-proof}
+
+The proof section contains a sequence of sibling hashes used during
+reconstruction. Each hash is consumed exactly once.
+
+#### Layout
+{: #semantics-layout}
+
+The layout section defines how proof nodes are combined with the
+current hash value.
+
+| Token  | Operation                          |
+|--------|------------------------------------|
+| left   | H = Hash(proof[i] \|\| H)          |
+| right  | H = Hash(H \|\| proof[i])          |
+| up     | No hash operation; advance level   |
+
+The number of "left" and "right" tokens MUST equal the number of proof
+nodes.
+
+### Verification Procedure
+{: #verification}
+
+A verifier processes the multiproof as follows:
+
+#### Initialization
+
+~~~
+H := leaf
+proof_index := 0
+~~~
+
+#### Process Layout
+
+For each layout token:
+
+~~~
+if token == "left":
+    H := Hash(proof[proof_index] || H)
+    proof_index++
+
+else if token == "right":
+    H := Hash(H || proof[proof_index])
+    proof_index++
+
+else if token == "up":
+    # no-op
+~~~
+
+#### Target Validation
+
+When reconstruction reaches a level corresponding to a target, the
+computed hash MUST equal the target hash.
+
+#### Completion
+
+Verification succeeds if:
+
+* All targets are validated, and
+* The final computed value matches a trusted root or checkpoint
+
+### Example
+{: #example}
+
+~~~
+5 3
+1024
+768
+512
+256
+
+leaf: 1111111111111111111111111111111111111111111111111111111111111111
+
+targets:
+3 3333333333333333333333333333333333333333333333333333333333333333
+5 5555555555555555555555555555555555555555555555555555555555555555
+
+proof:
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+
+layout:
+left
+right
+up
+left
+~~~
+
+
 TODO, define format of the landmark (or point to section in MTC Draft):
 
 Questions To be answered:

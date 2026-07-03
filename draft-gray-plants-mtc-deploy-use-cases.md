@@ -226,7 +226,7 @@ This draft proposes an extension to the landmark format specified in section
 6.3.3 of I-D.ietf-plants-merkle-tree-certs.  The extension to this format
 will include carrying the necessary hashes so that there is an authentication
 path from one landmark to the next.  The calculation of the path from one
-landmark to the next can occur when a new landmark is published.  
+landmark to the next can occur when a new landmark is published.
 
 This will allow for period and incremental updates for clients that need to
 request infromation from the LDP server.
@@ -237,7 +237,7 @@ The format is defined as follows:
 <landmark-header>
 <landmark-tree-sizes>
 [landmarkProofs-section]
-~~~~
+~~~
 
 LandmarkProofs-section
 
@@ -283,9 +283,6 @@ hash = 1*(HEXDIG)
 newline = %x0A
 SP = %x20
 ~~~
-
-### Semantics
-{: #semantics}
 
 #### Landmark Header and Sizes
 {: #semantics-header}
@@ -339,7 +336,7 @@ nodes.
 ### Verification Procedure
 {: #verification}
 
-A verifier processes the multiproof as follows:
+A verifier processes the landmarkproof as follows:
 
 #### Initialization
 

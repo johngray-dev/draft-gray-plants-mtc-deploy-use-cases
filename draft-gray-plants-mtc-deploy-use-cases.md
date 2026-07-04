@@ -224,7 +224,7 @@ is not readily available.
 
 This draft proposes an extension to the landmark format specified in section
 6.3.3 of I-D.ietf-plants-merkle-tree-certs which defines a mechanism for
-publishing active landmarks. 
+publishing active landmarks.
 
 The current landmark format describes the tree sizes associated for each
 landmark.  However, it does not provide a mechanism for establishing a
@@ -255,7 +255,7 @@ into a target landmark identified by a larger tree size.
 The LandmarkProof does not modify the landmark publication
 format defined in Section 6.3.3.  Instead, it is published as a
 separate resource by the Landmark Distribution Point Server
-(LDP Server)  
+(LDP Server).
 
 The LandmarkProof structure is defined as follows:
 
@@ -377,15 +377,14 @@ including post-quantum signature algorithms.
 
 ### Skip links for efficiency
 
-TODO:  Generating the consistency proof at the LDP server introduces an O(N^2) problem.  For efficiency, it would likely want to cache landmark proofs as they are generated between each landmark.  For example 1->2, 2->3, 3->4 but also 1->3, 1-4, 2-4.  Thus O(n^2).  A better approach is to use a skip link which only generates O(Log(num_landmarks)) for each landmark.  For example, a system that issued a landmark every hour for 10 years would have 87,600 landmarks.  When landmark 87,601 is created, only 17 landmark proofs will need to be created.  When verifying 
+TODO:  Generating the consistency proof at the LDP server introduces an O(N^2) problem.  For efficiency, it would likely want to cache landmark proofs as they are generated between each landmark.  For example 1->2, 2->3, 3->4 but also 1->3, 1-4, 2-4.  Thus O(n^2).  A better approach is to use a skip link which only generates O(Log(num_landmarks)) for each landmark.  For example, a system that issued a landmark every hour for 10 years would have 87,600 landmarks.  When landmark 87,601 is created, only 17 landmark proofs will need to be created.
 
-
-More items to be discussed:
+### More items to be discussed:
 - When a CA issues an MTC certificate, it will know where the landmark will be published.  It needs to provide the LDP service.
 - Current format uses start and end values from the inclusion proof.  This is nice because no other extension is needed in the EE certs
 - Landmarks should be available in a predictable way.  The above format should meet this requirement.
 - Section 6.3.3 of Merkle Tree Certificates describes publishing landmarks, this draft expands on it to include Landmark proofs that can be build towards a trusted anchor.
-- Do Landmark's contain a signature, or is it just the MTH and we use the cumulative landmarks along with the inclusion proof?  
+- Do Landmark's contain a signature, or is it just the MTH and we use the cumulative landmarks along with the inclusion proof?
    - A:  No, there is one trusted target that contains a signature.  That trusted target should be cached so that the full PQ signatures doesn't need to be continually downloaded.  This is where MTC gets its efficiency.
 - Is there a repository of test landmark certificates that we can use to test this mechanism?
 

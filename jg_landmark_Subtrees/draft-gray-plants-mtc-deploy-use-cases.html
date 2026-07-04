@@ -1057,7 +1057,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Gray, et al.</td>
-<td class="center">Expires 4 January 2027</td>
+<td class="center">Expires 5 January 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1070,12 +1070,12 @@ svg {
 <dd class="internet-draft">draft-gray-plants-mtc-deploy-use-cases-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-07-03" class="published">3 July 2026</time>
+<time datetime="2026-07-04" class="published">4 July 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-01-04">4 January 2027</time></dd>
+<dd class="expires"><time datetime="2027-01-05">5 January 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1141,7 +1141,7 @@ use cases. Some of this use-cases may provide benefit for private PKI usage.<a h
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 4 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 5 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1197,16 +1197,7 @@ use cases. Some of this use-cases may provide benefit for private PKI usage.<a h
                     <p id="section-toc.1-1.3.2.1.2.2.1"><a href="#section-3.1.2" class="auto internal xref">3.1.2</a>.  <a href="#name-format-of-landmark" class="internal xref">Format of Landmark</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.3">
-                    <p id="section-toc.1-1.3.2.1.2.3.1"><a href="#section-3.1.3" class="auto internal xref">3.1.3</a>.  <a href="#name-abnf-definition-of-landmark" class="internal xref">ABNF Definition of Landmark Format</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.4">
-                    <p id="section-toc.1-1.3.2.1.2.4.1"><a href="#section-3.1.4" class="auto internal xref">3.1.4</a>.  <a href="#name-verification-procedure" class="internal xref">Verification Procedure</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.5">
-                    <p id="section-toc.1-1.3.2.1.2.5.1"><a href="#section-3.1.5" class="auto internal xref">3.1.5</a>.  <a href="#name-example" class="internal xref">Example</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.6">
-                    <p id="section-toc.1-1.3.2.1.2.6.1"><a href="#section-3.1.6" class="auto internal xref">3.1.6</a>.  <a href="#name-landmark-distribution-serve" class="internal xref">Landmark Distribution server</a></p>
+                    <p id="section-toc.1-1.3.2.1.2.3.1"><a href="#section-3.1.3" class="auto internal xref">3.1.3</a>.  <a href="#name-landmark-distribution-serve" class="internal xref">Landmark Distribution server</a></p>
 </li>
                 </ul>
 </li>
@@ -1417,7 +1408,7 @@ struct {
           <h4 id="name-format-of-landmark">
 <a href="#section-3.1.2" class="section-number selfRef">3.1.2. </a><a href="#name-format-of-landmark" class="section-name selfRef">Format of Landmark</a>
           </h4>
-<p id="section-3.1.2-1">The format of the landmark distribution point is defined in section 6.3.3
+<p id="section-3.1.2-1">The format of the landmark is defined in section 6.3.3
 of I-D.ietf-plants-merkle-tree-certs<a href="#section-3.1.2-1" class="pilcrow">¶</a></p>
 <p id="section-3.1.2-2">As mentioned above, the verifier may need to request the landmark if it
 is not readily available.<a href="#section-3.1.2-2" class="pilcrow">¶</a></p>
@@ -1426,283 +1417,85 @@ is not readily available.<a href="#section-3.1.2-2" class="pilcrow">¶</a></p>
 will include carrying the necessary hashes so that there is an authentication
 path from one landmark to the next.  The calculation of the path from one
 landmark to the next can occur when a new landmark is published.<a href="#section-3.1.2-3" class="pilcrow">¶</a></p>
-<p id="section-3.1.2-4">This will allow for period and incremental updates for clients that need to
+<p id="section-3.1.2-4">This will allow for periodic and incremental updates for clients that need to
 request infromation from the LDP server.<a href="#section-3.1.2-4" class="pilcrow">¶</a></p>
 <p id="section-3.1.2-5">The format is defined as follows:<a href="#section-3.1.2-5" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-3.1.2-6">
 <pre>
-&lt;landmark-header&gt;
-&lt;landmark-tree-sizes&gt;
-[landmarkProofs-section]
+struct {
+    uint64 start;
+    uint64 end;
+
+    HashValue subtree_root;
+
+    HashValue previous_landmark_hash;
+
+    HashValue landmark_transition_path&lt;0..2^16-1&gt;;
+
+    MTCSignature signatures&lt;0..2^16-1&gt;;
+} MTCLandmark;
 </pre><a href="#section-3.1.2-6" class="pilcrow">¶</a>
 </div>
-<p id="section-3.1.2-7">LandmarkProofs-section<a href="#section-3.1.2-7" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="abnf-definition">
-<section id="section-3.1.3">
-          <h4 id="name-abnf-definition-of-landmark">
-<a href="#section-3.1.3" class="section-number selfRef">3.1.3. </a><a href="#name-abnf-definition-of-landmark" class="section-name selfRef">ABNF Definition of Landmark Format</a>
-          </h4>
-<div class="lang-abnf sourcecode" id="section-3.1.3-1">
-<pre>
-landmark-file = header newline
-                sizes
-                [multiproof-section]
-
-header = last-landmark SP num-active-landmarks
-
-last-landmark = 1*DIGIT
-num-active-landmarks = 1*DIGIT
-
-sizes = 1*(tree-size newline)
-
-tree-size = 1*DIGIT
-
-multiproof-section = newline
-                     "leaf:" SP hash newline
-                     targets-section
-                     proof-section
-                     layout-section
-
-targets-section = "targets:" newline
-                  1*(target-line)
-
-target-line = landmark-index SP hash newline
-
-landmark-index = 1*DIGIT
-
-proof-section = "proof:" newline
-                1*(hash newline)
-
-layout-section = "layout:" newline
-                 1*(layout-token newline)
-
-layout-token = "left" / "right" / "up"
-
-hash = 1*(HEXDIG)
-newline = %x0A
-SP = %x20
-</pre><a href="#section-3.1.3-1" class="pilcrow">¶</a>
-</div>
-<div id="semantics-header">
-<section id="section-3.1.3.1">
-            <h5 id="name-landmark-header-and-sizes">
-<a href="#section-3.1.3.1" class="section-number selfRef">3.1.3.1. </a><a href="#name-landmark-header-and-sizes" class="section-name selfRef">Landmark Header and Sizes</a>
-            </h5>
-<p id="section-3.1.3.1-1">The header and tree size values <span class="bcp14">MUST</span> satisfy all conditions defined in
-Section 6.3.3, including:<a href="#section-3.1.3.1-1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-3.1.3.1-2.1">
-                <p id="section-3.1.3.1-2.1.1">num_active_landmarks &lt;= last_landmark<a href="#section-3.1.3.1-2.1.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="normal" id="section-3.1.3.1-2.2">
-                <p id="section-3.1.3.1-2.2.1">Exactly num_active_landmarks + 1 tree-size entries<a href="#section-3.1.3.1-2.2.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="normal" id="section-3.1.3.1-2.3">
-                <p id="section-3.1.3.1-2.3.1">Tree sizes <span class="bcp14">MUST</span> be strictly monotonically decreasing<a href="#section-3.1.3.1-2.3.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="normal" id="section-3.1.3.1-2.4">
-                <p id="section-3.1.3.1-2.4.1">All tree sizes <span class="bcp14">MUST</span> be less than or equal to the log's latest tree size<a href="#section-3.1.3.1-2.4.1" class="pilcrow">¶</a></p>
-</li>
-            </ul>
-</section>
-</div>
-<div id="semantics-leaf">
-<section id="section-3.1.3.2">
-            <h5 id="name-leaf">
-<a href="#section-3.1.3.2" class="section-number selfRef">3.1.3.2. </a><a href="#name-leaf" class="section-name selfRef">Leaf</a>
-            </h5>
-<p id="section-3.1.3.2-1">The value after "leaf:" specifies the starting hash for the proof.<a href="#section-3.1.3.2-1" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="semantics-targets">
-<section id="section-3.1.3.3">
-            <h5 id="name-targets">
-<a href="#section-3.1.3.3" class="section-number selfRef">3.1.3.3. </a><a href="#name-targets" class="section-name selfRef">Targets</a>
-            </h5>
-<p id="section-3.1.3.3-1">Each entry in the targets section defines a landmark index and its
-expected hash value.<a href="#section-3.1.3.3-1" class="pilcrow">¶</a></p>
-<p id="section-3.1.3.3-2">Targets <span class="bcp14">MUST</span>:<a href="#section-3.1.3.3-2" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-3.1.3.3-3.1">
-                <p id="section-3.1.3.3-3.1.1">Be in strictly increasing index order<a href="#section-3.1.3.3-3.1.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="normal" id="section-3.1.3.3-3.2">
-                <p id="section-3.1.3.3-3.2.1">Refer only to active landmarks from the header<a href="#section-3.1.3.3-3.2.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="normal" id="section-3.1.3.3-3.3">
-                <p id="section-3.1.3.3-3.3.1">Not contain duplicate indices<a href="#section-3.1.3.3-3.3.1" class="pilcrow">¶</a></p>
-</li>
-            </ul>
-</section>
-</div>
-<div id="semantics-proof">
-<section id="section-3.1.3.4">
-            <h5 id="name-proof-nodes">
-<a href="#section-3.1.3.4" class="section-number selfRef">3.1.3.4. </a><a href="#name-proof-nodes" class="section-name selfRef">Proof Nodes</a>
-            </h5>
-<p id="section-3.1.3.4-1">The proof section contains a sequence of sibling hashes used during
-reconstruction. Each hash is consumed exactly once.<a href="#section-3.1.3.4-1" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="semantics-layout">
-<section id="section-3.1.3.5">
-            <h5 id="name-layout">
-<a href="#section-3.1.3.5" class="section-number selfRef">3.1.3.5. </a><a href="#name-layout" class="section-name selfRef">Layout</a>
-            </h5>
-<p id="section-3.1.3.5-1">The layout section defines how proof nodes are combined with the
-current hash value.<a href="#section-3.1.3.5-1" class="pilcrow">¶</a></p>
-<table class="center" id="table-1">
-              <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
-<thead>
-                <tr>
-                  <th class="text-left" rowspan="1" colspan="1">Token</th>
-                  <th class="text-left" rowspan="1" colspan="1">Operation</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="text-left" rowspan="1" colspan="1">left</td>
-                  <td class="text-left" rowspan="1" colspan="1">H = Hash(proof[i] || H)</td>
-                </tr>
-                <tr>
-                  <td class="text-left" rowspan="1" colspan="1">right</td>
-                  <td class="text-left" rowspan="1" colspan="1">H = Hash(H || proof[i])</td>
-                </tr>
-                <tr>
-                  <td class="text-left" rowspan="1" colspan="1">up</td>
-                  <td class="text-left" rowspan="1" colspan="1">No hash operation; advance level</td>
-                </tr>
-              </tbody>
-            </table>
-<p id="section-3.1.3.5-3">The number of "left" and "right" tokens <span class="bcp14">MUST</span> equal the number of proof
-nodes.<a href="#section-3.1.3.5-3" class="pilcrow">¶</a></p>
-</section>
-</div>
-</section>
-</div>
-<div id="verification">
-<section id="section-3.1.4">
-          <h4 id="name-verification-procedure">
-<a href="#section-3.1.4" class="section-number selfRef">3.1.4. </a><a href="#name-verification-procedure" class="section-name selfRef">Verification Procedure</a>
-          </h4>
-<p id="section-3.1.4-1">A verifier processes the landmarkproof as follows:<a href="#section-3.1.4-1" class="pilcrow">¶</a></p>
-<div id="initialization">
-<section id="section-3.1.4.1">
-            <h5 id="name-initialization">
-<a href="#section-3.1.4.1" class="section-number selfRef">3.1.4.1. </a><a href="#name-initialization" class="section-name selfRef">Initialization</a>
-            </h5>
-<div class="alignLeft art-text artwork" id="section-3.1.4.1-1">
-<pre>
-H := leaf
-proof_index := 0
-</pre><a href="#section-3.1.4.1-1" class="pilcrow">¶</a>
-</div>
-</section>
-</div>
-<div id="process-layout">
-<section id="section-3.1.4.2">
-            <h5 id="name-process-layout">
-<a href="#section-3.1.4.2" class="section-number selfRef">3.1.4.2. </a><a href="#name-process-layout" class="section-name selfRef">Process Layout</a>
-            </h5>
-<p id="section-3.1.4.2-1">For each layout token:<a href="#section-3.1.4.2-1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-3.1.4.2-2">
-<pre>
-if token == "left":
-    H := Hash(proof[proof_index] || H)
-    proof_index++
-
-else if token == "right":
-    H := Hash(H || proof[proof_index])
-    proof_index++
-
-else if token == "up":
-    # no-op
-</pre><a href="#section-3.1.4.2-2" class="pilcrow">¶</a>
-</div>
-</section>
-</div>
-<div id="target-validation">
-<section id="section-3.1.4.3">
-            <h5 id="name-target-validation">
-<a href="#section-3.1.4.3" class="section-number selfRef">3.1.4.3. </a><a href="#name-target-validation" class="section-name selfRef">Target Validation</a>
-            </h5>
-<p id="section-3.1.4.3-1">When reconstruction reaches a level corresponding to a target, the
-computed hash <span class="bcp14">MUST</span> equal the target hash.<a href="#section-3.1.4.3-1" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="completion">
-<section id="section-3.1.4.4">
-            <h5 id="name-completion">
-<a href="#section-3.1.4.4" class="section-number selfRef">3.1.4.4. </a><a href="#name-completion" class="section-name selfRef">Completion</a>
-            </h5>
-<p id="section-3.1.4.4-1">Verification succeeds if:<a href="#section-3.1.4.4-1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-3.1.4.4-2.1">
-                <p id="section-3.1.4.4-2.1.1">All targets are validated, and<a href="#section-3.1.4.4-2.1.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="normal" id="section-3.1.4.4-2.2">
-                <p id="section-3.1.4.4-2.2.1">The final computed value matches a trusted root or checkpoint<a href="#section-3.1.4.4-2.2.1" class="pilcrow">¶</a></p>
-</li>
-            </ul>
-</section>
-</div>
-</section>
-</div>
-<div id="example">
-<section id="section-3.1.5">
-          <h4 id="name-example">
-<a href="#section-3.1.5" class="section-number selfRef">3.1.5. </a><a href="#name-example" class="section-name selfRef">Example</a>
-          </h4>
-<div class="alignLeft art-text artwork" id="section-3.1.5-1">
-<pre>
-5 3
-1024
-768
-512
-256
-
-leaf: 1111111111111111111111111111111111111111111111111111111111111111
-
-targets:
-3 3333333333333333333333333333333333333333333333333333333333333333
-5 5555555555555555555555555555555555555555555555555555555555555555
-
-proof:
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
-
-layout:
-left
-right
-up
-left
-</pre><a href="#section-3.1.5-1" class="pilcrow">¶</a>
-</div>
-<p id="section-3.1.5-2">TODO, define format of the landmark (or point to section in MTC Draft):<a href="#section-3.1.5-2" class="pilcrow">¶</a></p>
-<p id="section-3.1.5-3">Questions To be answered:
+<p id="section-3.1.2-7">start:
+   The first leaf index covered by the subtree authenticated by
+   this landmark.<a href="#section-3.1.2-7" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-8">end:
+   The last leaf index covered by the subtree authenticated by
+   this landmark.<a href="#section-3.1.2-8" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-9">subtree_root:
+   The Merkle Tree root calculated for the subtree identified by
+   start and end.<a href="#section-3.1.2-9" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-10">previous_landmark_hash:
+   The hash of the previously published landmark.  For the first
+   landmark in a series, this value <span class="bcp14">SHALL</span> be omitted or set to
+   the all-zero hash value.<a href="#section-3.1.2-10" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-11">landmark_transition_path:
+   A sequence of hashes required to authenticate the previous
+   landmark within the current landmark.  The exact calculation
+   of this value is implementation dependent but <span class="bcp14">SHALL</span> permit a
+   verifier to construct a verifiable chain between successive
+   landmarks.<a href="#section-3.1.2-11" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-12">signatures:
+   One or more signatures generated by the issuer over the
+   contents of the landmark.<a href="#section-3.1.2-12" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-13">When a new landmark is published, the issuer calculates the
+landmark_transition_path that links the previous landmark to the
+current landmark.  This computation is performed once at
+publication time and does not require subsequent recalculation.<a href="#section-3.1.2-13" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-14">A verifier that possesses a landmark for the subtree identified
+by the start and end values from the MTCProof structure may
+retrieve newer landmarks from the Landmark Distribution Point
+until reaching a locally trusted landmark.<a href="#section-3.1.2-14" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-15">For each successive landmark, the verifier <span class="bcp14">SHALL</span> verify the
+issuer signature and <span class="bcp14">SHALL</span> verify the landmark_transition_path
+from the previously validated landmark.  Successful validation
+establishes an authenticated chain from the subtree referenced
+by the certificate inclusion proof to the trusted landmark.<a href="#section-3.1.2-15" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-16">This mechanism allows incremental retrieval of validation data
+while avoiding the need to redistribute complete historical
+Merkle Tree state.<a href="#section-3.1.2-16" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-17">TODO, define format of the landmark (or point to section in MTC Draft):<a href="#section-3.1.2-17" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-18">Questions To be answered:
 - When a CA issues an MTC certificate, it will know where the landmark will be published.
    - Current format uses start and end values from the inclusion proof.  This is nice because no other extension is needed in the EE certs
 - Landmarks should be available in a predictable way
 - Section 6.3.3 of Merkle Tree Certificates describes publishing landmarks, but it just seems to be a text file that contains the list of
 tree sizes for each landmark?  It doesn't seem to mention the actual format of the subtree?
 - Do Landmark's contain a signature, or is it just the MTH and we use the cumulative landmarks along with the inclusion proof?  Where is the verifiable signature? I thought landmarks were signed
-- Is there a repository of test landmarks we can use to test this mechanism?<a href="#section-3.1.5-3" class="pilcrow">¶</a></p>
+- Is there a repository of test landmarks we can use to test this mechanism?<a href="#section-3.1.2-18" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="landmark-distribution-server">
-<section id="section-3.1.6">
+<section id="section-3.1.3">
           <h4 id="name-landmark-distribution-serve">
-<a href="#section-3.1.6" class="section-number selfRef">3.1.6. </a><a href="#name-landmark-distribution-serve" class="section-name selfRef">Landmark Distribution server</a>
+<a href="#section-3.1.3" class="section-number selfRef">3.1.3. </a><a href="#name-landmark-distribution-serve" class="section-name selfRef">Landmark Distribution server</a>
           </h4>
-<p id="section-3.1.6-1">As mentioned above, the landmarks can be fetched dynamically as needed by
+<p id="section-3.1.3-1">As mentioned above, the landmarks can be fetched dynamically as needed by
 combining the start and end values from the MTCProof.  The server fulfilling
 these requests will need to parse the start and end values, aggregate the
 require landmark subtrees together, and send the responce back to the client.
-The responce format will be:<a href="#section-3.1.6-1" class="pilcrow">¶</a></p>
-<p id="section-3.1.6-2">TODO:  DEFINE responce format<a href="#section-3.1.6-2" class="pilcrow">¶</a></p>
+The responce format will be:<a href="#section-3.1.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.3-2">TODO:  DEFINE responce format<a href="#section-3.1.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>

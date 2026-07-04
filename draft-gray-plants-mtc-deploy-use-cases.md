@@ -223,26 +223,22 @@ As mentioned above, the verifier may need to request the landmark if it
 is not readily available.
 
 This draft proposes an extension to the landmark format specified in section
-6.3.3 of I-D.ietf-plants-merkle-tree-certs.  The extension to this format
-will include carrying the necessary hashes so that there is an authentication
-path from one landmark to the next.  The calculation of the path from one
-landmark to the next can occur when a new landmark is published.
+6.3.3 of I-D.ietf-plants-merkle-tree-certs which defines a mechanism for
+publishing active landmarks. 
+
+The current landmark format describes the tree sizes associated for each
+landmark.  However, it does not provide a mechanism for establishing a
+cryptographic relationship between a previously published landmark and a
+more recent landmark.  This document defines this mechanism as a Landmark
+Proof.  It includes carrying the necessary hashes so that there is an
+authentication path from one landmark to the next.  The calculation of the
+path from one landmark to the next can occur when a new landmark is published.
 
 This will allow for periodic and incremental updates for clients that need to
-request infromation from the LDP server.
+request information from the LDP server.
 
 
-### Landmark Proof Publication
-
-Section 6.3.3 of I-D.ietf-plants-merkle-tree-certs defines a
-mechanism for publishing active landmarks.  Each landmark is
-identified by its corresponding tree size.
-
-The landmark publication mechanism allows a verifier to
-determine the tree sizes associated with available landmarks.
-However, it does not provide a mechanism for establishing a
-cryptographic relationship between a previously published
-landmark and a more recent landmark.
+### Landmark Proof
 
 A verifier validating an MTCProof may possess a trust anchor
 associated with a more recent landmark than the one
@@ -258,7 +254,8 @@ into a target landmark identified by a larger tree size.
 
 The LandmarkProof does not modify the landmark publication
 format defined in Section 6.3.3.  Instead, it is published as a
-separate resource by the Landmark Distribution Point.
+separate resource by the Landmark Distribution Point Server
+(LDP Server)  
 
 The LandmarkProof structure is defined as follows:
 
@@ -274,7 +271,7 @@ struct {
 Where:
 
 source_tree_size:
-   The tree size corresponding to the source landmark.  
+   The tree size corresponding to the source landmark.
 
 target_tree_size:
    The tree size corresponding to the target landmark.
@@ -296,7 +293,7 @@ Point for subsequent retrieval by the verifier as needed.
 
 A verifier validating an MTCProof obtains the corresponding
 subtree information from the certificate and retrieves the
-associated landmark as described in Section 6.3.3.
+associated landmark file as described in Section 6.3.3.
 
 If the verifier possesses a trusted landmark whose tree size is
 greater than the retrieved landmark's tree size, the verifier
@@ -310,7 +307,7 @@ LandmarkDistributionPoint?
     target=<target_tree_size>
 ~~~
 
-The specific URI format is implementation dependent.
+TODO:  Agree on the URI format
 
 The Landmark Distribution Point SHALL return a LandmarkProof
 capable of demonstrating that the source landmark is
@@ -323,22 +320,25 @@ A verifier SHALL perform the following steps:
 1.  Extract the `start` and `end` values from the MTCProof.
 
 2.  Retrieve the landmark corresponding to the authenticated
-    subtree by contacting the LDP server.
+    subtree by contacting the LDP server (or retrieving it
+    from a local cache).
 
-3.  Determine the tree size associated with the retrieved
+4.  Determine the tree size associated with the retrieved
     landmark.
 
-4.  Obtain a trusted target landmark if one is not already cached
+5.  Obtain a trusted target landmark if one is not already
+    cached.  For example, a likely candidate would be the
+    latest landmark specified by the landmark file.
 
-5.  If the source and target landmarks differ, retrieve a
+6.  If the source and target landmarks differ, retrieve a
     LandmarkProof connecting the two tree sizes.
 
-6.  Verify the signature(s) associated with the trusted target
+7.  Verify the signature(s) associated with the trusted target
     landmark.
 
-7.  Verify the LandmarkProof and establish that the source
+8.  Verify the LandmarkProof and establish that the source
     landmark tree is a prefix of the target landmark tree.
-    
+
 9.  Use the validated source landmark to verify the Inclusion
     Proof contained within the MTCProof.
 
@@ -375,20 +375,24 @@ This property is particularly beneficial when signatures are
 generated using computationally expensive algorithms,
 including post-quantum signature algorithms.
 
+### Skip links for efficiency
 
-Questions To be answered:
-- When a CA issues an MTC certificate, it will know where the landmark will be published.
-   - Current format uses start and end values from the inclusion proof.  This is nice because no other extension is needed in the EE certs
-- Landmarks should be available in a predictable way
-- Section 6.3.3 of Merkle Tree Certificates describes publishing landmarks, but it just seems to be a text file that contains the list of
-tree sizes for each landmark?  It doesn't seem to mention the actual format of the subtree?
-- Do Landmark's contain a signature, or is it just the MTH and we use the cumulative landmarks along with the inclusion proof?  Where is the verifiable signature? I thought landmarks were signed
-   - A:  No, there is one trusted target that contains a signature.  That trusted target should be cached so that the full PQ signatures doesn't need to be continually downloaded.  This is where MTC gets its efficiency
-- Is there a repository of test landmarks we can use to test this mechanism?
+TODO:  Generating the consistency proof at the LDP server introduces an O(N^2) problem.  For efficiency, it would likely want to cache landmark proofs as they are generated between each landmark.  For example 1->2, 2->3, 3->4 but also 1->3, 1-4, 2-4.  Thus O(n^2).  A better approach is to use a skip link which only generates O(Log(num_landmarks)) for each landmark.  For example, a system that issued a landmark every hour for 10 years would have 87,600 landmarks.  When landmark 87,601 is created, only 17 landmark proofs will need to be created.  When verifying 
+
+
+More items to be discussed:
+- When a CA issues an MTC certificate, it will know where the landmark will be published.  It needs to provide the LDP service.
+- Current format uses start and end values from the inclusion proof.  This is nice because no other extension is needed in the EE certs
+- Landmarks should be available in a predictable way.  The above format should meet this requirement.
+- Section 6.3.3 of Merkle Tree Certificates describes publishing landmarks, this draft expands on it to include Landmark proofs that can be build towards a trusted anchor.
+- Do Landmark's contain a signature, or is it just the MTH and we use the cumulative landmarks along with the inclusion proof?  
+   - A:  No, there is one trusted target that contains a signature.  That trusted target should be cached so that the full PQ signatures doesn't need to be continually downloaded.  This is where MTC gets its efficiency.
+- Is there a repository of test landmark certificates that we can use to test this mechanism?
+
 
 ### Landmark Distribution server
 As mentioned above, the landmarks can be fetched dynamically as needed by
-combining the start and end values from the MTCProof.  The server fulfilling
+combining the start and end values from the MTCProof.  The LDP server fulfilling
 these requests will need to parse the start and end values, aggregate the
 require landmark subtrees together, and send the responce back to the client.
 The responce format will be:
@@ -419,15 +423,14 @@ TODO:  If a certificate is not used, the same kind of fetching mechanism
 would be needed for the verifier but that would need to be provided by
 some out-of-band mechanism.
 
-Changing verification code; only one signature.
+
 
 ## Just using transparency
+TODO - discuss advantages of transparency logs
 - Track mis-issued certificates in your private key
 - CA's already have an audit trail - is there an advantage to using transparency logs
 - Need a source of truth for cross checking
 
-# Different ways of acquiring landmarks
-This section will describe the different ways landmarks can be obtained.
 
 # Security Considerations
 

@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-30T02:04:17.236584+00:00",
+  "timestamp": "2026-07-05T01:50:13.710584+00:00",
   "repo": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
   "labels": [
     {
@@ -584,6 +584,32 @@
       "mergeCommit": {
         "oid": "19dfd52c30ecc593d4e6906079229d4ace57c520"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 9,
+      "id": "PR_kwDOR-NuIc7tx4F1",
+      "title": "Jg landmark subtrees",
+      "url": "https://github.com/johngray-dev/draft-gray-plants-mtc-deploy-use-cases/pull/9",
+      "state": "OPEN",
+      "author": "johngray-dev",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Add text about possible landmark format and landmark consistency proof structure.   ",
+      "createdAt": "2026-07-04T02:39:43Z",
+      "updatedAt": "2026-07-04T02:39:43Z",
+      "baseRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
+      "baseRefName": "main",
+      "baseRefOid": "19dfd52c30ecc593d4e6906079229d4ace57c520",
+      "headRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
+      "headRefName": "jg_landmark_Subtrees",
+      "headRefOid": "2a6d940d505140c41f86035fa45227d5c195afc3",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }

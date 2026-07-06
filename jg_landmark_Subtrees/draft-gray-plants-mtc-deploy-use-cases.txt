@@ -5,12 +5,12 @@
 PKI, Logs, And Tree Signatures                                   J. Gray
 Internet-Draft                                                   Entrust
 Intended status: Informational                              M. Ounsworth
-Expires: 5 January 2027                                   Cryptic Forest
+Expires: 7 January 2027                                   Cryptic Forest
                                                             J. Klaussner
                                                     Bundesdruckerei GmbH
                                                               L. Tindell
                                        UK National Cyber Security Centre
-                                                             4 July 2026
+                                                             6 July 2026
 
 
              Merkle Tree Certificates Deployment Use Cases
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 January 2027.
+   This Internet-Draft will expire on 7 January 2027.
 
 Copyright Notice
 
@@ -85,13 +85,12 @@ Table of Contents
            outside the WebPKI
        3.1.1.  Landmark Distribution Point Fetching Mechanism
        3.1.2.  Format of Landmark
-       3.1.3.  Landmark Proof
-       3.1.4.  Landmark Proof Retrieval
-       3.1.5.  Validation Procedure
-       3.1.6.  Efficiency Considerations
-       3.1.7.  Skip links for efficiency
-       3.1.8.  More items to be discussed:
-       3.1.9.  Landmark Distribution server
+       3.1.3.  Landmark Subtree Proof Retrieval
+       3.1.4.  Validation Procedure
+       3.1.5.  Efficiency Considerations
+       3.1.6.  Skip links for efficiency
+       3.1.7.  More items to be discussed:
+       3.1.8.  Landmark Distribution server
      3.2.  Batching for performance optimization
      3.3.  Just using transparency
    4.  Security Considerations
@@ -272,48 +271,52 @@ LandmarkDistributionPoint ::= IA5String
    each landmark.  However, it does not provide a mechanism for
    establishing a cryptographic relationship between a previously
    published landmark and a more recent landmark.  This document defines
-   this mechanism as a Landmark Proof.  It includes carrying the
-   necessary hashes so that there is an authentication path from one
-   landmark to the next.  The calculation of the path from one landmark
-   to the next can occur when a new landmark is published.
+   this mechanism as a Landmark subtree consistency Proof.  It includes
+   carrying the necessary hashes so that there is a subtree consistency
+   proof from one landmark to the next.  The calculation of the subtree
+   consistency proof from one landmark to the next can occur when a new
+   landmark is published.  See section 4.4 of I-D.ietf-plants-merkle-
+   tree-certs for information on subtree consistency proofs.
 
    This will allow for periodic and incremental updates for clients that
    need to request information from the LDP server.
 
-3.1.3.  Landmark Proof
+3.1.2.1.  Landmark subtree consistency proof
 
-   A verifier validating an MTCProof may possess a trust anchor
-   associated with a more recent landmark than the one corresponding to
-   the certificate's inclusion proof.  Requiring the verifier to
-   retrieve and validate every intermediate landmark would increase both
-   network traffic and signature verification costs.
+   A verifier requesting updated landmarks may require a lot of new
+   landmarks.  Requiring the verifier to retrieve and validate every
+   intermediate landmark would increase both network traffic and
+   signature verification costs.
 
-   To address this problem, this document defines a LandmarkProof
-   object.  A LandmarkProof provides cryptographic evidence that a
-   source landmark identified by one tree size is incorporated into a
+   To address this problem, this document defines a LandmarkSubtreeProof
+   object.  A LandmarkSubtreeProof provides cryptographic evidence that
+   a source landmark identified by one tree size is incorporated into a
    target landmark identified by a larger tree size.
 
-   The LandmarkProof does not modify the landmark publication format
-   defined in Section 6.3.3.  Instead, it is published as a separate
-   resource by the Landmark Distribution Point Server (LDP Server).
+   The LandmarkSubtreeProof does not modify the landmark publication
+   format defined in Section 6.3.3.  Instead, it is published as a
+   separate resource by the Landmark Distribution Point Server (LDP
+   Server).
 
-   The LandmarkProof structure is defined as follows:
+   The LandmarkSubtreeProof structure is defined as follows:
 
    struct {
        uint64 source_tree_size;
        uint64 target_tree_size;
 
        HashValue consistency_proof<0..2^16-1>;
-   } LandmarkProof;
+   } LandmarkSubtreeProof;
 
    Where:
 
-   source_tree_size: The tree size corresponding to the source landmark.
+   source_tree_size (similar to start in MTCProof): The tree size
+   corresponding to the source landmark.
 
-   target_tree_size: The tree size corresponding to the target landmark.
+   target_tree_size (similar to end in MTCProof): The tree size
+   corresponding to the target landmark.
 
    consistency_proof: A proof demonstrating that the source landmark
-   tree is a prefix of the target landmark tree.
+   tree is a subtree of the target landmark tree.
 
    The consistency_proof SHALL be constructed so that successful
    verification demonstrates that all entries represented by the source
@@ -324,7 +327,7 @@ LandmarkDistributionPoint ::= IA5String
    MAY be retained by the Landmark Distribution Point for subsequent
    retrieval by the verifier as needed.
 
-3.1.4.  Landmark Proof Retrieval
+3.1.3.  Landmark Subtree Proof Retrieval
 
    A verifier validating an MTCProof obtains the corresponding subtree
    information from the certificate and retrieves the associated
@@ -332,7 +335,20 @@ LandmarkDistributionPoint ::= IA5String
 
    If the verifier possesses a trusted landmark whose tree size is
    greater than the retrieved landmark's tree size, the verifier MAY
-   obtain a LandmarkProof connecting the two landmarks.
+   obtain a set of LandmarkSubtreeProofSet connecting the two landmarks.
+
+3.1.3.1.  Landmark Subtree Proof Set
+
+   A LandmarkSubtreeProofSet contains an ordered sequence of
+   LandmarkSubtreeProof values.  The first proof SHALL be verified
+   against a trusted landmark root.  Each subsequent proof SHALL be
+   verified against the landmark root reconstructed from the preceding
+   proof.  Successful verification of all contained proofs establishes a
+   cryptographic path from the trusted landmark to the target landmark.
+
+   struct {
+       LandmarkSubtreeProof proofSet<0..2^16-1>;
+   } LandmarkSubtreeProofSet;
 
    One possible retrieval mechanism is:
 
@@ -342,34 +358,42 @@ LandmarkDistributionPoint ::= IA5String
 
    TODO: Agree on the URI format
 
-   The Landmark Distribution Point SHALL return a LandmarkProof capable
-   of demonstrating that the source landmark is incorporated into the
-   target landmark.
+   The Landmark Distribution Point Server SHALL return a
+   LandmarkSubtreeProofSet capable of demonstrating that the source
+   landmark is incorporated into the target landmark.
 
-3.1.5.  Validation Procedure
+3.1.4.  Validation Procedure
 
    A verifier SHALL perform the following steps:
 
    1.  Extract the start and end values from the MTCProof.
 
-   2.  Retrieve the landmark corresponding to the authenticated subtree
-       by contacting the LDP server (or retrieving it from a local
-       cache).
+   2.  Retrieve the landmark file corresponding to the authenticated
+       subtree by contacting the LDP server (or retrieving it from a
+       local cache).
 
-   3.  Determine the tree size associated with the retrieved landmark.
-
-   4.  Obtain a trusted target landmark if one is not already cached.
+   3.  Obtain a trusted target landmark if one is not already cached.
        For example, a likely candidate would be the latest landmark
-       specified by the landmark file.
+       referenced by the Landmark File.
 
-   5.  If the source and target landmarks differ, retrieve a
-       LandmarkProof connecting the two tree sizes.
+   4.  Verify the signature(s) associated with the trusted target
+       landmark.  If signature verification fails, the verifier MUST
+       reject the certificate.
 
-   6.  Verify the signature(s) associated with the trusted target
-       landmark.
+   5.  If the source subtree landmark and trusted target landmark
+       differ, retrieve a LandmarkSubtreeProofSet that establishes a
+       sequence of authenticated subtree transitions between the source
+       landmark and the trusted target landmark.
 
-   7.  Verify the LandmarkProof and establish that the source landmark
-       tree is a prefix of the target landmark tree.
+   6.  Verify each LandmarkSubtreeProof contained in the
+       LandmarkSubtreeProofSet in the order in which it appears.  The
+       first proof SHALL be verified against the source landmark.  Each
+       subsequent proof SHALL be verified against the landmark root
+       reconstructed from the preceding proof.
+
+   7.  Successful verification of the complete LandmarkSubtreeProofSet
+       SHALL establish that the source landmark tree is a cryptographic
+       prefix of the trusted target landmark tree.
 
    8.  Use the validated source landmark to verify the Inclusion Proof
        contained within the MTCProof.
@@ -379,14 +403,15 @@ LandmarkDistributionPoint ::= IA5String
    Successful completion of this procedure establishes that the
    certificate entry is included in the authenticated subtree identified
    by the source landmark and that the source landmark is
-   cryptographically bound to the trusted target landmark.
+   cryptographically bound via the verified LandmarkSubtreeProofSet to
+   the trusted target landmark.
 
-3.1.6.  Efficiency Considerations
+3.1.5.  Efficiency Considerations
 
-   The purpose of LandmarkProofs is to reduce the number of landmarks
-   and signatures that must be processed by a verifier.
+   The purpose of LandmarkSubtreeProofs is to reduce the number of
+   landmarks and signatures that must be processed by a verifier.
 
-   Without LandmarkProofs, a verifier may be required to retrieve
+   Without LandmarkSubtreeProofs, a verifier may be required to retrieve
    multiple intermediate landmarks and validate the signatures
    associated with each landmark before reaching a currently trusted
    landmark.
@@ -397,7 +422,7 @@ LandmarkDistributionPoint ::= IA5String
 
    *  the trusted target landmark; and
 
-   *  a LandmarkProof connecting the corresponding tree sizes.
+   *  a LandmarkSubtreeProofSet connecting the corresponding tree sizes.
 
    As a result, the number of signature verification operations is
    independent of the number of intermediate landmarks published between
@@ -407,21 +432,23 @@ LandmarkDistributionPoint ::= IA5String
    generated using computationally expensive algorithms, including post-
    quantum signature algorithms.
 
-3.1.7.  Skip links for efficiency
+3.1.6.  Skip links for efficiency
 
    TODO: Generating the consistency proof at the LDP server introduces
-   an O(N^2) problem.  For efficiency, it would likely want to cache
-   landmark proofs as they are generated between each landmark.  For
-   example 1->2, 2->3, 3->4 but also 1->3, 1-4, 2-4.  Thus O(n^2).  A
-   better approach is to use a skip link which only generates
+   an O(N^2) problem.  For efficiency, we likely want to cache landmark
+   proofs as they are generated between each landmark.  For example
+   1->2, 2->3, 3->4 but also 1->3, 1-4, 2-4.  Thus O(n^2).  A better
+   approach is to use a skip link which only generates
    O(Log(num_landmarks)) for each landmark.  For example, a system that
    issued a landmark every hour for 10 years would have 87,600
    landmarks.  When landmark 87,601 is created, only 17 landmark proofs
-   will need to be created.
+   will need to be created.  It would also reduce the
+   LandmarkSubtreeProofSet from O(num_landmarks) to
+   O(Log(num_landmarks), greatly reducing bandwidth requirements!
 
-3.1.8.  More items to be discussed:
+3.1.7.  More items to be discussed:
 
-   *  When a CA issues an MTC certificate, it will know where the
+   *  When a CA issues an MTC certificate, it will decide where the
       landmark will be published.  It needs to provide the LDP service.
 
    *  Current format uses start and end values from the inclusion proof.
@@ -429,10 +456,6 @@ LandmarkDistributionPoint ::= IA5String
 
    *  Landmarks should be available in a predictable way.  The above
       format should meet this requirement.
-
-   *  Section 6.3.3 of Merkle Tree Certificates describes publishing
-      landmarks, this draft expands on it to include Landmark proofs
-      that can be build towards a trusted anchor.
 
    *  Do Landmark's contain a signature, or is it just the MTH and we
       use the cumulative landmarks along with the inclusion proof?
@@ -445,7 +468,9 @@ LandmarkDistributionPoint ::= IA5String
    *  Is there a repository of test landmark certificates that we can
       use to test this mechanism?
 
-3.1.9.  Landmark Distribution server
+      -  A: Seems like a good hackathon project!
+
+3.1.8.  Landmark Distribution server
 
    As mentioned above, the landmarks can be fetched dynamically as
    needed by combining the start and end values from the MTCProof.  The

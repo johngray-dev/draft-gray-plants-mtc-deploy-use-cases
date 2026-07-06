@@ -231,11 +231,11 @@ landmark.  However, it does not provide a mechanism for establishing a
 cryptographic relationship between a previously published landmark and a
 more recent landmark.  This document defines this mechanism as a Landmark
 subtree consistency Proof.  It includes carrying the necessary hashes so
-that there is a subtree consistency proof from one landmark to the next. 
+that there is a subtree consistency proof from one landmark to the next.
 The calculation of the subtree consistency proof from one landmark to the
 next can occur when a new landmark is published.  See section
 4.4 of I-D.ietf-plants-merkle-tree-certs for information on subtree
-consistency proofs.  
+consistency proofs.
 
 This will allow for periodic and incremental updates for clients that need to
 request information from the LDP server.
@@ -247,7 +247,7 @@ Requiring the verifier to retrieve and validate every intermediate
 landmark would increase both network traffic and signature
 verification costs.
 
-To address this problem, this document defines a 
+To address this problem, this document defines a
 LandmarkSubtreeProof object.  A LandmarkSubtreeProof provides cryptographic
 evidence that a source landmark identified by one tree size is incorporated
 into a target landmark identified by a larger tree size.
@@ -320,7 +320,7 @@ LandmarkDistributionPoint?
 
 TODO:  Agree on the URI format
 
-The Landmark Distribution Point Server SHALL return a 
+The Landmark Distribution Point Server SHALL return a
 LandmarkSubtreeProofSet capable of demonstrating that the source landmark is
 incorporated into the target landmark.
 

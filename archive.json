@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-05T01:50:13.710584+00:00",
+  "timestamp": "2026-07-07T01:52:55.731958+00:00",
   "repo": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
   "labels": [
     {
@@ -592,26 +592,120 @@
       "id": "PR_kwDOR-NuIc7tx4F1",
       "title": "Jg landmark subtrees",
       "url": "https://github.com/johngray-dev/draft-gray-plants-mtc-deploy-use-cases/pull/9",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "johngray-dev",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Add text about possible landmark format and landmark consistency proof structure.   ",
       "createdAt": "2026-07-04T02:39:43Z",
-      "updatedAt": "2026-07-04T02:39:43Z",
+      "updatedAt": "2026-07-06T21:49:50Z",
       "baseRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
       "baseRefName": "main",
       "baseRefOid": "19dfd52c30ecc593d4e6906079229d4ace57c520",
       "headRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
       "headRefName": "jg_landmark_Subtrees",
-      "headRefOid": "2a6d940d505140c41f86035fa45227d5c195afc3",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "47b39a88133ae10a93e7053ad90ccae9c0d2ae65",
+      "closedAt": "2026-07-06T21:49:50Z",
+      "mergedAt": "2026-07-06T21:49:50Z",
+      "mergedBy": "johngray-dev",
+      "mergeCommit": {
+        "oid": "d5af29292bf7bfb163af232b62a078d69830b7c6"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOR-NuIc8AAAABFHMmrw",
+          "commit": {
+            "abbreviatedOid": "2a6d940"
+          },
+          "author": "Luke-T-2",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-06T16:59:28Z",
+          "updatedAt": "2026-07-06T16:59:28Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "If we think of landmarks as just special subtrees of the Merkle Tree, can you use the Subtree Consistency Proofs in section 4.4? ",
+              "createdAt": "2026-07-06T16:59:28Z",
+              "updatedAt": "2026-07-06T16:59:28Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOR-NuIc8AAAABFHZcPA",
+          "commit": {
+            "abbreviatedOid": "2a6d940"
+          },
+          "author": "Luke-T-2",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-06T17:30:54Z",
+          "updatedAt": "2026-07-06T17:30:54Z",
+          "comments": [
+            {
+              "originalPosition": 35,
+              "body": "Should we start with maybe a simpler case of trying to send down a list of landmarks, but without wanting to send the signatures for all of the landmarks.\n\nsome alternative text maybe:  \n\nA verifier requesting updated landmarks may require a lot of new landmarks. \nRequiring the verifier to retrieve and validate every intermediate\nlandmark individually would increase both network traffic and signature\nverification costs.\n\n...\n\nWith the Landmark proofs you could just have the proof from one landmark to the next, keeping them in a chain. \n\nThen later on, the retrieval mechanism would be for the verifier to send the point on the tree they want the list to start from, this could be their most up to date point on the tree in their cache so far. \n\n~~~\nLandmarkDistributionPoint?\nstart=<start_tree_size>&\nend=<end_tree_size>\n~~~\n\nand the response would be all the landmarks from the start, with the landmark proofs between them, finishing at the final landmark and the signature material for that final landmark! \n\n\nSorry for the lateness of the comment before the deadline - hopefully this all makes sense \n",
+              "createdAt": "2026-07-06T17:30:54Z",
+              "updatedAt": "2026-07-06T17:30:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOR-NuIc8AAAABFHaHhg",
+          "commit": {
+            "abbreviatedOid": "2a6d940"
+          },
+          "author": "Luke-T-2",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "Hey John, \n\nsorry for the late comments - happy to submit this as an 00 version if needed and we can come back to discuss the comments at the next catch up!  ",
+          "createdAt": "2026-07-06T17:32:42Z",
+          "updatedAt": "2026-07-06T17:32:42Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOR-NuIc8AAAABFI9o0g",
+          "commit": {
+            "abbreviatedOid": "5fd409b"
+          },
+          "author": "github-actions",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-06T21:37:16Z",
+          "updatedAt": "2026-07-06T21:37:17Z",
+          "comments": [
+            {
+              "originalPosition": 110,
+              "body": "````suggestion\nThe Landmark Distribution Point Server SHALL return a\n````",
+              "createdAt": "2026-07-06T21:37:16Z",
+              "updatedAt": "2026-07-06T21:37:17Z"
+            },
+            {
+              "originalPosition": 37,
+              "body": "````suggestion\nTo address this problem, this document defines a\n````",
+              "createdAt": "2026-07-06T21:37:16Z",
+              "updatedAt": "2026-07-06T21:37:17Z"
+            },
+            {
+              "originalPosition": 25,
+              "body": "````suggestion\nconsistency proofs.\n````",
+              "createdAt": "2026-07-06T21:37:16Z",
+              "updatedAt": "2026-07-06T21:37:17Z"
+            },
+            {
+              "originalPosition": 21,
+              "body": "````suggestion\nthat there is a subtree consistency proof from one landmark to the next.\n````",
+              "createdAt": "2026-07-06T21:37:16Z",
+              "updatedAt": "2026-07-06T21:37:17Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

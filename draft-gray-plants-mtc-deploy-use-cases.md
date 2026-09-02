@@ -451,6 +451,37 @@ TODO - discuss advantages of transparency logs
 - CA's already have an audit trail - is there an advantage to using transparency logs
 - Need a source of truth for cross checking
 
+
+## Certificate Revocation
+If a certificate is compromised, mis-issued or no longer trustworthy, revocation is
+a mechanism that allows a certificate to be declared invalid.  It is a critical part
+of RFC 5280 path building, and is required to support long-lived certificates in a
+private PKI infrastructure.
+
+The two main types of revocation in use today are Certificate Revocation Lists (CRLs)
+and OCSP (On-line certificate status Protocol).  A Certificate Revocation List (CRL)
+is a digitally signed list published by a CA that identifies certificates that have
+been revoked and should no longer be trusted before their expiration date.  Over time
+they become large and stale, and require periodic download leading to increased
+bandwidth, latency and delayed revocation awareness. OCSP creates individual proofs
+for each certificate, requiring an updated signature for every updated request or
+change in status of a certificate revocation.  In the context of much larger PQ
+signatures like ML-DSA, a single revocation check increases from about 400 bytes to
+around 4kb, which is 8 to 10 times larger!
+
+Merkle Tree-based revocation can be significantly more efficient than CRL and OCSP by
+effectively using small cryptographic proof sizes along with batch signing.  For
+example, in OCSP each proof is signed, in Merkle Tree Revocation, each proof becomes
+a leaf-hash in the Merkle Tree.  A relying party only needs a small cryptographic
+proof, typically logarithmic in the number of certificates, rather than downloading
+an entire revocation list or contacting an online responder for each validation. This
+reduces bandwidth consumption, eliminates dependence on highly available OCSP
+infrastructure, and enables offline verification. As the number of revoked
+certificates grows, Merkle proofs remain compact and scalable, making them
+particularly attractive for large PKI deployments and post-quantum environments where
+revocation artifacts and signatures may be substantially larger.
+
+
 ## Code Signing and Software Supply Chain Integrity
 
 The verification model for code signing differs fundamentally from TLS.  In a TLS

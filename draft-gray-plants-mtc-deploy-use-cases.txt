@@ -5,12 +5,12 @@
 PKI, Logs, And Tree Signatures                                   J. Gray
 Internet-Draft                                                   Entrust
 Intended status: Informational                              J. Klaussner
-Expires: 7 January 2027                             Bundesdruckerei GmbH
+Expires: 6 March 2027                               Bundesdruckerei GmbH
                                                               L. Tindell
                                        UK National Cyber Security Centre
                                                               G. Mallaya
                                                             AppViewX Inc
-                                                             6 July 2026
+                                                        2 September 2026
 
 
              Merkle Tree Certificates Deployment Use Cases
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 January 2027.
+   This Internet-Draft will expire on 6 March 2027.
 
 Copyright Notice
 
@@ -93,25 +93,26 @@ Table of Contents
        3.1.8.  Landmark Distribution server
      3.2.  Batching for performance optimization
      3.3.  Just using transparency
-     3.4.  Code Signing and Software Supply Chain Integrity
-       3.4.1.  Batch Signing for Code Signing Certificate Authorities
-       3.4.2.  The Case for Transparency in Private PKI Code Signing
-       3.4.3.  Transparency Log Requirements for Code Signing
-       3.4.4.  Independent Monitor
-       3.4.5.  Archival Obligations
-     3.5.  Private PKI PQC Migration with Downgrade Resistance
-       3.5.1.  Active Downgrade During Hybrid Deployment
-       3.5.2.  Harvest Now Decrypt Later
-       3.5.3.  Unauthorized Classical Certificate Issuance During
+     3.4.  Certificate Revocation
+     3.5.  Code Signing and Software Supply Chain Integrity
+       3.5.1.  Batch Signing for Code Signing Certificate Authorities
+       3.5.2.  The Case for Transparency in Private PKI Code Signing
+       3.5.3.  Transparency Log Requirements for Code Signing
+       3.5.4.  Independent Monitor
+       3.5.5.  Archival Obligations
+     3.6.  Private PKI PQC Migration with Downgrade Resistance
+       3.6.1.  Active Downgrade During Hybrid Deployment
+       3.6.2.  Harvest Now Decrypt Later
+       3.6.3.  Unauthorized Classical Certificate Issuance During
                Migration
-       3.5.4.  Frozen Devices
-       3.5.5.  Algorithm Metadata Requirements
-       3.5.6.  Migration Staging
-     3.6.  Constrained Device Certificate Validation
-       3.6.1.  The Landmark Accumulation Problem
-       3.6.2.  Landmark Rebasing
-       3.6.3.  Re-anchoring After Extended Offline Periods
-       3.6.4.  Guidance for PKI Operators
+       3.6.4.  Frozen Devices
+       3.6.5.  Algorithm Metadata Requirements
+       3.6.6.  Migration Staging
+     3.7.  Constrained Device Certificate Validation
+       3.7.1.  The Landmark Accumulation Problem
+       3.7.2.  Landmark Rebasing
+       3.7.3.  Re-anchoring After Extended Offline Periods
+       3.7.4.  Guidance for PKI Operators
    4.  Security Considerations
    5.  IANA Considerations
    6.  Normative References
@@ -528,7 +529,43 @@ LandmarkDistributionPoint ::= IA5String
    is there an advantage to using transparency logs - Need a source of
    truth for cross checking
 
-3.4.  Code Signing and Software Supply Chain Integrity
+3.4.  Certificate Revocation
+
+   If a certificate is compromised, mis-issued or no longer trustworthy,
+   revocation is a mechanism that allows a certificate to be declared
+   invalid.  It is a critical part of RFC 5280 path building, and is
+   required to support long-lived certificates in a private PKI
+   infrastructure.
+
+   The two main types of revocation in use today are Certificate
+   Revocation Lists (CRLs) and OCSP (On-line certificate status
+   Protocol).  A Certificate Revocation List (CRL) is a digitally signed
+   list published by a CA that identifies certificates that have been
+   revoked and should no longer be trusted before their expiration date.
+   Over time they become large and stale, and require periodic download
+   leading to increased bandwidth, latency and delayed revocation
+   awareness.  OCSP creates individual proofs for each certificate,
+   requiring an updated signature for every updated request or change in
+   status of a certificate revocation.  In the context of much larger PQ
+   signatures like ML-DSA, a single revocation check increases from
+   about 400 bytes to around 4kb, which is 8 to 10 times larger!
+
+   Merkle Tree-based revocation can be significantly more efficient than
+   CRL and OCSP by effectively using small cryptographic proof sizes
+   along with batch signing.  For example, in OCSP each proof is signed,
+   in Merkle Tree Revocation, each proof becomes a leaf-hash in the
+   Merkle Tree.  A relying party only needs a small cryptographic proof,
+   typically logarithmic in the number of certificates, rather than
+   downloading an entire revocation list or contacting an online
+   responder for each validation.  This reduces bandwidth consumption,
+   eliminates dependence on highly available OCSP infrastructure, and
+   enables offline verification.  As the number of revoked certificates
+   grows, Merkle proofs remain compact and scalable, making them
+   particularly attractive for large PKI deployments and post-quantum
+   environments where revocation artifacts and signatures may be
+   substantially larger.
+
+3.5.  Code Signing and Software Supply Chain Integrity
 
    The verification model for code signing differs fundamentally from
    TLS.  In a TLS handshake, the server is present at verification time
@@ -556,7 +593,7 @@ LandmarkDistributionPoint ::= IA5String
    signing.  A post-quantum CA signature embedded in a binary of tens to
    hundreds of megabytes represents negligible overhead.
 
-3.4.1.  Batch Signing for Code Signing Certificate Authorities
+3.5.1.  Batch Signing for Code Signing Certificate Authorities
 
    A code signing CA serving a large enterprise or a high-throughput CI/
    CD environment may issue signing certificates at a volume that places
@@ -574,7 +611,7 @@ LandmarkDistributionPoint ::= IA5String
    Guidance on batch size trade-offs is provided in Section 1.2 of this
    document.
 
-3.4.2.  The Case for Transparency in Private PKI Code Signing
+3.5.2.  The Case for Transparency in Private PKI Code Signing
 
    Private PKI code signing operates without any transparency
    requirement today.  Certificates issued by an enterprise CA for
@@ -613,7 +650,7 @@ LandmarkDistributionPoint ::= IA5String
    record that cannot be erased without detection by any party that has
    retained log state.
 
-3.4.3.  Transparency Log Requirements for Code Signing
+3.5.3.  Transparency Log Requirements for Code Signing
 
    For the transparency log to support anomaly detection and post-
    incident forensics in code signing deployments, the log MUST record
@@ -689,7 +726,7 @@ LandmarkDistributionPoint ::= IA5String
        MTCSignature ca_assertion_signature;
    }
 
-3.4.4.  Independent Monitor
+3.5.4.  Independent Monitor
 
    The transparency log for private PKI code signing MUST be operated
    independently from the issuing CA.  A log under the administrative
@@ -728,7 +765,7 @@ LandmarkDistributionPoint ::= IA5String
        opaque evidence_log_reference<0..2^16-1>;
    }
 
-3.4.5.  Archival Obligations
+3.5.5.  Archival Obligations
 
    Signed artifacts may require verification throughout their
    operational lifetime, which in enterprise deployments can span years.
@@ -739,7 +776,7 @@ LandmarkDistributionPoint ::= IA5String
    issuing CA and MUST NOT share infrastructure with the live issuing
    CA.
 
-3.5.  Private PKI PQC Migration with Downgrade Resistance
+3.6.  Private PKI PQC Migration with Downgrade Resistance
 
    The first post-quantum cryptographic algorithm standards were
    published by NIST in 2024, including ML-DSA (FIPS 204), ML-KEM (FIPS
@@ -756,7 +793,7 @@ LandmarkDistributionPoint ::= IA5String
    exist in a fully migrated environment.  This section describes those
    threats and the capabilities MTC provides to detect them.
 
-3.5.1.  Active Downgrade During Hybrid Deployment
+3.6.1.  Active Downgrade During Hybrid Deployment
 
    When a server holds a post-quantum certificate and also supports
    classical algorithm fallback for legacy clients, a network-positioned
@@ -786,7 +823,7 @@ LandmarkDistributionPoint ::= IA5String
    it enables detection and scoping of the compromise through records
    maintained independently of the endpoints involved.
 
-3.5.2.  Harvest Now Decrypt Later
+3.6.2.  Harvest Now Decrypt Later
 
    Adversaries may record encrypted private PKI traffic with the intent
    to decrypt it when quantum computing capabilities become sufficient.
@@ -809,7 +846,7 @@ LandmarkDistributionPoint ::= IA5String
    evidence of completed migration rather than assertions about future
    intent.
 
-3.5.3.  Unauthorized Classical Certificate Issuance During Migration
+3.6.3.  Unauthorized Classical Certificate Issuance During Migration
 
    An entity that has completed migration to post-quantum algorithms
    should no longer receive classical algorithm certificates.  During
@@ -850,7 +887,7 @@ LandmarkDistributionPoint ::= IA5String
        opaque policy_reference<0..2^16-1>;
    }
 
-3.5.4.  Frozen Devices
+3.6.4.  Frozen Devices
 
    Certain devices in private PKI environments cannot receive updates
    that would add post-quantum algorithm support.  Regulatory re-
@@ -890,7 +927,7 @@ LandmarkDistributionPoint ::= IA5String
        MTCSignature operator_signature;
    }
 
-3.5.5.  Algorithm Metadata Requirements
+3.6.5.  Algorithm Metadata Requirements
 
    For the transparency log to support the use cases described in this
    section, the log MUST record the signing algorithm used to produce
@@ -920,7 +957,7 @@ LandmarkDistributionPoint ::= IA5String
    for each subject to detect unauthorized classical issuance during the
    transition period.
 
-3.5.6.  Migration Staging
+3.6.6.  Migration Staging
 
    A private PKI operator deploying MTC during the post-quantum
    transition period should proceed through distinct stages.  In the
@@ -943,7 +980,7 @@ LandmarkDistributionPoint ::= IA5String
    the endpoint population capabilities and applicable regulatory
    requirements.
 
-3.6.  Constrained Device Certificate Validation
+3.7.  Constrained Device Certificate Validation
 
    Private PKI deployments include endpoint populations with constraints
    on available memory, processing capacity and network access.  Access
@@ -960,7 +997,7 @@ LandmarkDistributionPoint ::= IA5String
    endpoints for which neither real-time landmark retrieval nor
    continuous landmark cache maintenance can be assumed.
 
-3.6.1.  The Landmark Accumulation Problem
+3.7.1.  The Landmark Accumulation Problem
 
    In a traditional X.509 deployment, a constrained verifier typically
    holds one or more trust anchor certificates and retrieves revocation
@@ -993,7 +1030,7 @@ LandmarkDistributionPoint ::= IA5String
    publication frequency with reference to the storage capacity of the
    most constrained device in the target population.
 
-3.6.2.  Landmark Rebasing
+3.7.2.  Landmark Rebasing
 
    Where the calculated storage requirement exceeds the available
    capacity of constrained devices, a rebasing mechanism may reduce the
@@ -1018,7 +1055,7 @@ LandmarkDistributionPoint ::= IA5String
    an adversary substitutes a fraudulent tree head, potentially causing
    the device to reject valid certificates or accept fraudulent ones.
 
-3.6.3.  Re-anchoring After Extended Offline Periods
+3.7.3.  Re-anchoring After Extended Offline Periods
 
    A device that has been without network access for an extended period
    accumulates a deficit of landmarks issued during its offline
@@ -1063,7 +1100,7 @@ LandmarkDistributionPoint ::= IA5String
        HashValue last_trusted_tree_head;
    }
 
-3.6.4.  Guidance for PKI Operators
+3.7.4.  Guidance for PKI Operators
 
    PKI operators deploying MTC for constrained device populations SHOULD
    publish landmark storage requirements as part of deployment

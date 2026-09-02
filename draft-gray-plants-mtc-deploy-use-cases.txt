@@ -1169,8 +1169,9 @@ LandmarkDistributionPoint ::= IA5String
 
 Appendix A.  Acknowledgments
 
-   Thanks to David Benjamin, Bas Westerbaan and Mike Ounsworth for their
-   feedback and review of this specification.
+   Thanks to David Benjamin, Bas Westerbaan, Mike Ounsworth,
+   Tirumaleswar Reddy, Rich Salz and Kris Kwiatkowski for their feedback
+   and review of this specification.
 
 Authors' Addresses
 

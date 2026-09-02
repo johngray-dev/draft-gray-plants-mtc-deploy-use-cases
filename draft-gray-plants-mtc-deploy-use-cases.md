@@ -1013,4 +1013,4 @@ in the "SMI Security for PKIX Certificate Extension" registry (1.3.6.1.5.5.7.1).
 --- back
 
 # Acknowledgments
-Thanks to David Benjamin, Bas Westerbaan and Mike Ounsworth for their feedback and review of this specification.
+Thanks to David Benjamin, Bas Westerbaan, Mike Ounsworth, Tirumaleswar Reddy, Rich Salz and Kris Kwiatkowski for their feedback and review of this specification.

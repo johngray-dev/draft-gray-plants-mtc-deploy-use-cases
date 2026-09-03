@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-20T00:31:50.097087+00:00",
+  "timestamp": "2026-09-03T01:48:05.965482+00:00",
   "repo": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
   "labels": [
     {
@@ -728,24 +728,26 @@
       "id": "PR_kwDOR-NuIc8AAAABAMQIOQ",
       "title": "Add Revocation Use Case Description",
       "url": "https://github.com/johngray-dev/draft-gray-plants-mtc-deploy-use-cases/pull/11",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "johngray-dev",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Added use-case description for revocation",
       "createdAt": "2026-08-18T19:38:09Z",
-      "updatedAt": "2026-08-18T19:38:09Z",
+      "updatedAt": "2026-09-02T14:13:17Z",
       "baseRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
       "baseRefName": "main",
       "baseRefOid": "e1dcb6b1af1f9f194d88f12b389b71b67dd83ff1",
       "headRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
       "headRefName": "jg_Revocation",
       "headRefOid": "2233fa8371fd008100bae1c5717194607f8c4c52",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-09-02T14:13:17Z",
+      "mergedAt": "2026-09-02T14:13:17Z",
+      "mergedBy": "johngray-dev",
+      "mergeCommit": {
+        "oid": "2d439436b2e716d6a8ae30ace5e3326138e257ce"
+      },
       "comments": [],
       "reviews": []
     }

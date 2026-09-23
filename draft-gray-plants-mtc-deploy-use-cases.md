@@ -12,7 +12,7 @@ v: 3
 area: "Security"
 workgroup: "PKI, Logs, And Tree Signatures"
 keyword:
- - Merke Tree Certificate
+ - Merkle Tree Certificate
  - Post Quantum
  - PKI
 venue:

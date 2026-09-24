@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-09-03T01:48:05.965482+00:00",
+  "timestamp": "2026-09-24T01:55:36.601353+00:00",
   "repo": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
   "labels": [
     {
@@ -750,6 +750,88 @@
       },
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 12,
+      "id": "PR_kwDOR-NuIc8AAAABEwaZ0g",
+      "title": "Fix pluralization of 'MTC' to 'MTCs' to align with the standards draft",
+      "url": "https://github.com/johngray-dev/draft-gray-plants-mtc-deploy-use-cases/pull/12",
+      "state": "OPEN",
+      "author": "aww-aww",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Corrected pluralization of 'Merkle Tree Certificates' throughout the document for consistency. In the MTCs draft, they are always referred to as MTCs unless the use is specifically a singular use.",
+      "createdAt": "2026-09-23T13:28:14Z",
+      "updatedAt": "2026-09-23T18:53:05Z",
+      "baseRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
+      "baseRefName": "main",
+      "baseRefOid": "b5e05f27ea6c24c9c446e6830db43224a63373b9",
+      "headRepository": "aww-aww/draft-gray-plants-mtc-deploy-use-cases",
+      "headRefName": "patch-1",
+      "headRefOid": "d243aa94c843411352fc0be6e5873181f9567265",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOR-NuIc8AAAABO6DmPA",
+          "commit": {
+            "abbreviatedOid": "d243aa9"
+          },
+          "author": "johngray-dev",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "Thanks for making the document more consistent",
+          "createdAt": "2026-09-23T18:53:05Z",
+          "updatedAt": "2026-09-23T18:53:05Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "id": "PR_kwDOR-NuIc8AAAABEwb4Vg",
+      "title": "Fix typo in Merkle Tree Certificate",
+      "url": "https://github.com/johngray-dev/draft-gray-plants-mtc-deploy-use-cases/pull/13",
+      "state": "MERGED",
+      "author": "aww-aww",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-09-23T13:30:41Z",
+      "updatedAt": "2026-09-23T18:52:06Z",
+      "baseRepository": "johngray-dev/draft-gray-plants-mtc-deploy-use-cases",
+      "baseRefName": "main",
+      "baseRefOid": "b5e05f27ea6c24c9c446e6830db43224a63373b9",
+      "headRepository": "aww-aww/draft-gray-plants-mtc-deploy-use-cases",
+      "headRefName": "patch-2",
+      "headRefOid": "6b54a28ced9dd74201fa38dacc3ce7e7f6647ab8",
+      "closedAt": "2026-09-23T18:52:06Z",
+      "mergedAt": "2026-09-23T18:52:05Z",
+      "mergedBy": "johngray-dev",
+      "mergeCommit": {
+        "oid": "470929297ca90e605a5ef6b8152111205ad6c842"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOR-NuIc8AAAABO6C2-Q",
+          "commit": {
+            "abbreviatedOid": "6b54a28"
+          },
+          "author": "johngray-dev",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "Thanks for the update",
+          "createdAt": "2026-09-23T18:51:48Z",
+          "updatedAt": "2026-09-23T18:51:48Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
